@@ -29,8 +29,8 @@ The NuoDB Control Plane can now be installed as follows:
 
 ```sh
 helm install nuodb-cp-crd nuodb-cp/nuodb-cp-crd
-helm install nuodb-cp-operator nuodb-cp/nuodb-cp-operator --set image.repository=ghcr.io/nuodb/nuodb-cp-releases
-helm install nuodb-cp-rest nuodb-cp/nuodb-cp-rest --set image.repository=ghcr.io/nuodb/nuodb-cp-releases
+helm install nuodb-cp-operator nuodb-cp/nuodb-cp-operator --set image.repository=ghcr.io/nuodb/nuodb-cp-images
+helm install nuodb-cp-rest nuodb-cp/nuodb-cp-rest --set image.repository=ghcr.io/nuodb/nuodb-cp-images
 ```
 
 ## Helm charts
@@ -44,4 +44,4 @@ This must always be installed.
 - `nuodb-cp-rest` contains a REST service that exposes access to the NuoDB Control Plane in a Database as a Service (DBaaS) model.
 This allows users without access to Kubernetes APIs to manage NuoDB domains and databases.
 - `nuodb-cp-doc` exposes an endpoint for interactive documentation of the NuoDB Control Plane REST service.
-See [https://nuodb.github.io/nuodb-cp-releases/api-doc] for non-interactive documentation of the REST service.
+See https://nuodb.github.io/nuodb-cp-releases/api-doc for non-interactive documentation of the REST service.
