@@ -1,0 +1,1480 @@
+openapi: 3.0.1
+info:
+  title: NuoDB Control Plane REST API
+  description: NuoDB Control Plane (CP) allows users to create and manage NuoDB databases
+    remotely using a Database as a Service (DBaaS) model.
+  termsOfService: https://doc.nuodb.com/nuodb/latest/release-notes/nuodb-license-terms/
+  contact:
+    url: https://nuodb.com
+    email: NuoDB.Support@3ds.com
+  license:
+    name: NuoDB EULA
+    url: https://doc.nuodb.com/nuodb/latest/release-notes/license-terms/nuodb-eula/
+  version: 2.1.0
+servers:
+- url: https://example.nuodb.com
+paths:
+  /databases/{organization}/{project}/{database}:
+    get:
+      tags:
+      - databases
+      summary: Get an existing database
+      operationId: getDatabase
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: database
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The database was found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseModel'
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "404":
+          description: The database does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+      security:
+      - basicAuth: []
+    put:
+      tags:
+      - databases
+      summary: Create or update a database
+      operationId: createDatabase
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: database
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DatabaseCreateUpdateModel'
+            examples:
+              "0":
+                summary: Create database
+                value: |-
+                  {
+                    "tier": "n0.small",
+                    "dbaPassword": "changeIt",
+                    "properties": {
+                      "archiveDiskSize": "50Gi",
+                      "journalDiskSize": "5Gi"
+                    }
+                  }
+              "1":
+                summary: Create database with default properties
+                value: |-
+                  {
+                    "dbaPassword": "changeIt"
+                  }
+              "2":
+                summary: Update database
+                value: |-
+                  {
+                    "organization": "acme",
+                    "project": "messaging",
+                    "name": "demo",
+                    "tier": "n1.small",
+                    "properties": {
+                      "archiveDiskSize": "100Gi",
+                      "journalDiskSize": "10Gi"
+                    },
+                    "resourceVersion": "30503"
+                  }
+        required: true
+      responses:
+        "200":
+          description: The database was updated
+        "201":
+          description: The database was created
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "404":
+          description: "The database could not be created because the project does\
+            \ not exist, or could not be updated because it does not exist"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "409":
+          description: The database could not be created or updated due to unexpected
+            state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "415":
+          description: A media type other than `application/json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+      security:
+      - basicAuth: []
+    delete:
+      tags:
+      - databases
+      summary: Delete an existing database
+      operationId: deleteDatabase
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: database
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: The database was deleted
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "404":
+          description: The database does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+      security:
+      - basicAuth: []
+    patch:
+      tags:
+      - databases
+      summary: Update an existing database
+      operationId: patchDatabase
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: database
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/JsonPatchOperation'
+            examples:
+              "0":
+                summary: Change database tier
+                value: |-
+                  [
+                    {
+                      "op": "add",
+                      "path": "/tier",
+                      "value": "n1.small"
+                    }
+                  ]
+              "1":
+                summary: Increase disk size for database archives
+                value: |-
+                  [
+                    {
+                      "op": "add",
+                      "path": "/properties/archiveDiskSize",
+                      "value": "100Gi"
+                    }
+                  ]
+              "2":
+                summary: Set database to expire
+                value: |-
+                  [
+                    {
+                      "op": "add",
+                      "path": "/maintenance",
+                      "value": {
+                        "expiresIn": "1d"
+                      }
+                    }
+                  ]
+              "3":
+                summary: Disable database
+                value: |-
+                  [
+                    {
+                      "op": "add",
+                      "path": "/maintenance",
+                      "value": {
+                        "isDisabled": true
+                      }
+                    }
+                  ]
+              "4":
+                summary: Enable database
+                value: |-
+                  [
+                    {
+                      "op": "remove",
+                      "path": "/maintenance"
+                    }
+                  ]
+        required: true
+      responses:
+        "200":
+          description: The patch was applied to the database
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "404":
+          description: The database does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "409":
+          description: The database could not be updated due to unexpected state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "415":
+          description: A media type other than `application/json-patch+json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+      security:
+      - basicAuth: []
+  /databases/{organization}/{project}:
+    get:
+      tags:
+      - databases
+      summary: List the databases in a project
+      operationId: getDatabases
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The list of databases was returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemListString'
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "404":
+          description: The project does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+      security:
+      - basicAuth: []
+  /healthz:
+    get:
+      tags:
+      - healthz
+      summary: Get health of service
+      operationId: getHealth
+      responses:
+        "204":
+          description: The server is healthy
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "503":
+          description: The server is unhealthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+      security:
+      - basicAuth: []
+  /projects/{organization}/{project}:
+    get:
+      tags:
+      - projects
+      summary: Get an existing project
+      operationId: getProject
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The project was found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectModel'
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "404":
+          description: The project does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+      security:
+      - basicAuth: []
+    put:
+      tags:
+      - projects
+      summary: Create or update a project
+      operationId: createProject
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectModel'
+            examples:
+              "0":
+                summary: Create project
+                value: |-
+                  {
+                    "sla": "dev",
+                    "tier": "n0.nano"
+                  }
+              "1":
+                summary: Update project
+                value: |-
+                  {
+                    "organization": "acme",
+                    "name": "messaging",
+                    "sla": "dev",
+                    "tier": "n0.small",
+                    "resourceVersion": "30503"
+                  }
+        required: true
+      responses:
+        "200":
+          description: The project was updated
+        "201":
+          description: The project was created
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "404":
+          description: The project could not be updated because it does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "409":
+          description: The project could not be created or updated due to unexpected
+            state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "415":
+          description: A media type other than `application/json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+      security:
+      - basicAuth: []
+    delete:
+      tags:
+      - projects
+      summary: Delete an existing project
+      operationId: deleteProject
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: The project was deleted
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "404":
+          description: The project does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "409":
+          description: The project could not be deleted because it has databases
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+      security:
+      - basicAuth: []
+    patch:
+      tags:
+      - projects
+      summary: Update an existing project
+      operationId: patchProject
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/JsonPatchOperation'
+            examples:
+              "0":
+                summary: Change project tier
+                value: |-
+                  [
+                    {
+                      "op": "add",
+                      "path": "/tier",
+                      "value": "n0.small"
+                    }
+                  ]
+              "1":
+                summary: Set project to expire
+                value: |-
+                  [
+                    {
+                      "op": "add",
+                      "path": "/maintenance",
+                      "value": {
+                        "expiresIn": "1d"
+                      }
+                    }
+                  ]
+              "2":
+                summary: Disable project
+                value: |-
+                  [
+                    {
+                      "op": "add",
+                      "path": "/maintenance",
+                      "value": {
+                        "isDisabled": true
+                      }
+                    }
+                  ]
+              "3":
+                summary: Enable project
+                value: |-
+                  [
+                    {
+                      "op": "remove",
+                      "path": "/maintenance"
+                    }
+                  ]
+        required: true
+      responses:
+        "200":
+          description: The patch was applied to the project
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "404":
+          description: The project does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "409":
+          description: The project could not be updated due to unexpected state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "415":
+          description: A media type other than `application/json-patch+json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+      security:
+      - basicAuth: []
+  /projects/{organization}:
+    get:
+      tags:
+      - projects
+      summary: List the projects in an organization
+      operationId: getProjects
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The list of projects was returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemListString'
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+      security:
+      - basicAuth: []
+  /users/{organization}/{user}:
+    get:
+      tags:
+      - users
+      summary: Get an existing user
+      operationId: getUser
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: user
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The user was found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DbaasUserModel'
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "404":
+          description: The user does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+      security:
+      - basicAuth: []
+    put:
+      tags:
+      - users
+      summary: Create or update a user
+      operationId: createUser
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: user
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: allowCrossOrganizationAccess
+        in: query
+        description: Whether to allow the user to have access outside of its organization
+        schema:
+          type: boolean
+          default: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DbaasUserCreateUpdateModel'
+            examples:
+              "0":
+                summary: Create user
+                value: |-
+                  {
+                    "password": "changeIt",
+                    "accessRule": {
+                      "allow": [
+                        "all:acme"
+                      ]
+                    }
+                  }
+              "1":
+                summary: Update user
+                value: |-
+                  {
+                    "organization": "acme",
+                    "name": "admin",
+                    "password": "newPassword",
+                    "accessRule": {
+                      "allow": [
+                        "all:acme"
+                      ]
+                    },
+                    "resourceVersion": "30503"
+                  }
+        required: true
+      responses:
+        "200":
+          description: The user was updated
+        "201":
+          description: The user was created
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "404":
+          description: The user could not be updated because it does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "409":
+          description: The user could not be created or updated due to unexpected
+            state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "415":
+          description: A media type other than `application/json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+      security:
+      - basicAuth: []
+    delete:
+      tags:
+      - users
+      summary: Delete an existing user
+      operationId: deleteUser
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: user
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: The user was deleted
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "404":
+          description: The user does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+      security:
+      - basicAuth: []
+    patch:
+      tags:
+      - users
+      summary: Update an existing user
+      operationId: patchUser
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: user
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: allowCrossOrganizationAccess
+        in: query
+        description: Whether to allow the user to have access outside of its organization
+        schema:
+          type: boolean
+          default: false
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/JsonPatchOperation'
+            examples:
+              "0":
+                summary: Change user password
+                value: |-
+                  [
+                    {
+                      "op": "add",
+                      "path": "/password",
+                      "value": "newPassword"
+                    }
+                  ]
+              "1":
+                summary: Change user access
+                value: |-
+                  [
+                    {
+                      "op": "add",
+                      "path": "/accessRule",
+                      "value": {
+                        "allow": [
+                          "read:acme",
+                          "all:acme/messaging"
+                        ]
+                      }
+                    }
+                  ]
+              "2":
+                summary: Grant read access for organization
+                value: |-
+                  [
+                    {
+                      "op": "add",
+                      "path": "/accessRule/allow/-",
+                      "value": "read:acme"
+                    }
+                  ]
+              "3":
+                summary: Grant full access for project
+                value: |-
+                  [
+                    {
+                      "op": "add",
+                      "path": "/accessRule/allow/-",
+                      "value": "all:acme/messaging"
+                    }
+                  ]
+        required: true
+      responses:
+        "200":
+          description: The patch was applied to the user
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "404":
+          description: The user does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "409":
+          description: The user could not be updated due to unexpected state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "415":
+          description: A media type other than `application/json-patch+json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+      security:
+      - basicAuth: []
+  /users/{organization}:
+    get:
+      tags:
+      - users
+      summary: List the users in an organization
+      operationId: getUsers
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The list of users was returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemListString'
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContentString'
+      security:
+      - basicAuth: []
+components:
+  schemas:
+    DatabaseCreateUpdateModel:
+      type: object
+      properties:
+        organization:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+        project:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+        name:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+        dbaPassword:
+          type: string
+          description: The password for the DBA user. Can only be specified when creating
+            a database.
+          writeOnly: true
+        tier:
+          type: string
+          description: "The service tier for the database. If omitted, the project\
+            \ service tier is inherited."
+          example: n0.small
+        maintenance:
+          $ref: '#/components/schemas/MaintenanceModel'
+        properties:
+          $ref: '#/components/schemas/DatabasePropertiesModel'
+        resourceVersion:
+          type: string
+          description: "The version of the resource. When specified in a `PUT` request\
+            \ payload, indicates that the resoure should be updated, and is used by\
+            \ the system to guard against concurrent updates."
+        status:
+          $ref: '#/components/schemas/DatabaseStatusModel'
+    DatabasePropertiesModel:
+      type: object
+      properties:
+        archiveDiskSize:
+          pattern: "^(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?$"
+          type: string
+          description: The size of the archive volumes for the database. Can be only
+            updated to increase the volume size.
+          example: 2Ti
+        journalDiskSize:
+          pattern: "^(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?$"
+          type: string
+          description: The size of the journal volumes for the database. Can be only
+            updated to increase the volume size.
+          example: 50Gi
+    DatabaseStatusModel:
+      type: object
+      properties:
+        sqlEndpoint:
+          type: string
+          description: The endpoint for SQL clients to connect to
+        caPem:
+          type: string
+          description: The PEM-encoded certificate for SQL clients to verify database
+            servers
+        ready:
+          type: boolean
+          description: Whether the database is ready
+        shutdown:
+          type: boolean
+          description: Whether the database has shutdown
+        message:
+          type: string
+          description: Message summarizing the state of the database
+      readOnly: true
+    MaintenanceModel:
+      type: object
+      properties:
+        expiresAtTime:
+          type: string
+          description: The time at which the project or database will be disabled
+          format: date-time
+          example: 2024-01-01T00:00:00Z
+        expiresIn:
+          pattern: "(\\d+)\\s*([A-Za-zµ]+)"
+          type: string
+          description: "The time until the project or database is disabled, e.g. `1d`"
+          example: 1d
+        isDisabled:
+          type: boolean
+          description: Whether the project or database should be shutdown
+    DatabaseModel:
+      type: object
+      properties:
+        organization:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+        project:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+        name:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+        tier:
+          type: string
+          description: "The service tier for the database. If omitted, the project\
+            \ service tier is inherited."
+          example: n0.small
+        maintenance:
+          $ref: '#/components/schemas/MaintenanceModel'
+        properties:
+          $ref: '#/components/schemas/DatabasePropertiesModel'
+        resourceVersion:
+          type: string
+          description: "The version of the resource. When specified in a `PUT` request\
+            \ payload, indicates that the resoure should be updated, and is used by\
+            \ the system to guard against concurrent updates."
+        status:
+          $ref: '#/components/schemas/DatabaseStatusModel'
+    ItemListString:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: string
+    JsonNode:
+      type: object
+      oneOf:
+      - type: object
+      - type: string
+      - type: number
+      - type: boolean
+    JsonPatchOperation:
+      required:
+      - op
+      - path
+      type: object
+      properties:
+        op:
+          type: string
+          enum:
+          - add
+          - remove
+          - replace
+          - move
+          - copy
+          - test
+        from:
+          pattern: /.*
+          type: string
+        path:
+          pattern: /.*
+          type: string
+        value:
+          $ref: '#/components/schemas/JsonNode'
+    ProjectModel:
+      required:
+      - sla
+      - tier
+      type: object
+      properties:
+        organization:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+        name:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+        sla:
+          type: string
+          description: The SLA for the project. Cannot be updated once the project
+            is created.
+          example: dev
+        tier:
+          type: string
+          description: The service tier for the project
+          example: n0.small
+        maintenance:
+          $ref: '#/components/schemas/MaintenanceModel'
+        resourceVersion:
+          type: string
+          description: "The version of the resource. When specified in a `PUT` request\
+            \ payload, indicates that the resoure should be updated, and is used by\
+            \ the system to guard against concurrent updates."
+        status:
+          $ref: '#/components/schemas/ProjectStatusModel'
+    ProjectStatusModel:
+      type: object
+      properties:
+        caPem:
+          type: string
+          description: The PEM-encoded certificate for SQL clients to verify database
+            servers within the project
+        ready:
+          type: boolean
+          description: Whether the project is ready
+        shutdown:
+          type: boolean
+          description: Whether the project and all of its databases have shutdown
+        message:
+          type: string
+          description: Message summarizing the state of the project
+      readOnly: true
+    DbaasAccessRuleModel:
+      type: object
+      properties:
+        allow:
+          type: array
+          description: "List of access rule entries in the form `<verb>:<resource\
+            \ specifier>[:<SLA>]` that specify requests to allow"
+          items:
+            type: string
+        deny:
+          type: array
+          description: List of access rule entries in the form `<verb>:<resource specifier>`
+            that specify requests to deny
+          items:
+            type: string
+      description: The rule specifying access for the user
+    DbaasUserCreateUpdateModel:
+      required:
+      - accessRule
+      type: object
+      properties:
+        organization:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+        name:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+        password:
+          type: string
+          description: The password for the user
+          writeOnly: true
+        accessRule:
+          $ref: '#/components/schemas/DbaasAccessRuleModel'
+        resourceVersion:
+          type: string
+          description: "The version of the resource. When specified in a `PUT` request\
+            \ payload, indicates that the resoure should be updated, and is used by\
+            \ the system to guard against concurrent updates."
+    DbaasUserModel:
+      required:
+      - accessRule
+      type: object
+      properties:
+        organization:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+        name:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+        accessRule:
+          $ref: '#/components/schemas/DbaasAccessRuleModel'
+        resourceVersion:
+          type: string
+          description: "The version of the resource. When specified in a `PUT` request\
+            \ payload, indicates that the resoure should be updated, and is used by\
+            \ the system to guard against concurrent updates."
+    ErrorContentString:
+      type: object
+      properties:
+        code:
+          type: string
+        status:
+          type: string
+        detail:
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: BASIC
+
