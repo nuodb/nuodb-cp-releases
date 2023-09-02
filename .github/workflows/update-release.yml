@@ -1,0 +1,27 @@
+name: Update GitHub release tag, OpenAPI spec, and Helm index
+on:
+  release:
+    types:
+      - published
+jobs:
+  update_release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Configure Git user
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - name: Update release tag and OpenAPI spec
+        run: ./scripts/update-release.sh
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Update Helm index
+        run: ./scripts/update-index.sh
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+          PUSH_UPDATE: "true"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
