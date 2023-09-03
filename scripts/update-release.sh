@@ -13,10 +13,17 @@ set -e
 GIT_STATUS="$(git status --porcelain)"
 [ "$GIT_STATUS" = "" ] || fail "Cannot publish release with uncommitted changes:\n$GIT_STATUS"
 
-# Checkout or create branch vX.Y-dev if release is not X.Y.0
+# Save current branch
+MAIN_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+
+# Checkout correct branch for release
 case "$TAG" in
-    (*.0) : ;;
+    (*.0)
+        # Branch latest tracks <major>.<minor>.0 releases
+        git checkout latest
+        ;;
     (*)
+        # Branch v<major>.<minor>-dev tracks patch releases
         PREFIX="${TAG%.*}"
         BRANCH="${PREFIX}-dev"
         if ! git checkout "$BRANCH"; then
@@ -38,3 +45,6 @@ if [ "$DRY_RUN" != true ]; then
     git push --tags --force
     git push
 fi
+
+# Checkout original branch
+git checkout "$MAIN_BRANCH"
