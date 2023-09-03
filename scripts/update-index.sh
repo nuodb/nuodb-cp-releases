@@ -9,12 +9,19 @@ set -e
 
 : ${TAG:?"Must specify release tag"}
 
+# Change to root directory
+cd "$(dirname "$0")/.."
+
 # Make sure there are no uncommitted changes
 GIT_STATUS="$(git status --porcelain)"
 [ "$GIT_STATUS" = "" ] || fail "Cannot publish charts with uncommitted changes:\n$GIT_STATUS"
 
-# Change to root directory
-cd "$(dirname "$0")/.."
+# Save current branch or commit
+ORIG_REF="$(git rev-parse --abbrev-ref HEAD)"
+if [ "$ORIG_REF" = HEAD ]; then
+    # In detached head, so get commit SHA
+    ORIG_REF="$(git rev-parse HEAD)"
+fi
 
 # Download Helm charts for release
 rm -rf assets/
@@ -32,7 +39,10 @@ mv assets/index.yaml charts/
 git add charts/index.yaml
 git commit -m "Add $TAG charts to index"
 
-# Push change if PUSH_UPDATE=true
-if [ "$PUSH_UPDATE" = true ]; then
+# Push change unless DRY_RUN=true
+if [ "$DRY_RUN" != true ]; then
     git push
 fi
+
+# Checkout original branch or commit
+git checkout "$ORIG_REF"

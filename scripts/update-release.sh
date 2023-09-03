@@ -9,6 +9,9 @@ set -e
 
 : ${TAG:?"Must specify release tag"}
 
+# Change to root directory
+cd "$(dirname "$0")/.."
+
 # Make sure there are no uncommitted changes
 GIT_STATUS="$(git status --porcelain)"
 [ "$GIT_STATUS" = "" ] || fail "Cannot publish release with uncommitted changes:\n$GIT_STATUS"
