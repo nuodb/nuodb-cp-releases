@@ -13,8 +13,12 @@ set -e
 GIT_STATUS="$(git status --porcelain)"
 [ "$GIT_STATUS" = "" ] || fail "Cannot publish release with uncommitted changes:\n$GIT_STATUS"
 
-# Save current branch
-MAIN_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+# Save current branch or commit
+ORIG_REF="$(git rev-parse --abbrev-ref HEAD)"
+if [ "$ORIG_REF" = HEAD ]; then
+    # In detached head, so get commit SHA
+    ORIG_REF="$(git rev-parse HEAD)"
+fi
 
 # Checkout correct branch for release
 case "$TAG" in
@@ -27,9 +31,12 @@ case "$TAG" in
         PREFIX="${TAG%.*}"
         BRANCH="${PREFIX}-dev"
         if ! git checkout "$BRANCH"; then
+            # Branch does not exist. Create it off of <major>.<minor>.0.
             git checkout "${PREFIX}.0"
             git checkout -b "$BRANCH"
-            git push --set-upstream origin "$BRANCH"
+            if [ "$DRY_RUN" != true ]; then
+                git push --set-upstream origin "$BRANCH"
+            fi
         fi
         ;;
 esac
@@ -46,5 +53,5 @@ if [ "$DRY_RUN" != true ]; then
     git push
 fi
 
-# Checkout original branch
-git checkout "$MAIN_BRANCH"
+# Checkout original branch or commit
+git checkout "$ORIG_REF"
