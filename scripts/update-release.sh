@@ -14,7 +14,7 @@ cd "$(dirname "$0")/.."
 
 # Make sure there are no uncommitted changes
 GIT_STATUS="$(git status --porcelain)"
-[ "$GIT_STATUS" = "" ] || fail "Cannot publish release with uncommitted changes:\n$GIT_STATUS"
+[ "$GIT_STATUS" = "" ] || fail "ERROR: Cannot publish release with uncommitted changes:\n$GIT_STATUS"
 
 # Save current branch or commit
 ORIG_REF="$(git rev-parse --abbrev-ref HEAD)"
@@ -33,10 +33,19 @@ case "$TAG" in
         # Branch v<major>.<minor>-dev tracks patch releases
         PREFIX="${TAG%.*}"
         BRANCH="${PREFIX}-dev"
-        if ! git checkout "$BRANCH"; then
-            # Branch does not exist. Create it off of <major>.<minor>.0.
-            git checkout "${PREFIX}.0"
+        if ! git checkout "$BRANCH" 2>/dev/null; then
+            BRANCH_FROM="${PREFIX}.0"
+            echo "Branch $BRANCH does not exist. Creating it off of tag $BRANCH_FROM..."
+            # Make sure <major>.<minor>.0 tag is on branch latest
+            if [ "$(git rev-parse "$BRANCH_FROM")" != "$(git merge-base latest "$BRANCH_FROM")" ]; then
+                fail "ERROR: Tag $BRANCH_FROM is not on branch latest"
+            fi
+
+            # Checkout tag <major>.<minor>.0 and create branch
+            # v<major>.<minor>-dev off of it
+            git checkout --detach "$BRANCH_FROM"
             git checkout -b "$BRANCH"
+            # Push branch unless DRY_RUN=true
             if [ "$DRY_RUN" != true ]; then
                 git push --set-upstream origin "$BRANCH"
             fi
