@@ -37,7 +37,7 @@ case "$TAG" in
             BRANCH_FROM="${PREFIX}.0"
             echo "Branch $BRANCH does not exist. Creating it off of tag $BRANCH_FROM..."
             # Make sure <major>.<minor>.0 tag is on branch latest
-            if [ "$(git rev-parse "$BRANCH_FROM")" != "$(git merge-base latest "$BRANCH_FROM")" ]; then
+            if [ "$(git rev-parse "$BRANCH_FROM")" != "$(git merge-base origin/latest "$BRANCH_FROM")" ]; then
                 fail "ERROR: Tag $BRANCH_FROM is not on branch latest"
             fi
 
