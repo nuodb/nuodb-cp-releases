@@ -2,6 +2,21 @@
 
 This repository is for releases and documentation for the NuoDB Control Plane, which enables automatic management of NuoDB databases in Kubernetes.
 
+NuoDB Control Plane allows users to provision NuoDB databases on-demand remotely using REST services by exposing various predefined configuration options.
+NuoDB domain and database are modeled as Kubernetes [Custom Resources][1] (CRs).
+Their [Custom Resource Definitions][2] (CRDs) act as contracts between NuoDB Operator and the other modules.
+
+![nuodb-control-plane-overview](docs/images/overview.png)
+
+## Documentation
+
+The NuoDB Control Plane documentation is available in [docs](./docs) directory of this repository.
+The REST API non-interactive documentation is available at [API documentation][3].
+
+### Get Started
+
+- [Quick Start Guide](./docs/QuickStart.md)
+
 ## Installation
 
 To install the NuoDB Control Plane into your Kubernetes cluster, first add the Helm repository for the NuoDB Control Plane Helm charts.
@@ -79,15 +94,22 @@ To enable multi-tenancy, NuoDB _databases_ managed by the NuoDB Control Plane ar
 Create a NuoDB database as follows:
 
 1. Create a project using the `PUT projects` REST endpoint:
+
 ```sh
 curl -X PUT -H 'Content-Type: application/json' \
     $BASE_URL/projects/acme/messaging -d '{"sla": "dev", "tier": "n0.small"}'
 ```
+
 2. Create a database using the `PUT databases` REST endpoint:
+
 ```sh
 curl -X PUT -H 'Content-Type: application/json' \
     $BASE_URL/databases/acme/messaging/demo -d '{"dbaPassword": "dba"}'
 ```
 
-> *NOTE*: Projects and databases are identified by resource path segments `<organization>/<project>` and `<organization>/<project>/<database>`, respectively.
-The example above creates the database `demo` within the project `messaging` within the organization `acme`.
+>**Note**
+> Projects and databases are identified by resource path segments `<organization>/<project>` and `<organization>/<project>/<database>`, respectively. The example above creates the database `demo` within the project `messaging` within the organization `acme`.
+
+[1]: https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#custom-resources
+[2]: https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions
+[3]: https://nuodb.github.io/nuodb-cp-releases/api-doc
