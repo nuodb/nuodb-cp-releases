@@ -1,7 +1,8 @@
 # DBaaS Quick Start Guide
 
+This document describes how to provision NuoDB databases in multi-tenancy model by using NuoDB Control Plane (CP).
 NuoDB Control Plane works with [Kubernetes][1] locally or in the cloud.
-This document describes how to provision NuoDB databases in multi-tenancy model by using NuoDB Control Plane.
+The steps in this guide can be followed regardless of the selected Kubernetes platform provider.
 
 ## Prerequisites
 
@@ -9,39 +10,25 @@ This document describes how to provision NuoDB databases in multi-tenancy model 
 - [kubectl][3] installed and able to access the cluster.
 - [Helm 3.x][4] installed.
 
-## Installing NuoDB Control Plane
+## Installing Dependencies
 
-The NuoDB Control Plane consists of [Custom Resource Definitions][5] and the following workloads:
+### Install Cert Manager
 
-- *NuoDB CP Operator*, which enforces the desired state of the NuoDB [custom resources][6].
-- *NuoDB CP REST service*, that exposes a REST API allowing users to manipulate and inspect DBaaS entities.
-
-### Configure Kubernetes
-
-Create a namespace for all NuoDB resources.
-
-```sh
-kubectl create namespace nuodb-cp-system
-kubectl config set-context --current --namespace=nuodb-cp-system
-```
-
-### Configure Helm repositories
+To enable [admission webhooks][7] in the NuoDB operator, [cert-manager](https://github.com/cert-manager/cert-manager) must be installed to automatically generate certificates for the webhook server.
 
 Add the official Helm repositories.
 
 ```sh
 helm repo add jetstack https://charts.jetstack.io
-helm repo add nuodb-cp https://nuodb.github.io/nuodb-cp-releases/charts
 helm repo update
 ```
 
-### Install Cert Manager
-
-To enable [admission webhooks][7] that perform synchronous validation of NuoDB custom resource definitions, [cert-manager](https://github.com/cert-manager/cert-manager) should be installed to automatically generate certificates for the webhook server.
+Install Cert Manager Helm chart.
 
 ```sh
 helm upgrade --install cert-manager jetstack/cert-manager \
   --namespace cert-manager \
+  --set installCRDs=true \
   --create-namespace
 ```
 
@@ -51,11 +38,29 @@ Wait for Cert Manager to become available.
 kubectl -n cert-manager wait pod --all --for=condition=Ready
 ```
 
-### Install NuoDB CP using Helm charts
+## Installing NuoDB Control Plane
+
+The NuoDB Control Plane consists of [Custom Resource Definitions][5] and the following workloads:
+
+- *NuoDB CP Operator*, which enforces the desired state of the NuoDB [custom resources][6].
+- *NuoDB CP REST service*, that exposes a REST API allowing users to manipulate and inspect DBaaS entities.
+
+By default the NuoDB CP will operate in a single namespace only which will be used for NuoDB CP and all databases created by it.
+The databases are grouped into *projects*, which are themselves grouped into *organizations*.
+
+Add the official Helm repositories.
+
+```sh
+helm repo add nuodb-cp https://nuodb.github.io/nuodb-cp-releases/charts
+helm repo update
+```
+
+Install NuoDB CP Helm charts.
 
 ```sh
 helm upgrade --install nuodb-cp-crd nuodb-cp/nuodb-cp-crd \
-    --namespace nuodb-cp-system
+    --namespace nuodb-cp-system \
+    --create-namespace
 
 helm upgrade --install nuodb-cp-operator nuodb-cp/nuodb-cp-operator \
     --namespace nuodb-cp-system \
@@ -82,17 +87,17 @@ Once the Control Plane is deployed, projects and databases can now be created.
 
 ### Access and Authentication
 
-This guide will use port forwarding and `cURL` to demonstrate how to create projects and databases through the REST service.
+This guide will use port forwarding and [cURL][9] to demonstrate how to create projects and databases through the REST service.
 
 ```sh
-kubectl port-forward svc/nuodb-cp-rest 8080 2>&1 >/dev/null &
+kubectl port-forward -n nuodb-cp-system svc/nuodb-cp-rest 8080 2>&1 >/dev/null &
 ```
 
-To successfully authenticate with the REST API endpoints, get the *system/admin* user's password from the cluster:
+To successfully authenticate with the REST API, get the *system/admin* user's password from the cluster:
 
 ```sh
-PASS=$(kubectl get secret dbaas-user-system-admin -o jsonpath='{.data.password}' | base64 -d)
-BASE_URL="http://api.dbaas.localtest.me:8080"
+PASS=$(kubectl get secret dbaas-user-system-admin -n nuodb-cp-system -o jsonpath='{.data.password}' | base64 -d)
+BASE_URL="http://localhost:8080"
 ```
 
 ### Create Project
@@ -105,10 +110,13 @@ curl -u "system/admin:$PASS" -X PUT -H 'Content-Type: application/json' \
     -d '{"sla": "dev", "tier": "n0.small"}'
 ```
 
+>**Note**
+> Creating project and database with `n0.small` service tier will require 3 vCPU and 5Gi RAM allocatable resources from your cluster. If your setup is resource constrained, consider using `n0.nano` service tier.
+
 Wait for the project to become available.
 
 ```sh
-while [ "$(curl -s -u "system/admin:$PASS" $BASE_URL/projects/acme/messaging | jq '.status.ready')" = "false" ]; do echo "Waiting ..."; sleep 5; done; echo "Domain is available"
+while [ "$(curl -s -u "system/admin:$PASS" $BASE_URL/projects/acme/messaging | jq '.status.ready')" != "true" ]; do echo "Waiting ..."; sleep 5; done; echo "Domain is available"
 ```
 
 ### Create database
@@ -124,7 +132,7 @@ curl -u "system/admin:$PASS" -X PUT -H 'Content-Type: application/json' \
 Wait for the database to become available.
 
 ```sh
-while [ "$(curl -s -u "system/admin:$PASS" $BASE_URL/databases/acme/messaging/demo | jq '.status.ready')" = "false" ]; do echo "Waiting ..."; sleep 5; done; echo "Database is available"
+while [ "$(curl -s -u "system/admin:$PASS" $BASE_URL/databases/acme/messaging/demo | jq '.status.ready')" != "true" ]; do echo "Waiting ..."; sleep 5; done; echo "Database is available"
 ```
 
 ### Connect to Database
@@ -132,10 +140,12 @@ while [ "$(curl -s -u "system/admin:$PASS" $BASE_URL/databases/acme/messaging/de
 This guide will use port forwarding to connect to the NuoDB database.
 
 ```sh
-ADMIN_SVC=$(kubectl get svc -l 'cp.nuodb.com/organization=acme,cp.nuodb.com/project=messaging,!cp.nuodb.com/database' -oname | grep "clusterip")
-DB_SVC=$(kubectl get svc -l "cp.nuodb.com/organization=acme,cp.nuodb.com/project=messaging,cp.nuodb.com/database" -oname)
-kubectl port-forward $ADMIN_SVC 48004 2>&1 >/dev/null &
-kubectl port-forward $DB_SVC 48006 2>&1 >/dev/null &
+ADMIN_SVC=$(kubectl get svc -n nuodb-cp-system \
+    -l 'cp.nuodb.com/organization=acme,cp.nuodb.com/project=messaging,!cp.nuodb.com/database' -oname | grep "clusterip")
+DB_SVC=$(kubectl get svc -n nuodb-cp-system \
+    -l "cp.nuodb.com/organization=acme,cp.nuodb.com/project=messaging,cp.nuodb.com/database" -oname)
+kubectl port-forward -n nuodb-cp-system $ADMIN_SVC 48004 2>&1 >/dev/null &
+kubectl port-forward -n nuodb-cp-system $DB_SVC 48006 2>&1 >/dev/null &
 ```
 
 Connect to the NuoDB database via `nuosql` (requires [nuodb-client][8] package v20230228 or later).
@@ -161,24 +171,20 @@ kubectl get secrets -o name --selector=cp.nuodb.com/organization | xargs -r kube
 kubectl get pvc -o name --selector=group=nuodb | xargs -r kubectl delete
 ```
 
-- Cleanup the NuoDB CP Helm charts in the following order:
+- Cleanup the installed resources in the following order:
 
 ```sh
-helm uninstall nuodb-cp-rest
-helm uninstall nuodb-cp-operator
-helm uninstall nuodb-cp-crd
+helm uninstall nuodb-cp-rest --namespace nuodb-cp-system
+helm uninstall nuodb-cp-operator --namespace nuodb-cp-system
+helm uninstall nuodb-cp-crd --namespace nuodb-cp-system
+helm uninstall cert-manager --namespace cert-manager
 ```
 
-- Delete the NuoDB CP namespace:
+- Delete the provisioned namespace:
 
 ```sh
 kubectl delete namespace nuodb-cp-system
-```
-
-- Cleanup Cert Manager Helm chart:
-
-```sh
-helm uninstall cert-manager --namespace cert-manager
+kubectl delete namespace cert-manager
 ```
 
 [1]: https://kubernetes.io/docs/home/
@@ -189,3 +195,4 @@ helm uninstall cert-manager --namespace cert-manager
 [6]: https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#custom-resources
 [7]: https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/
 [8]: https://github.com/nuodb/nuodb-client/releases
+[9]: https://curl.se/
