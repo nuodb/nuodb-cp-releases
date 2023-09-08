@@ -11,6 +11,7 @@ spec:
   type: 
     tierRef: 
       name: n0.small
+      namespace: nuodb-cp-system
     sla: dev
   tls:
     secretRef:

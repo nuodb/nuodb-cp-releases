@@ -11,14 +11,24 @@ This document describes how to use database injector to supply database connecti
 ## Installing NuoDB Control Plane
 
 Install NuoDB CP as documented in [Installation](../README.md#installation) section.
-By default NuoDB operator will monitor the local namespace only for NuoDB [custom resources][4].
+
+### Enable Cluster-scoped Access
+
+By default NuoDB operator will monitor only the local namespace for NuoDB [custom resources][4].
 If cluster-scoped access is required, set the `cpOperator.watchNamespace.enabled=false` Helm value during installation. E.g.:
 
 ```sh
 helm install nuodb-cp-operator nuodb-cp/nuodb-cp-operator \
+    --namespace nuodb-cp-system \
     --set cpOperator.watchNamespace.enabled=false \
+    --set nuodb.serviceAccount.create=false \
+    --set nuodb.serviceAccount.name=default \
     ...
 ```
+
+>**Note**
+> The `nuodb` service account (SA) creation is disabled in the above command for simplicity. To enable NuoDB Kubernetes Aware Admin (KAA) capabilities, the NuoDB processes should be given special permissions to access Kubernetes API server.
+For more information, please check [Automatic Management of NuoDB State](https://doc.nuodb.com/nuodb/latest/deployment-models/kubernetes-environments/kubernetes-aware-admin/). For cluster-scoped deployments, the NuoDB SA and RBAC should be provisioned before hand in each namespace where NuoDB databases are created.
 
 ## Database Injection
 
@@ -35,7 +45,7 @@ kubectl apply -f https://raw.githubusercontent.com/nuodb/nuodb-cp-releases/main/
 kubectl apply -f https://raw.githubusercontent.com/nuodb/nuodb-cp-releases/main/docs/files/database.yaml
 ```
 
-## Creating YCSB
+## Creating Sample Application
 
 Create a sample Yahoo! Cloud Serving Benchmark (YCSB) application and reference the database information into the _app_ container.
 
@@ -79,6 +89,16 @@ Database injection is controlled by custom annotations specified on the target C
 There is an alternative way to configure database injection using the ConfigMap _data_ markers.
 Their values are treated the same way as the annotation value.
 This can be used in environments where custom annotations can't be specified.
+
+## Cleanup
+
+Delete all resources.
+
+```sh
+kubectl delete -f https://raw.githubusercontent.com/nuodb/nuodb-cp-releases/main/docs/files/ycsb-demo-app.yaml
+kubectl delete -f https://raw.githubusercontent.com/nuodb/nuodb-cp-releases/main/docs/files/database.yaml
+kubectl delete -f https://raw.githubusercontent.com/nuodb/nuodb-cp-releases/main/docs/files/domain.yaml
+```
 
 [1]: https://kubernetes.io/docs/home/
 [2]: https://kubernetes.io/docs/concepts/overview/components/
