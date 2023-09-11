@@ -1,0 +1,20 @@
+---
+apiVersion: cp.nuodb.com/v1beta1
+kind: Domain
+metadata:
+  name: acme-messaging
+  labels:
+    cp.nuodb.com/organization: "acme"
+    cp.nuodb.com/project: "messaging"
+spec:
+  version: "5.0"
+  type: 
+    tierRef: 
+      name: n0.small
+      namespace: nuodb-cp-system
+    sla: dev
+  tls:
+    secretRef:
+      name: acme-messaging-tls
+    generate:
+      provider: NUODB_CP

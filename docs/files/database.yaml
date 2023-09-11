@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: acme-messaging-demo-credentials
+type: Opaque
+stringData:
+  dbUser: dba
+  dbPassword: secret
+
+---
+apiVersion: cp.nuodb.com/v1beta1
+kind: Database
+metadata:
+  name: acme-messaging-demo
+  labels:
+    cp.nuodb.com/organization: "acme"
+    cp.nuodb.com/project: "messaging"
+spec:
+  version: "5.0"
+  type: 
+    tierRef: 
+      name: n0.small
+      namespace: nuodb-cp-system
+    sla: dev
+  dbName: demo
+  domainRef: 
+    name: acme-messaging
+  passwordRef:
+    kind: Secret
+    name: acme-messaging-demo-credentials
+    dataKey: dbPassword
+  archiveVolume:
+    volumeSize: 10Gi
+  journalVolume:
+    volumeSize: 5Gi
