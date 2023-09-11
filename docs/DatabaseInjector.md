@@ -35,6 +35,18 @@ For more information, please check [Automatic Management of NuoDB State](https:/
 NuoDB operator can inject database information into ConfigMap's _data_ once the database is ready.
 This enables easy data source configuration in the application container and acts as a dependency mechanism without the need of additional _init_ containers.
 
+Database connection details are populated _after_ the database is created and ready to accept SQL connections which blocks application container creation.
+All containers that have references to the target ConfigMap will fail with `CreateContainerConfigError` due to the ConfigMap key being absent.
+
+### Injected Properties
+
+| Property | Description |
+| ----- | ----------- |
+| `dbName` | NuoDB database name |
+| `dbHost` | The FQDN of the domain managing this database. If external access is enabled on the domain, the property will be populated with the external FQDN. |
+| `dbPort` | The database port for SQL clients. If external access is enabled on the domain, the property will be populated with the Ingress Controller's service port (by default _443_). |
+| `caPem` | The Certificate Authority (CA) certificate for the domain. Used by SQL clients that need to enable TLS encryption on the database connections. If TLS is not enabled on the domain, the property is not injected. |
+
 ### Creating Database
 
 NuoDB domain and database resources can be created either via REST API or declaratively using [custom resources][4].
@@ -65,15 +77,6 @@ Verify that database information is injected into `acme-messaging-demo-info` Con
 kubectl get cm acme-messaging-demo-info -o yaml
 kubectl get pods -l app=ycsb-load
 ```
-
-### Injected Properties
-
-| Property | Description |
-| ----- | ----------- |
-| `dbName` | NuoDB database name |
-| `dbHost` | The FQDN of the domain managing this database. If external access is enabled on the domain, the property will be populated with the external FQDN. |
-| `dbPort` | The database port for SQL clients. If external access is enabled on the domain, the property will be populated with the Ingress Controller's service port (by default _443_). |
-| `caPem` | The Certificate Authority (CA) certificate for the domain. Used by SQL clients that need to enable TLS encryption on the database connections. If TLS is not enabled on the domain, the property is not injected. |
 
 ### Injector Configuration
 
