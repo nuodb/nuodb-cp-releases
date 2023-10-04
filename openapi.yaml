@@ -10,7 +10,7 @@ info:
   license:
     name: NuoDB EULA
     url: https://doc.nuodb.com/nuodb/latest/release-notes/license-terms/nuodb-eula/
-  version: 2.2.0
+  version: 2.2.1
 servers:
 - url: https://example.nuodb.com
 paths:
