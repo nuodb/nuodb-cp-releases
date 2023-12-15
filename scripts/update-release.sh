@@ -53,9 +53,9 @@ case "$TAG" in
         ;;
 esac
 
-# Download latest openapi.yaml and update if necessary
-gh release download "$TAG" -p openapi.yaml --clobber
-git add openapi.yaml
+# Download latest OpenAPI spec and CLI doc, and update if necessary
+gh release download "$TAG" -p openapi.yaml -p nuodb-cp.adoc --clobber
+git add openapi.yaml nuodb-cp.adoc
 git commit --allow-empty -m "Create release $TAG"
 
 # Force update and push tag unless DRY_RUN=true
