@@ -25,11 +25,11 @@ fi
 
 # Checkout correct branch for release
 case "$TAG" in
-    (*.0)
+    (v*.0)
         # Branch latest tracks <major>.<minor>.0 releases
         git checkout latest
         ;;
-    (*)
+    (v*)
         # Branch v<major>.<minor>-dev tracks patch releases
         PREFIX="${TAG%.*}"
         BRANCH="${PREFIX}-dev"
@@ -51,6 +51,9 @@ case "$TAG" in
             fi
         fi
         ;;
+    (*)
+        echo "Tag $TAG does not have format v<major>.<minor>.<patch>. Aborting workflow..."
+        exit 1
 esac
 
 # Download latest OpenAPI spec and CLI doc, and update if necessary
