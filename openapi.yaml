@@ -7,13 +7,909 @@ info:
   contact:
     url: https://nuodb.com
     email: NuoDB.Support@3ds.com
-  license:
-    name: NuoDB EULA
-    url: https://doc.nuodb.com/nuodb/latest/release-notes/license-terms/nuodb-eula/
-  version: 2.3.0
+  version: 2.4.0
 servers:
 - url: https://example.nuodb.com
 paths:
+  /backups:
+    get:
+      tags:
+      - backups
+      summary: List the database backups for the cluster
+      operationId: getAllBackups
+      parameters:
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+          default: false
+      responses:
+        "200":
+          description: The list of backups was returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemListString'
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /backups/{organization}:
+    get:
+      tags:
+      - backups
+      summary: List the database backups for an organization
+      operationId: getOrganizationBackups
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+          default: false
+      responses:
+        "200":
+          description: The list of backups was returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemListString'
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /backups/{organization}/{project}:
+    get:
+      tags:
+      - backups
+      summary: List the database backups for a project
+      operationId: getProjectBackups
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+          default: false
+      responses:
+        "200":
+          description: The list of backups was returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemListString'
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /backups/{organization}/{project}/{database}:
+    get:
+      tags:
+      - backups
+      summary: List the backups for a database
+      operationId: getBackups
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: database
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+          default: false
+      responses:
+        "200":
+          description: The list of backups was returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemListString'
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    post:
+      tags:
+      - backups
+      summary: Create an on-demand backup
+      operationId: createBackup
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: database
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackupCreateModel'
+            examples:
+              "0":
+                summary: Create backup with labels
+                value: |-
+                  {
+                    "labels": {
+                      "validated": "true"
+                    }
+                  }
+        required: true
+      responses:
+        "201":
+          description: The backup was created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackupModel'
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "404":
+          description: The backup could not be created because the database does not
+            exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "409":
+          description: The backup could not be created due to unexpected state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "415":
+          description: A media type other than `application/json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /backups/{organization}/{project}/{database}/{backup}:
+    get:
+      tags:
+      - backups
+      summary: Get an existing backup
+      operationId: getBackup
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: database
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: backup
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The backup was found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackupModel'
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "404":
+          description: The backup does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    put:
+      tags:
+      - backups
+      summary: Create or update a backup
+      operationId: createOrUpdateBackup
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: database
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: backup
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackupModel'
+            examples:
+              "0":
+                summary: Update labels for backup
+                value: |-
+                  {
+                    "organization": "acme",
+                    "project": "messaging",
+                    "database": "demo",
+                    "name": "20240101000000",
+                    "labels": {
+                      "validated": "true"
+                    },
+                    "resourceVersion": "12321"
+                  }
+              "1":
+                summary: Import an existing backup handle
+                value: |-
+                  {
+                    "importSource": {
+                      "backupHandle": "acme-messaging-demo-20240101000000",
+                      "backupPlugin": "embedded.cp.nuodb.com"
+                    }
+                  }
+        required: true
+      responses:
+        "200":
+          description: The backup was updated
+        "201":
+          description: The backup was created
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "404":
+          description: "The backup could not be created because the database does\
+            \ not exist, or could not be updated because it does not exist"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "409":
+          description: The backup could not be created or updated due to unexpected
+            state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "415":
+          description: A media type other than `application/json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    delete:
+      tags:
+      - backups
+      summary: Delete an existing backup
+      operationId: deleteBackup
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: database
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: backup
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: timeoutSeconds
+        in: query
+        description: "The number of seconds to wait for the deletion to be finalized,\
+          \ unless 0 is specified which indicates not to wait"
+        schema:
+          minimum: 0
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "204":
+          description: The backup was deleted
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "404":
+          description: The backup does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "408":
+          description: The backup was not deleted within the specified timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    patch:
+      tags:
+      - backups
+      summary: Update an existing backup
+      operationId: patchBackup
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: database
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: backup
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/JsonPatchOperation'
+            examples:
+              "0":
+                summary: Add label to backup
+                value: |-
+                  [
+                    {
+                      "op": "add",
+                      "path": "/labels/validated",
+                      "value": "true"
+                    }
+                  ]
+              "1":
+                summary: Remove label from backup
+                value: |-
+                  [
+                    {
+                      "op": "remove",
+                      "path": "/labels/validated"
+                    }
+                  ]
+        required: true
+      responses:
+        "200":
+          description: The patch was applied to the backup
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "404":
+          description: The backup does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "409":
+          description: The backup could not be updated due to unexpected state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "415":
+          description: A media type other than `application/json-patch+json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /databases:
+    get:
+      tags:
+      - databases
+      summary: List the databases in the cluster
+      operationId: getAllDatabases
+      parameters:
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+          default: false
+      responses:
+        "200":
+          description: The list of databases was returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemListString'
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /databases/{organization}:
+    get:
+      tags:
+      - databases
+      summary: List the databases in an organization
+      operationId: getOrganizationDatabases
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+          default: false
+      responses:
+        "200":
+          description: The list of databases was returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemListString'
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /databases/{organization}/{project}:
+    get:
+      tags:
+      - databases
+      summary: List the databases in a project
+      operationId: getDatabases
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+          default: false
+      responses:
+        "200":
+          description: The list of databases was returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemListString'
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "404":
+          description: The project does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+      security:
+      - basicAuth: []
+        bearerAuth: []
   /databases/{organization}/{project}/{database}:
     get:
       tags:
@@ -75,6 +971,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
     put:
       tags:
       - databases
@@ -192,6 +1089,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
     delete:
       tags:
       - databases
@@ -263,6 +1161,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
     patch:
       tags:
       - databases
@@ -400,198 +1299,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
-  /databases:
-    get:
-      tags:
-      - databases
-      summary: List the databases in the cluster
-      operationId: getAllDatabases
-      parameters:
-      - name: labelFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
-          * `key` - Only return resources that have label with specified key
-          * `key=value` - Only return resources that have label with specified key set to value
-          * `!key` - Only return resources that do _not_ have label with specified key
-          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: listAccessible
-        in: query
-        description: Whether to return any accessible sub-resources even if the current
-          user does not have access privileges to list all resources at this level
-        schema:
-          type: boolean
-          default: false
-      responses:
-        "200":
-          description: The list of databases was returned
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ItemListString'
-        "400":
-          description: The user request was invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-        "401":
-          description: The user did not provide correct authentication credentials
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-        "403":
-          description: The user was not authorized to access the requested resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-        "500":
-          description: A server error occurred
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-      security:
-      - basicAuth: []
-  /databases/{organization}:
-    get:
-      tags:
-      - databases
-      summary: List the databases in an organization
-      operationId: getOrganizationDatabases
-      parameters:
-      - name: organization
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: labelFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
-          * `key` - Only return resources that have label with specified key
-          * `key=value` - Only return resources that have label with specified key set to value
-          * `!key` - Only return resources that do _not_ have label with specified key
-          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: listAccessible
-        in: query
-        description: Whether to return any accessible sub-resources even if the current
-          user does not have access privileges to list all resources at this level
-        schema:
-          type: boolean
-          default: false
-      responses:
-        "200":
-          description: The list of databases was returned
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ItemListString'
-        "400":
-          description: The user request was invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-        "401":
-          description: The user did not provide correct authentication credentials
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-        "403":
-          description: The user was not authorized to access the requested resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-        "500":
-          description: A server error occurred
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-      security:
-      - basicAuth: []
-  /databases/{organization}/{project}:
-    get:
-      tags:
-      - databases
-      summary: List the databases in a project
-      operationId: getDatabases
-      parameters:
-      - name: organization
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: project
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: labelFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
-          * `key` - Only return resources that have label with specified key
-          * `key=value` - Only return resources that have label with specified key set to value
-          * `!key` - Only return resources that do _not_ have label with specified key
-          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: listAccessible
-        in: query
-        description: Whether to return any accessible sub-resources even if the current
-          user does not have access privileges to list all resources at this level
-        schema:
-          type: boolean
-          default: false
-      responses:
-        "200":
-          description: The list of databases was returned
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ItemListString'
-        "400":
-          description: The user request was invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-        "401":
-          description: The user did not provide correct authentication credentials
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-        "403":
-          description: The user was not authorized to access the requested resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-        "404":
-          description: The project does not exist
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-        "500":
-          description: A server error occurred
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-      security:
-      - basicAuth: []
+        bearerAuth: []
   /healthz:
     get:
       tags:
@@ -633,6 +1341,191 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
+  /login:
+    post:
+      tags:
+      - login
+      summary: Login a user
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestModel'
+      responses:
+        "200":
+          description: The login was successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponseModel'
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "404":
+          description: Token authentication is not available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "409":
+          description: An unexpected state was encountered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "415":
+          description: A media type other than `application/json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /projects:
+    get:
+      tags:
+      - projects
+      summary: List the projects in the cluster
+      operationId: getAllProjects
+      parameters:
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+          default: false
+      responses:
+        "200":
+          description: The list of projects was returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemListString'
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /projects/{organization}:
+    get:
+      tags:
+      - projects
+      summary: List the projects in an organization
+      operationId: getProjects
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+          default: false
+      responses:
+        "200":
+          description: The list of projects was returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemListString'
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorContent'
+      security:
+      - basicAuth: []
+        bearerAuth: []
   /projects/{organization}/{project}:
     get:
       tags:
@@ -689,6 +1582,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
     put:
       tags:
       - projects
@@ -779,6 +1673,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
     delete:
       tags:
       - projects
@@ -851,6 +1746,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
     patch:
       tags:
       - projects
@@ -966,12 +1862,13 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
-  /projects:
+        bearerAuth: []
+  /users:
     get:
       tags:
-      - projects
-      summary: List the projects in the cluster
-      operationId: getAllProjects
+      - users
+      summary: List the users in the cluster
+      operationId: getAllUsers
       parameters:
       - name: labelFilter
         in: query
@@ -992,7 +1889,7 @@ paths:
           default: false
       responses:
         "200":
-          description: The list of projects was returned
+          description: The list of users was returned
           content:
             application/json:
               schema:
@@ -1023,12 +1920,13 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
-  /projects/{organization}:
+        bearerAuth: []
+  /users/{organization}:
     get:
       tags:
-      - projects
-      summary: List the projects in an organization
-      operationId: getProjects
+      - users
+      summary: List the users in an organization
+      operationId: getUsers
       parameters:
       - name: organization
         in: path
@@ -1054,7 +1952,7 @@ paths:
           default: false
       responses:
         "200":
-          description: The list of projects was returned
+          description: The list of users was returned
           content:
             application/json:
               schema:
@@ -1085,6 +1983,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
   /users/{organization}/{user}:
     get:
       tags:
@@ -1141,6 +2040,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
     put:
       tags:
       - users
@@ -1245,6 +2145,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
     delete:
       tags:
       - users
@@ -1311,6 +2212,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
     patch:
       tags:
       - users
@@ -1434,33 +2336,16 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
-  /users:
+        bearerAuth: []
+  /cluster/databasequotas:
     get:
       tags:
-      - users
-      summary: List the users in the cluster
-      operationId: getAllUsers
-      parameters:
-      - name: labelFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
-          * `key` - Only return resources that have label with specified key
-          * `key=value` - Only return resources that have label with specified key set to value
-          * `!key` - Only return resources that do _not_ have label with specified key
-          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: listAccessible
-        in: query
-        description: Whether to return any accessible sub-resources even if the current
-          user does not have access privileges to list all resources at this level
-        schema:
-          type: boolean
-          default: false
+      - cluster/databasequotas
+      summary: List the database quotas
+      operationId: getDatabaseQuotas
       responses:
         "200":
-          description: The list of users was returned
+          description: The list of database quotas was returned
           content:
             application/json:
               schema:
@@ -1491,68 +2376,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
-  /users/{organization}:
-    get:
-      tags:
-      - users
-      summary: List the users in an organization
-      operationId: getUsers
-      parameters:
-      - name: organization
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: labelFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
-          * `key` - Only return resources that have label with specified key
-          * `key=value` - Only return resources that have label with specified key set to value
-          * `!key` - Only return resources that do _not_ have label with specified key
-          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: listAccessible
-        in: query
-        description: Whether to return any accessible sub-resources even if the current
-          user does not have access privileges to list all resources at this level
-        schema:
-          type: boolean
-          default: false
-      responses:
-        "200":
-          description: The list of users was returned
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ItemListString'
-        "400":
-          description: The user request was invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-        "401":
-          description: The user did not provide correct authentication credentials
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-        "403":
-          description: The user was not authorized to access the requested resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-        "500":
-          description: A server error occurred
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-      security:
-      - basicAuth: []
+        bearerAuth: []
   /cluster/databasequotas/{name}:
     get:
       tags:
@@ -1604,6 +2428,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
     put:
       tags:
       - cluster/databasequotas
@@ -1672,6 +2497,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
     delete:
       tags:
       - cluster/databasequotas
@@ -1733,6 +2559,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
     patch:
       tags:
       - cluster/databasequotas
@@ -1799,15 +2626,16 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
-  /cluster/databasequotas:
+        bearerAuth: []
+  /cluster/helmfeatures:
     get:
       tags:
-      - cluster/databasequotas
-      summary: List the database quotas
-      operationId: getDatabaseQuotas
+      - cluster/helmfeatures
+      summary: List the Helm features
+      operationId: getHelmFeatures
       responses:
         "200":
-          description: The list of database quotas was returned
+          description: The list of Helm features was returned
           content:
             application/json:
               schema:
@@ -1838,6 +2666,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
   /cluster/helmfeatures/{name}:
     get:
       tags:
@@ -1889,6 +2718,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
     put:
       tags:
       - cluster/helmfeatures
@@ -1956,6 +2786,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
     delete:
       tags:
       - cluster/helmfeatures
@@ -2017,6 +2848,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
     patch:
       tags:
       - cluster/helmfeatures
@@ -2083,15 +2915,16 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
-  /cluster/helmfeatures:
+        bearerAuth: []
+  /cluster/servicetiers:
     get:
       tags:
-      - cluster/helmfeatures
-      summary: List the Helm features
-      operationId: getHelmFeatures
+      - cluster/servicetiers
+      summary: List the service tiers
+      operationId: getServiceTiers
       responses:
         "200":
-          description: The list of Helm features was returned
+          description: The list of service tiers was returned
           content:
             application/json:
               schema:
@@ -2122,6 +2955,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
   /cluster/servicetiers/{name}:
     get:
       tags:
@@ -2173,6 +3007,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
     put:
       tags:
       - cluster/servicetiers
@@ -2240,6 +3075,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
     delete:
       tags:
       - cluster/servicetiers
@@ -2301,6 +3137,7 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
+        bearerAuth: []
     patch:
       tags:
       - cluster/servicetiers
@@ -2367,59 +3204,61 @@ paths:
                 $ref: '#/components/schemas/ErrorContent'
       security:
       - basicAuth: []
-  /cluster/servicetiers:
-    get:
-      tags:
-      - cluster/servicetiers
-      summary: List the service tiers
-      operationId: getServiceTiers
-      responses:
-        "200":
-          description: The list of service tiers was returned
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ItemListString'
-        "400":
-          description: The user request was invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-        "401":
-          description: The user did not provide correct authentication credentials
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-        "403":
-          description: The user was not authorized to access the requested resource
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-        "500":
-          description: A server error occurred
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorContent'
-      security:
-      - basicAuth: []
+        bearerAuth: []
 components:
   schemas:
-    DatabaseCreateUpdateModel:
+    BackupModel:
+      required:
+      - database
+      - name
+      - organization
+      - project
       type: object
       properties:
         organization:
           pattern: "[a-z][a-z0-9]*"
           type: string
+          description: The organization that the backup belongs to
+          x-tf-name: organization
+          x-oapi-codegen-extra-tags:
+            cty: organization
+            hcl: organization
+            tfsdk: organization
+          x-tf-identifier: true
+          x-order: 0
         project:
           pattern: "[a-z][a-z0-9]*"
           type: string
-        name:
+          description: The project that the backup belongs to
+          x-tf-name: project
+          x-oapi-codegen-extra-tags:
+            cty: project
+            hcl: project
+            tfsdk: project
+          x-tf-identifier: true
+          x-order: 1
+        database:
           pattern: "[a-z][a-z0-9]*"
           type: string
+          description: The database that the backup belongs to
+          x-tf-name: database
+          x-oapi-codegen-extra-tags:
+            cty: database
+            hcl: database
+            tfsdk: database
+          x-tf-identifier: true
+          x-order: 2
+        name:
+          pattern: "([0-9]+|[a-z][a-z0-9]*)"
+          type: string
+          description: The name of the backup
+          x-tf-name: name
+          x-oapi-codegen-extra-tags:
+            cty: name
+            hcl: name
+            tfsdk: name
+          x-tf-identifier: true
+          x-order: 3
         labels:
           pattern: "(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])"
           type: object
@@ -2428,127 +3267,171 @@ components:
             type: string
           description: User-defined labels attached to the resource that can be used
             for filtering
-        dbaPassword:
-          type: string
-          description: The password for the DBA user. Can only be specified when creating
-            a database.
-          writeOnly: true
-        tier:
-          type: string
-          description: "The service tier for the database. If omitted, the project\
-            \ service tier is inherited."
-          example: n0.small
-        maintenance:
-          $ref: '#/components/schemas/MaintenanceModel'
-        properties:
-          $ref: '#/components/schemas/DatabasePropertiesModel'
+          x-tf-name: labels
+          x-oapi-codegen-extra-tags:
+            cty: labels
+            hcl: labels
+            tfsdk: labels
+          x-order: 4
+        importSource:
+          $ref: '#/components/schemas/ImportSourceModel'
         resourceVersion:
           type: string
           description: "The version of the resource. When specified in a `PUT` request\
             \ payload, indicates that the resoure should be updated, and is used by\
             \ the system to guard against concurrent updates."
+          x-order: 6
+          x-oapi-codegen-extra-tags:
+            tfsdk: "-"
         status:
-          $ref: '#/components/schemas/DatabaseStatusModel'
-    DatabasePropertiesModel:
+          $ref: '#/components/schemas/BackupStatusModel'
+    BackupStatusModel:
       type: object
       properties:
-        archiveDiskSize:
-          pattern: "(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?"
+        creationTime:
           type: string
-          description: The size of the archive volumes for the database. Can be only
-            updated to increase the volume size.
-          example: 2Ti
-        journalDiskSize:
-          pattern: "(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?"
+          description: The time that the backup was taken
+          format: date-time
+          example: 2024-01-01T00:00:00Z
+          x-tf-name: creation_time
+          x-oapi-codegen-extra-tags:
+            cty: creation_time
+            hcl: creation_time
+            tfsdk: creation_time
+          x-go-type: string
+          x-order: 0
+        backupHandle:
           type: string
-          description: The size of the journal volumes for the database. Can be only
-            updated to increase the volume size.
-          example: 50Gi
-        tierParameters:
-          type: object
-          additionalProperties:
-            type: string
-          description: Opaque parameters supplied to database service tier.
-        inheritTierParameters:
+          description: The handle for the backup
+          x-tf-name: backup_handle
+          x-oapi-codegen-extra-tags:
+            cty: backup_handle
+            hcl: backup_handle
+            tfsdk: backup_handle
+          x-order: 1
+        backupPlugin:
+          type: string
+          description: The plugin used to manage the backup
+          x-tf-name: backup_plugin
+          x-oapi-codegen-extra-tags:
+            cty: backup_plugin
+            hcl: backup_plugin
+            tfsdk: backup_plugin
+          x-order: 2
+        readyToUse:
           type: boolean
-          description: Whether to inherit tier parameters from the project if the
-            database service tier matches the project.
-          writeOnly: true
-        productVersion:
-          pattern: "([1-9][0-9]*|[1-9][0-9]*\\.[0-9]+|[1-9][0-9]*\\.[0-9]+\\.[0-9]+)([._-][a-z0-9._-]+)?"
-          type: string
-          description: "The version/tag of the NuoDB image to use. For available tags,\
-            \ see https://hub.docker.com/r/nuodb/nuodb-ce/tags. If omitted, the database\
-            \ version will be inherited from the project."
-    DatabaseStatusModel:
-      type: object
-      properties:
-        sqlEndpoint:
-          type: string
-          description: The endpoint for SQL clients to connect to
-        caPem:
-          type: string
-          description: The PEM-encoded certificate for SQL clients to verify database
-            servers
-        ready:
-          type: boolean
-          description: Whether the database is ready
-        shutdown:
-          type: boolean
-          description: Whether the database has shutdown
+          description: Whether the backup is ready to be used to restore a database
+          x-tf-name: ready_to_use
+          x-oapi-codegen-extra-tags:
+            cty: ready_to_use
+            hcl: ready_to_use
+            tfsdk: ready_to_use
+          x-order: 3
         message:
           type: string
-          description: Message summarizing the state of the database
+          description: Message summarizing the state of the backup
+          x-tf-name: message
+          x-oapi-codegen-extra-tags:
+            cty: message
+            hcl: message
+            tfsdk: message
+          x-order: 4
         state:
           type: string
           description: |-
-            The state of the database:
-              * `Available` - The database is ready to accept SQL connections
-              * `Creating` - The database is being created and not yet available
-              * `Modifying` - The database is being modified
-              * `Stopping` - Shutdown is in progress for this database
-              * `Stopped` - The database has been stopped
-              * `Expired` - The database has expired
-              * `Failed` - The database has failed to achieve a usable state
-              * `Deleting` - The database has been marked for deletion, which is in progress
+            The state of the backup:
+              * `Pending` - The backup is pending completion
+              * `Succeeded` - The backup completed successfully and is available for use
+              * `Failed` - The backup failed and is unusable
+              * `Deleting` - The backup has been marked for deletion, which is in progress
           enum:
-          - Available
-          - Creating
-          - Modifying
-          - Stopping
-          - Stopped
-          - Expired
+          - Pending
+          - Succeeded
           - Failed
           - Deleting
+          x-tf-name: state
+          x-oapi-codegen-extra-tags:
+            cty: state
+            hcl: state
+            tfsdk: state
+          x-order: 5
       readOnly: true
-    MaintenanceModel:
+      x-tf-name: status
+      x-oapi-codegen-extra-tags:
+        cty: status
+        hcl: status
+        tfsdk: status
+    ImportSourceModel:
+      required:
+      - backupHandle
+      - backupPlugin
       type: object
       properties:
-        expiresAtTime:
+        backupHandle:
           type: string
-          description: The time at which the project or database will be disabled
-          format: date-time
-          example: 2024-01-01T00:00:00Z
-        expiresIn:
-          pattern: "(\\d+)\\s*([A-Za-zµ]+)"
+          description: The existing backup handle to import
+          x-tf-name: backup_handle
+          x-oapi-codegen-extra-tags:
+            cty: backup_handle
+            hcl: backup_handle
+            tfsdk: backup_handle
+          x-immutable: true
+          x-order: 0
+        backupPlugin:
           type: string
-          description: "The time until the project or database is disabled, e.g. `1d`"
-          example: 1d
-        isDisabled:
-          type: boolean
-          description: Whether the project or database should be shutdown
-    DatabaseModel:
+          description: The plugin used to create the backup to import
+          x-tf-name: backup_plugin
+          x-oapi-codegen-extra-tags:
+            cty: backup_plugin
+            hcl: backup_plugin
+            tfsdk: backup_plugin
+          x-immutable: true
+          x-order: 1
+      x-tf-name: import_source
+      x-oapi-codegen-extra-tags:
+        cty: import_source
+        hcl: import_source
+        tfsdk: import_source
+    BackupCreateModel:
+      required:
+      - database
+      - organization
+      - project
       type: object
       properties:
         organization:
           pattern: "[a-z][a-z0-9]*"
           type: string
+          description: The organization that the backup belongs to
+          x-tf-name: organization
+          x-oapi-codegen-extra-tags:
+            cty: organization
+            hcl: organization
+            tfsdk: organization
+          x-tf-identifier: true
+          x-order: 0
         project:
           pattern: "[a-z][a-z0-9]*"
           type: string
-        name:
+          description: The project that the backup belongs to
+          x-tf-name: project
+          x-oapi-codegen-extra-tags:
+            cty: project
+            hcl: project
+            tfsdk: project
+          x-tf-identifier: true
+          x-order: 1
+        database:
           pattern: "[a-z][a-z0-9]*"
           type: string
+          description: The database that the backup belongs to
+          x-tf-name: database
+          x-oapi-codegen-extra-tags:
+            cty: database
+            hcl: database
+            tfsdk: database
+          x-tf-identifier: true
+          x-order: 2
         labels:
           pattern: "(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])"
           type: object
@@ -2557,22 +3440,12 @@ components:
             type: string
           description: User-defined labels attached to the resource that can be used
             for filtering
-        tier:
-          type: string
-          description: "The service tier for the database. If omitted, the project\
-            \ service tier is inherited."
-          example: n0.small
-        maintenance:
-          $ref: '#/components/schemas/MaintenanceModel'
-        properties:
-          $ref: '#/components/schemas/DatabasePropertiesModel'
-        resourceVersion:
-          type: string
-          description: "The version of the resource. When specified in a `PUT` request\
-            \ payload, indicates that the resoure should be updated, and is used by\
-            \ the system to guard against concurrent updates."
-        status:
-          $ref: '#/components/schemas/DatabaseStatusModel'
+          x-tf-name: labels
+          x-oapi-codegen-extra-tags:
+            cty: labels
+            hcl: labels
+            tfsdk: labels
+          x-order: 3
     ItemListString:
       type: object
       properties:
@@ -2602,26 +3475,60 @@ components:
           - move
           - copy
           - test
+          x-order: 0
         from:
           pattern: /.*
           type: string
+          x-order: 1
         path:
           pattern: /.*
           type: string
+          x-order: 2
         value:
           $ref: '#/components/schemas/JsonNode'
-    ProjectModel:
+    DatabaseCreateUpdateModel:
       required:
-      - sla
-      - tier
+      - name
+      - organization
+      - project
       type: object
       properties:
         organization:
           pattern: "[a-z][a-z0-9]*"
           type: string
+          description: The organization that the database belongs to
+          x-tf-name: organization
+          x-oapi-codegen-extra-tags:
+            cty: organization
+            hcl: organization
+            tfsdk: organization
+          x-tf-identifier: true
+          x-immutable: true
+          x-order: 0
+        project:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+          description: The project that the database belongs to
+          x-tf-name: project
+          x-oapi-codegen-extra-tags:
+            cty: project
+            hcl: project
+            tfsdk: project
+          x-tf-identifier: true
+          x-immutable: true
+          x-order: 1
         name:
           pattern: "[a-z][a-z0-9]*"
           type: string
+          description: The name of the database
+          x-tf-name: name
+          x-oapi-codegen-extra-tags:
+            cty: name
+            hcl: name
+            tfsdk: name
+          x-tf-identifier: true
+          x-immutable: true
+          x-order: 2
         labels:
           pattern: "(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])"
           type: object
@@ -2630,15 +3537,466 @@ components:
             type: string
           description: User-defined labels attached to the resource that can be used
             for filtering
+          x-tf-name: labels
+          x-oapi-codegen-extra-tags:
+            cty: labels
+            hcl: labels
+            tfsdk: labels
+          x-order: 3
+        dbaPassword:
+          type: string
+          description: The password for the DBA user. Can only be specified when creating
+            a database.
+          writeOnly: true
+          x-tf-name: dba_password
+          x-oapi-codegen-extra-tags:
+            cty: dba_password
+            hcl: dba_password
+            tfsdk: dba_password
+          x-tf-sensitive: true
+          x-immutable: true
+          x-order: 4
+        restoreFrom:
+          $ref: '#/components/schemas/RestoreFromModel'
+        tier:
+          type: string
+          description: "The service tier for the database. If omitted, the project\
+            \ service tier is inherited."
+          example: n0.small
+          x-tf-name: tier
+          x-oapi-codegen-extra-tags:
+            cty: tier
+            hcl: tier
+            tfsdk: tier
+          x-order: 6
+        maintenance:
+          $ref: '#/components/schemas/MaintenanceModel'
+        properties:
+          $ref: '#/components/schemas/DatabasePropertiesModel'
+        resourceVersion:
+          type: string
+          description: "The version of the resource. When specified in a `PUT` request\
+            \ payload, indicates that the resoure should be updated, and is used by\
+            \ the system to guard against concurrent updates."
+          x-order: 9
+          x-oapi-codegen-extra-tags:
+            tfsdk: "-"
+        status:
+          $ref: '#/components/schemas/DatabaseStatusModel'
+    DatabasePropertiesModel:
+      type: object
+      properties:
+        archiveDiskSize:
+          pattern: "(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?"
+          type: string
+          description: The size of the archive volumes for the database. Can be only
+            updated to increase the volume size.
+          example: 2Ti
+          x-tf-name: archive_disk_size
+          x-oapi-codegen-extra-tags:
+            cty: archive_disk_size
+            hcl: archive_disk_size
+            tfsdk: archive_disk_size
+          x-order: 0
+        journalDiskSize:
+          pattern: "(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?"
+          type: string
+          description: The size of the journal volumes for the database. Can be only
+            updated to increase the volume size.
+          example: 50Gi
+          x-tf-name: journal_disk_size
+          x-oapi-codegen-extra-tags:
+            cty: journal_disk_size
+            hcl: journal_disk_size
+            tfsdk: journal_disk_size
+          x-order: 1
+        tierParameters:
+          type: object
+          additionalProperties:
+            type: string
+          description: Opaque parameters supplied to database service tier.
+          x-tf-name: tier_parameters
+          x-oapi-codegen-extra-tags:
+            cty: tier_parameters
+            hcl: tier_parameters
+            tfsdk: tier_parameters
+          x-order: 2
+        inheritTierParameters:
+          type: boolean
+          description: Whether to inherit tier parameters from the project if the
+            database service tier matches the project.
+          writeOnly: true
+          x-order: 3
+          x-oapi-codegen-extra-tags:
+            tfsdk: "-"
+        productVersion:
+          pattern: "([1-9][0-9]*|[1-9][0-9]*\\.[0-9]+|[1-9][0-9]*\\.[0-9]+\\.[0-9]+)([._-][a-z0-9._-]+)?"
+          type: string
+          description: "The version/tag of the NuoDB image to use. For available tags,\
+            \ see https://hub.docker.com/r/nuodb/nuodb-ce/tags. If omitted, the database\
+            \ version will be inherited from the project."
+          x-tf-name: product_version
+          x-oapi-codegen-extra-tags:
+            cty: product_version
+            hcl: product_version
+            tfsdk: product_version
+          x-order: 4
+      x-tf-name: properties
+      x-oapi-codegen-extra-tags:
+        cty: properties
+        hcl: properties
+        tfsdk: properties
+    DatabaseStatusModel:
+      type: object
+      properties:
+        sqlEndpoint:
+          type: string
+          description: The endpoint for SQL clients to connect to
+          x-tf-name: sql_endpoint
+          x-oapi-codegen-extra-tags:
+            cty: sql_endpoint
+            hcl: sql_endpoint
+            tfsdk: sql_endpoint
+          x-order: 0
+        caPem:
+          type: string
+          description: The PEM-encoded certificate for SQL clients to verify database
+            servers
+          x-tf-name: ca_pem
+          x-oapi-codegen-extra-tags:
+            cty: ca_pem
+            hcl: ca_pem
+            tfsdk: ca_pem
+          x-order: 1
+        ready:
+          type: boolean
+          description: Whether the database is ready
+          x-tf-name: ready
+          x-oapi-codegen-extra-tags:
+            cty: ready
+            hcl: ready
+            tfsdk: ready
+          x-order: 2
+        shutdown:
+          type: boolean
+          description: Whether the database has shutdown
+          x-tf-name: shutdown
+          x-oapi-codegen-extra-tags:
+            cty: shutdown
+            hcl: shutdown
+            tfsdk: shutdown
+          x-order: 3
+        message:
+          type: string
+          description: Message summarizing the state of the database
+          x-tf-name: message
+          x-oapi-codegen-extra-tags:
+            cty: message
+            hcl: message
+            tfsdk: message
+          x-order: 4
+        state:
+          type: string
+          description: |-
+            The state of the database:
+              * `Available` - The database is ready to accept SQL connections
+              * `Creating` - The database is being created and not yet available
+              * `Modifying` - The database is being modified
+              * `Stopping` - Shutdown is in progress for this database
+              * `Stopped` - The database has been stopped
+              * `Expired` - The database has expired
+              * `Failed` - The database has failed to achieve a usable state
+              * `Deleting` - The database has been marked for deletion, which is in progress
+              * `Restoring` - Restore from backup is in progress for this database
+          enum:
+          - Available
+          - Creating
+          - Modifying
+          - Stopping
+          - Stopped
+          - Expired
+          - Failed
+          - Deleting
+          - Restoring
+          x-tf-name: state
+          x-oapi-codegen-extra-tags:
+            cty: state
+            hcl: state
+            tfsdk: state
+          x-order: 5
+      readOnly: true
+      x-tf-name: status
+      x-oapi-codegen-extra-tags:
+        cty: status
+        hcl: status
+        tfsdk: status
+    MaintenanceModel:
+      type: object
+      properties:
+        expiresAtTime:
+          type: string
+          description: The time at which the project or database will be disabled
+          format: date-time
+          example: 2024-01-01T00:00:00Z
+          x-order: 0
+          x-oapi-codegen-extra-tags:
+            tfsdk: "-"
+        expiresIn:
+          pattern: "(\\d+)\\s*([A-Za-zµ]+)"
+          type: string
+          description: "The time until the project or database is disabled, e.g. `1d`"
+          example: 1d
+          x-order: 1
+          x-oapi-codegen-extra-tags:
+            tfsdk: "-"
+        isDisabled:
+          type: boolean
+          description: Whether the project or database should be shutdown
+          x-tf-name: is_disabled
+          x-oapi-codegen-extra-tags:
+            cty: is_disabled
+            hcl: is_disabled
+            tfsdk: is_disabled
+          x-order: 2
+      x-tf-name: maintenance
+      x-oapi-codegen-extra-tags:
+        cty: maintenance
+        hcl: maintenance
+        tfsdk: maintenance
+    RestoreFromModel:
+      type: object
+      properties:
+        backup:
+          pattern: "([a-z][a-z0-9]*/){0,3}([0-9]+|[a-z][a-z0-9]*)"
+          type: string
+          description: "The name of the backup to restore the database from. If a\
+            \ fully-qualified name is not supplied, then the organization, project,\
+            \ or name of the database being created is assumed."
+          example: acme/messaging/demo/20240101120000
+          x-tf-name: backup
+          x-oapi-codegen-extra-tags:
+            cty: backup
+            hcl: backup
+            tfsdk: backup
+          x-immutable: true
+          x-order: 0
+      x-tf-name: restore_from
+      x-oapi-codegen-extra-tags:
+        cty: restore_from
+        hcl: restore_from
+        tfsdk: restore_from
+    DatabaseModel:
+      required:
+      - name
+      - organization
+      - project
+      type: object
+      properties:
+        organization:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+          description: The organization that the database belongs to
+          x-tf-name: organization
+          x-oapi-codegen-extra-tags:
+            cty: organization
+            hcl: organization
+            tfsdk: organization
+          x-tf-identifier: true
+          x-immutable: true
+          x-order: 0
+        project:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+          description: The project that the database belongs to
+          x-tf-name: project
+          x-oapi-codegen-extra-tags:
+            cty: project
+            hcl: project
+            tfsdk: project
+          x-tf-identifier: true
+          x-immutable: true
+          x-order: 1
+        name:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+          description: The name of the database
+          x-tf-name: name
+          x-oapi-codegen-extra-tags:
+            cty: name
+            hcl: name
+            tfsdk: name
+          x-tf-identifier: true
+          x-immutable: true
+          x-order: 2
+        labels:
+          pattern: "(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])"
+          type: object
+          additionalProperties:
+            pattern: "(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])"
+            type: string
+          description: User-defined labels attached to the resource that can be used
+            for filtering
+          x-tf-name: labels
+          x-oapi-codegen-extra-tags:
+            cty: labels
+            hcl: labels
+            tfsdk: labels
+          x-order: 3
+        restoreFrom:
+          $ref: '#/components/schemas/RestoreFromModel'
+        tier:
+          type: string
+          description: "The service tier for the database. If omitted, the project\
+            \ service tier is inherited."
+          example: n0.small
+          x-tf-name: tier
+          x-oapi-codegen-extra-tags:
+            cty: tier
+            hcl: tier
+            tfsdk: tier
+          x-order: 5
+        maintenance:
+          $ref: '#/components/schemas/MaintenanceModel'
+        properties:
+          $ref: '#/components/schemas/DatabasePropertiesModel'
+        resourceVersion:
+          type: string
+          description: "The version of the resource. When specified in a `PUT` request\
+            \ payload, indicates that the resoure should be updated, and is used by\
+            \ the system to guard against concurrent updates."
+          x-order: 8
+          x-oapi-codegen-extra-tags:
+            tfsdk: "-"
+        status:
+          $ref: '#/components/schemas/DatabaseStatusModel'
+    DbaasAccessRuleModel:
+      type: object
+      properties:
+        allow:
+          type: array
+          description: "List of access rule entries in the form `<verb>:<resource\
+            \ specifier>[:<SLA>]` that specify requests to allow"
+          items:
+            type: string
+        deny:
+          type: array
+          description: List of access rule entries in the form `<verb>:<resource specifier>`
+            that specify requests to deny
+          items:
+            type: string
+      description: The rule specifying access for the user
+      x-tf-name: access_rule
+      x-oapi-codegen-extra-tags:
+        cty: access_rule
+        hcl: access_rule
+        tfsdk: access_rule
+    LoginResponseModel:
+      type: object
+      properties:
+        token:
+          type: string
+          description: The authentication/authorization token
+          x-order: 0
+        accessRule:
+          $ref: '#/components/schemas/DbaasAccessRuleModel'
+        expiresAtTime:
+          type: string
+          description: The token expiration time
+          x-order: 2
+    LoginRequestModel:
+      type: object
+      properties:
+        limitAllow:
+          type: array
+          description: "The allow rule entries to use for the token, which cannot\
+            \ exceed the access of the current user"
+          items:
+            type: string
+          x-order: 0
+        extraDeny:
+          type: array
+          description: Extra deny rules entries to append to the access rule to further
+            restrict access granted by the token
+          items:
+            type: string
+          x-order: 1
+        expiresIn:
+          type: string
+          description: "Requested seconds, minutes, hours or days (s,m,h,d) when token\
+            \ should expire"
+          x-order: 2
+        expiresAtTime:
+          type: string
+          description: Requested timestamp when token should expire (in ISO-8601 format)
+          x-order: 3
+    ProjectModel:
+      required:
+      - name
+      - organization
+      - sla
+      - tier
+      type: object
+      properties:
+        organization:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+          description: The organization that the project belongs to
+          x-tf-name: organization
+          x-oapi-codegen-extra-tags:
+            cty: organization
+            hcl: organization
+            tfsdk: organization
+          x-tf-identifier: true
+          x-immutable: true
+          x-order: 0
+        name:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+          description: The name of the project
+          x-tf-name: name
+          x-oapi-codegen-extra-tags:
+            cty: name
+            hcl: name
+            tfsdk: name
+          x-tf-identifier: true
+          x-immutable: true
+          x-order: 1
+        labels:
+          pattern: "(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])"
+          type: object
+          additionalProperties:
+            pattern: "(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])"
+            type: string
+          description: User-defined labels attached to the resource that can be used
+            for filtering
+          x-tf-name: labels
+          x-oapi-codegen-extra-tags:
+            cty: labels
+            hcl: labels
+            tfsdk: labels
+          x-order: 2
         sla:
           type: string
           description: The SLA for the project. Cannot be updated once the project
             is created.
           example: dev
+          x-tf-name: sla
+          x-oapi-codegen-extra-tags:
+            cty: sla
+            hcl: sla
+            tfsdk: sla
+          x-immutable: true
+          x-order: 3
         tier:
           type: string
           description: The service tier for the project
           example: n0.small
+          x-tf-name: tier
+          x-oapi-codegen-extra-tags:
+            cty: tier
+            hcl: tier
+            tfsdk: tier
+          x-order: 4
         maintenance:
           $ref: '#/components/schemas/MaintenanceModel'
         properties:
@@ -2648,6 +4006,9 @@ components:
           description: "The version of the resource. When specified in a `PUT` request\
             \ payload, indicates that the resoure should be updated, and is used by\
             \ the system to guard against concurrent updates."
+          x-order: 7
+          x-oapi-codegen-extra-tags:
+            tfsdk: "-"
         status:
           $ref: '#/components/schemas/ProjectStatusModel'
     ProjectPropertiesModel:
@@ -2658,12 +4019,29 @@ components:
           additionalProperties:
             type: string
           description: Opaque parameters supplied to project service tier.
+          x-tf-name: tier_parameters
+          x-oapi-codegen-extra-tags:
+            cty: tier_parameters
+            hcl: tier_parameters
+            tfsdk: tier_parameters
+          x-order: 0
         productVersion:
           pattern: "([1-9][0-9]*|[1-9][0-9]*\\.[0-9]+|[1-9][0-9]*\\.[0-9]+\\.[0-9]+)([._-][a-z0-9._-]+)?"
           type: string
           description: "The version/tag of the NuoDB image to use. For available tags,\
             \ see https://hub.docker.com/r/nuodb/nuodb-ce/tags. If omitted, the project\
             \ version will be resolved based on the SLA and cluster configuration."
+          x-tf-name: product_version
+          x-oapi-codegen-extra-tags:
+            cty: product_version
+            hcl: product_version
+            tfsdk: product_version
+          x-order: 1
+      x-tf-name: properties
+      x-oapi-codegen-extra-tags:
+        cty: properties
+        hcl: properties
+        tfsdk: properties
     ProjectStatusModel:
       type: object
       properties:
@@ -2671,15 +4049,39 @@ components:
           type: string
           description: The PEM-encoded certificate for SQL clients to verify database
             servers within the project
+          x-tf-name: ca_pem
+          x-oapi-codegen-extra-tags:
+            cty: ca_pem
+            hcl: ca_pem
+            tfsdk: ca_pem
+          x-order: 0
         ready:
           type: boolean
           description: Whether the project is ready
+          x-tf-name: ready
+          x-oapi-codegen-extra-tags:
+            cty: ready
+            hcl: ready
+            tfsdk: ready
+          x-order: 1
         shutdown:
           type: boolean
           description: Whether the project and all of its databases have shutdown
+          x-tf-name: shutdown
+          x-oapi-codegen-extra-tags:
+            cty: shutdown
+            hcl: shutdown
+            tfsdk: shutdown
+          x-order: 2
         message:
           type: string
           description: Message summarizing the state of the project
+          x-tf-name: message
+          x-oapi-codegen-extra-tags:
+            cty: message
+            hcl: message
+            tfsdk: message
+          x-order: 3
         state:
           type: string
           description: |-
@@ -2701,34 +4103,47 @@ components:
           - Expired
           - Failed
           - Deleting
+          x-tf-name: state
+          x-oapi-codegen-extra-tags:
+            cty: state
+            hcl: state
+            tfsdk: state
+          x-order: 4
       readOnly: true
-    DbaasAccessRuleModel:
-      type: object
-      properties:
-        allow:
-          type: array
-          description: "List of access rule entries in the form `<verb>:<resource\
-            \ specifier>[:<SLA>]` that specify requests to allow"
-          items:
-            type: string
-        deny:
-          type: array
-          description: List of access rule entries in the form `<verb>:<resource specifier>`
-            that specify requests to deny
-          items:
-            type: string
-      description: The rule specifying access for the user
+      x-tf-name: status
+      x-oapi-codegen-extra-tags:
+        cty: status
+        hcl: status
+        tfsdk: status
     DbaasUserCreateUpdateModel:
       required:
       - accessRule
+      - name
+      - organization
       type: object
       properties:
         organization:
           pattern: "[a-z][a-z0-9]*"
           type: string
+          description: The organization that the user belongs to
+          x-tf-name: organization
+          x-oapi-codegen-extra-tags:
+            cty: organization
+            hcl: organization
+            tfsdk: organization
+          x-tf-identifier: true
+          x-order: 0
         name:
           pattern: "[a-z][a-z0-9]*"
           type: string
+          description: The name of the user
+          x-tf-name: name
+          x-oapi-codegen-extra-tags:
+            cty: name
+            hcl: name
+            tfsdk: name
+          x-tf-identifier: true
+          x-order: 1
         labels:
           pattern: "(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])"
           type: object
@@ -2737,10 +4152,23 @@ components:
             type: string
           description: User-defined labels attached to the resource that can be used
             for filtering
+          x-tf-name: labels
+          x-oapi-codegen-extra-tags:
+            cty: labels
+            hcl: labels
+            tfsdk: labels
+          x-order: 2
         password:
           type: string
           description: The password for the user
           writeOnly: true
+          x-tf-name: password
+          x-oapi-codegen-extra-tags:
+            cty: password
+            hcl: password
+            tfsdk: password
+          x-tf-sensitive: true
+          x-order: 3
         accessRule:
           $ref: '#/components/schemas/DbaasAccessRuleModel'
         resourceVersion:
@@ -2748,17 +4176,38 @@ components:
           description: "The version of the resource. When specified in a `PUT` request\
             \ payload, indicates that the resoure should be updated, and is used by\
             \ the system to guard against concurrent updates."
+          x-order: 5
+          x-oapi-codegen-extra-tags:
+            tfsdk: "-"
     DbaasUserModel:
       required:
       - accessRule
+      - name
+      - organization
       type: object
       properties:
         organization:
           pattern: "[a-z][a-z0-9]*"
           type: string
+          description: The organization that the user belongs to
+          x-tf-name: organization
+          x-oapi-codegen-extra-tags:
+            cty: organization
+            hcl: organization
+            tfsdk: organization
+          x-tf-identifier: true
+          x-order: 0
         name:
           pattern: "[a-z][a-z0-9]*"
           type: string
+          description: The name of the user
+          x-tf-name: name
+          x-oapi-codegen-extra-tags:
+            cty: name
+            hcl: name
+            tfsdk: name
+          x-tf-identifier: true
+          x-order: 1
         labels:
           pattern: "(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])"
           type: object
@@ -2767,6 +4216,12 @@ components:
             type: string
           description: User-defined labels attached to the resource that can be used
             for filtering
+          x-tf-name: labels
+          x-oapi-codegen-extra-tags:
+            cty: labels
+            hcl: labels
+            tfsdk: labels
+          x-order: 2
         accessRule:
           $ref: '#/components/schemas/DbaasAccessRuleModel'
         resourceVersion:
@@ -2774,6 +4229,9 @@ components:
           description: "The version of the resource. When specified in a `PUT` request\
             \ payload, indicates that the resoure should be updated, and is used by\
             \ the system to guard against concurrent updates."
+          x-order: 4
+          x-oapi-codegen-extra-tags:
+            tfsdk: "-"
     DatabaseQuotaModel:
       required:
       - name
@@ -2783,14 +4241,17 @@ components:
         name:
           type: string
           description: The name of the resource
+          x-order: 0
         description:
           type: string
           description: Human-readable description of the resource
+          x-order: 1
         resourceVersion:
           type: string
           description: "The version of the resource. When specified in a `PUT` request\
             \ payload, indicates that the resoure should be updated, and is used by\
             \ the system to guard against concurrent updates."
+          x-order: 2
         spec:
           $ref: '#/components/schemas/DatabaseQuotaSpec'
         status:
@@ -2803,6 +4264,7 @@ components:
           additionalProperties:
             $ref: '#/components/schemas/IntOrString'
           description: The set of desired hard limits for each named resource.
+          x-order: 0
         scope:
           $ref: '#/components/schemas/Scope'
     DatabaseQuotaStatus:
@@ -2814,8 +4276,10 @@ components:
             type: object
             additionalProperties:
               $ref: '#/components/schemas/IntOrString'
-          description: The current observed total usage of the named resources per
-            scoped group.
+          description: |-
+            The current observed total usage of the named resources per scoped
+            group.
+          x-order: 0
       readOnly: true
     FieldSelector:
       type: object
@@ -2826,13 +4290,16 @@ components:
             \ with `AND`."
           items:
             $ref: '#/components/schemas/databasequotaspec_scope_fieldselector_MatchExpressions'
+          x-order: 0
         matchFields:
           type: object
           additionalProperties:
             type: string
-          description: The field selector requirements as a map where each key-value
-            pair is equivalent to an element of `matchExpressions` with `operator`
-            set to `==`. The requirements are composed with `AND`.
+          description: |-
+            The field selector requirements as a map where each key-value pair is
+            equivalent to an element of `matchExpressions` with `operator` set to
+            `==`. The requirements are composed with `AND`.
+          x-order: 1
     IntOrString:
       type: object
       oneOf:
@@ -2848,14 +4315,16 @@ components:
             The requirements are ANDed.
           items:
             $ref: '#/components/schemas/databasequotaspec_scope_labelselector_MatchExpressions'
+          x-order: 0
         matchLabels:
           type: object
           additionalProperties:
             type: string
-          description: "matchLabels is a map of {key,value} pairs. A single {key,value}\
-            \ in the matchLabels map is equivalent to an element of matchExpressions,\
-            \ whose key field is \"key\", the operator is \"In\", and the values array\
-            \ contains only \"value\". The requirements are ANDed."
+          description: |-
+            matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
+            map is equivalent to an element of matchExpressions, whose key field is "key", the
+            operator is "In", and the values array contains only "value". The requirements are ANDed.
+          x-order: 1
     Scope:
       type: object
       properties:
@@ -2863,10 +4332,12 @@ components:
           $ref: '#/components/schemas/FieldSelector'
         groupByLabels:
           type: array
-          description: The label keys on which the selected databases are divided
-            into groups.
+          description: |-
+            The label keys on which the selected databases are divided into
+            groups.
           items:
             type: string
+          x-order: 1
         labelSelector:
           $ref: '#/components/schemas/LabelSelector'
     databasequotaspec_scope_fieldselector_MatchExpressions:
@@ -2878,13 +4349,16 @@ components:
         key:
           type: string
           description: The path of the field to apply the selector requirement to.
+          x-order: 0
         operator:
           type: string
           description: "The operator to apply to the field value. One of `=`, `==`,\
             \ and `!=`."
+          x-order: 1
         value:
           type: string
           description: The value to compare to.
+          x-order: 2
     databasequotaspec_scope_labelselector_MatchExpressions:
       required:
       - key
@@ -2894,18 +4368,23 @@ components:
         key:
           type: string
           description: key is the label key that the selector applies to.
+          x-order: 0
         operator:
           type: string
-          description: "operator represents a key's relationship to a set of values.\
-            \ Valid operators are In, NotIn, Exists and DoesNotExist."
+          description: |-
+            operator represents a key's relationship to a set of values.
+            Valid operators are In, NotIn, Exists and DoesNotExist.
+          x-order: 1
         values:
           type: array
-          description: "values is an array of string values. If the operator is In\
-            \ or NotIn, the values array must be non-empty. If the operator is Exists\
-            \ or DoesNotExist, the values array must be empty. This array is replaced\
-            \ during a strategic merge patch."
+          description: |-
+            values is an array of string values. If the operator is In or NotIn,
+            the values array must be non-empty. If the operator is Exists or DoesNotExist,
+            the values array must be empty. This array is replaced during a strategic
+            merge patch.
           items:
             type: string
+          x-order: 2
     AnyType:
       type: object
       additionalProperties:
@@ -2923,14 +4402,17 @@ components:
         name:
           type: string
           description: The name of the resource
+          x-order: 0
         description:
           type: string
           description: Human-readable description of the resource
+          x-order: 1
         resourceVersion:
           type: string
           description: "The version of the resource. When specified in a `PUT` request\
             \ payload, indicates that the resoure should be updated, and is used by\
             \ the system to guard against concurrent updates."
+          x-order: 2
         spec:
           $ref: '#/components/schemas/HelmFeatureSpec'
         status:
@@ -2942,20 +4424,27 @@ components:
           type: string
           description: The Helm chart version compatibility constraint for the Helm
             feature.
+          x-order: 0
         optional:
           type: boolean
-          description: Whether the Helm feature is optional and does not emit an error
+          description: |-
+            Whether the Helm feature is optional and does not emit an error
             if the Helm chart or product version is incompatible.
+          x-order: 1
         parameters:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/Parameters'
-          description: "The parameter definitions referenced in values. For example,\
-            \ parameter named `foo` is referenced using `<< .meta.params.foo >>` template."
+          description: |-
+            The parameter definitions referenced in values. For example, parameter
+            named `foo` is referenced using `<< .meta.params.foo >>` template.
+          x-order: 2
         productCompatibility:
           type: string
-          description: The NuoDB product version compatibility constraint for the
+          description: |-
+            The NuoDB product version compatibility constraint for the
             Helm feature.
+          x-order: 3
         values:
           $ref: '#/components/schemas/AnyType'
     HelmFeatureStatus:
@@ -2966,9 +4455,11 @@ components:
       properties:
         default:
           type: string
+          x-order: 0
         jsonSchema:
           type: string
           description: A JSONSchema used to validate the parameter's value.
+          x-order: 1
     Features:
       required:
       - name
@@ -2977,10 +4468,13 @@ components:
         name:
           type: string
           description: The name of the resource.
+          x-order: 0
         namespace:
           type: string
-          description: "The namespace of the resource. When not specified, the current\
-            \ namespace is assumed."
+          description: |-
+            The namespace of the resource. When not specified, the current
+            namespace is assumed.
+          x-order: 1
     ServiceTierModel:
       required:
       - name
@@ -2990,14 +4484,17 @@ components:
         name:
           type: string
           description: The name of the resource
+          x-order: 0
         description:
           type: string
           description: Human-readable description of the resource
+          x-order: 1
         resourceVersion:
           type: string
           description: "The version of the resource. When specified in a `PUT` request\
             \ payload, indicates that the resoure should be updated, and is used by\
             \ the system to guard against concurrent updates."
+          x-order: 2
         spec:
           $ref: '#/components/schemas/ServiceTierSpec'
         status:
@@ -3010,6 +4507,7 @@ components:
           description: The list of Helm features enabled for this service tier.
           items:
             $ref: '#/components/schemas/Features'
+          x-order: 0
     ServiceTierStatus:
       type: object
       readOnly: true
@@ -3025,14 +4523,20 @@ components:
           enum:
           - HTTP_ERROR
           - CONCURRENT_UPDATE
+          x-order: 0
         status:
           type: string
           description: HTTP status code and reason
+          x-order: 1
         detail:
           type: string
           description: Detail about the error
+          x-order: 2
   securitySchemes:
     basicAuth:
       type: http
       scheme: BASIC
+    bearerAuth:
+      type: http
+      scheme: BEARER
 
