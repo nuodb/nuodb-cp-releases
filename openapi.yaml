@@ -7,7 +7,7 @@ info:
   contact:
     url: https://nuodb.com
     email: NuoDB.Support@3ds.com
-  version: 2.4.0
+  version: 2.4.1
 servers:
 - url: https://example.nuodb.com
 paths:

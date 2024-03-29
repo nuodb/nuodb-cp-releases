@@ -1,4 +1,4 @@
-:revnumber: 2.4.0
+:revnumber: 2.4.1
 :toc: left
 
 [#nuodb-cp]
@@ -394,6 +394,7 @@ nuodb-cp database create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
                          [--trusted-cert=<trustedCert>] [-l=<String=String>]...
                          [--dba-password[=<dbaPassword>]] [--tier=<tier>]
                          [--expires-in=<expiresIn>] [--disabled]
+                         [--restore-from-backup=<restoreFromBackup>]
                          [--archive-size=<archiveSize>]
                          [--journal-size=<journalSize>]
                          [--tier-param=<String=String>]...
@@ -436,6 +437,9 @@ nuodb-cp database create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 
 |`--disabled`
 |Set the database as disabled
+
+|`--restore-from-backup`
+|The backup to restore the database from
 
 |`--archive-size`
 |The size of database archives
@@ -1061,7 +1065,7 @@ nuodb-cp user create [-XhV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 Update an existing user
 
 ....
-nuodb-cp user update [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
+nuodb-cp user update [-XhV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
                      [--trusted-cert=<trustedCert>] [--editor=<editor>] USER
 ....
 
@@ -1089,6 +1093,9 @@ nuodb-cp user update [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--editor`
 |The editor to use to update the resource +
 *default*: `${NUODB_CP_EDITOR:-vi}`
+
+|`-X, --allow-cross-organization`
+|Allow user to have access outside of its organization
 
 |`-h, --help`
 |Show this help message and exit.
