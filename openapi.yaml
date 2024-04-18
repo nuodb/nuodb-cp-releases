@@ -7,7 +7,7 @@ info:
   contact:
     url: https://nuodb.com
     email: NuoDB.Support@3ds.com
-  version: 2.4.0
+  version: 2.5.0
 servers:
 - url: https://example.nuodb.com
 paths:
@@ -18,6 +18,37 @@ paths:
       summary: List the database backups for the cluster
       operationId: getAllBackups
       parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
       - name: labelFilter
         in: query
         description: |-
@@ -34,38 +65,37 @@ paths:
           user does not have access privileges to list all resources at this level
         schema:
           type: boolean
-          default: false
       responses:
         "200":
           description: The list of backups was returned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemListString'
+                $ref: "#/components/schemas/ItemList"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -81,6 +111,37 @@ paths:
         required: true
         schema:
           type: string
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
       - name: labelFilter
         in: query
         description: |-
@@ -97,38 +158,37 @@ paths:
           user does not have access privileges to list all resources at this level
         schema:
           type: boolean
-          default: false
       responses:
         "200":
           description: The list of backups was returned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemListString'
+                $ref: "#/components/schemas/ItemList"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -149,6 +209,37 @@ paths:
         required: true
         schema:
           type: string
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
       - name: labelFilter
         in: query
         description: |-
@@ -165,38 +256,37 @@ paths:
           user does not have access privileges to list all resources at this level
         schema:
           type: boolean
-          default: false
       responses:
         "200":
           description: The list of backups was returned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemListString'
+                $ref: "#/components/schemas/ItemList"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -222,6 +312,37 @@ paths:
         required: true
         schema:
           type: string
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
       - name: labelFilter
         in: query
         description: |-
@@ -238,38 +359,37 @@ paths:
           user does not have access privileges to list all resources at this level
         schema:
           type: boolean
-          default: false
       responses:
         "200":
           description: The list of backups was returned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemListString'
+                $ref: "#/components/schemas/ItemList"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -298,7 +418,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BackupCreateModel'
+              $ref: "#/components/schemas/BackupCreateModel"
             examples:
               "0":
                 summary: Create backup with labels
@@ -315,50 +435,50 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BackupModel'
+                $ref: "#/components/schemas/BackupModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The backup could not be created because the database does not
             exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "409":
           description: The backup could not be created due to unexpected state
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "415":
           description: A media type other than `application/json` was supplied
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -395,37 +515,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BackupModel'
+                $ref: "#/components/schemas/BackupModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The backup does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -459,7 +579,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BackupModel'
+              $ref: "#/components/schemas/BackupModel"
             examples:
               "0":
                 summary: Update labels for backup
@@ -487,52 +607,60 @@ paths:
       responses:
         "200":
           description: The backup was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackupModel"
         "201":
           description: The backup was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackupModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: "The backup could not be created because the database does\
             \ not exist, or could not be updated because it does not exist"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "409":
           description: The backup could not be created or updated due to unexpected
             state
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "415":
           description: A media type other than `application/json` was supplied
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -564,7 +692,7 @@ paths:
           type: string
       - name: timeoutSeconds
         in: query
-        description: "The number of seconds to wait for the deletion to be finalized,\
+        description: "The number of seconds to wait for the operation to be finalized,\
           \ unless 0 is specified which indicates not to wait"
         schema:
           minimum: 0
@@ -579,37 +707,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The backup does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "408":
           description: The backup was not deleted within the specified timeout
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -645,7 +773,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/JsonPatchOperation'
+                $ref: "#/components/schemas/JsonPatchOperation"
             examples:
               "0":
                 summary: Add label to backup
@@ -670,48 +798,52 @@ paths:
       responses:
         "200":
           description: The patch was applied to the backup
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BackupModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The backup does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "409":
           description: The backup could not be updated due to unexpected state
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "415":
           description: A media type other than `application/json-patch+json` was supplied
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -722,6 +854,37 @@ paths:
       summary: List the databases in the cluster
       operationId: getAllDatabases
       parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
       - name: labelFilter
         in: query
         description: |-
@@ -738,38 +901,37 @@ paths:
           user does not have access privileges to list all resources at this level
         schema:
           type: boolean
-          default: false
       responses:
         "200":
           description: The list of databases was returned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemListString'
+                $ref: "#/components/schemas/ItemList"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -785,6 +947,37 @@ paths:
         required: true
         schema:
           type: string
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
       - name: labelFilter
         in: query
         description: |-
@@ -801,38 +994,37 @@ paths:
           user does not have access privileges to list all resources at this level
         schema:
           type: boolean
-          default: false
       responses:
         "200":
           description: The list of databases was returned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemListString'
+                $ref: "#/components/schemas/ItemList"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -853,6 +1045,37 @@ paths:
         required: true
         schema:
           type: string
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
       - name: labelFilter
         in: query
         description: |-
@@ -869,44 +1092,43 @@ paths:
           user does not have access privileges to list all resources at this level
         schema:
           type: boolean
-          default: false
       responses:
         "200":
           description: The list of databases was returned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemListString'
+                $ref: "#/components/schemas/ItemList"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The project does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -938,37 +1160,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatabaseModel'
+                $ref: "#/components/schemas/DatabaseModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The database does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -997,7 +1219,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DatabaseCreateUpdateModel'
+              $ref: "#/components/schemas/DatabaseCreateUpdateModel"
             examples:
               "0":
                 summary: Create database
@@ -1034,59 +1256,67 @@ paths:
       responses:
         "200":
           description: The database was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatabaseModel"
         "201":
           description: The database was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatabaseModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: "The database could not be created because the project does\
             \ not exist, or could not be updated because it does not exist"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "409":
           description: The database could not be created or updated due to unexpected
             state
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "415":
           description: A media type other than `application/json` was supplied
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "422":
           description: The database could not be created or updated because it would
             exceed a resource quota
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -1113,7 +1343,7 @@ paths:
           type: string
       - name: timeoutSeconds
         in: query
-        description: "The number of seconds to wait for the deletion to be finalized,\
+        description: "The number of seconds to wait for the operation to be finalized,\
           \ unless 0 is specified which indicates not to wait"
         schema:
           minimum: 0
@@ -1128,37 +1358,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The database does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "408":
           description: The database was not deleted within the specified timeout
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -1189,7 +1419,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/JsonPatchOperation'
+                $ref: "#/components/schemas/JsonPatchOperation"
             examples:
               "0":
                 summary: Change database tier
@@ -1248,55 +1478,173 @@ paths:
       responses:
         "200":
           description: The patch was applied to the database
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatabaseModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The database does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "409":
           description: The database could not be updated due to unexpected state
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "415":
           description: A media type other than `application/json-patch+json` was supplied
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "422":
           description: The database could not be updated because it would exceed a
             resource quota
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /databases/{organization}/{project}/{database}/dbaPassword:
+    post:
+      tags:
+      - databases
+      summary: Update the DBA password for a database
+      operationId: updateDbaPassword
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: database
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: timeoutSeconds
+        in: query
+        description: "The number of seconds to wait for the operation to be finalized,\
+          \ unless 0 is specified which indicates not to wait"
+        schema:
+          minimum: 0
+          type: integer
+          format: int32
+          default: 0
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateDbaPasswordModel"
+            examples:
+              "0":
+                summary: Initiate DBA password update
+                value: |-
+                  {
+                    "current": "currentDbaPassword",
+                    "target": "targetDbaPassword"
+                  }
+              "1":
+                summary: Resync configured DBA password
+                value: |-
+                  {
+                    "current": "actualDbaPassword",
+                    "resync": true
+                  }
+              "2":
+                summary: Verify current DBA password
+                value: |-
+                  {
+                    "current": "currentDbaPassword"
+                  }
+        required: true
+      responses:
+        "200":
+          description: The DBA password was updated successfully
+        "202":
+          description: The DBA password is in the process of being updated
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The database does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "408":
+          description: The DBA password was not updated within the specified timeout
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "409":
+          description: An unexpected state was encountered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "415":
+          description: A media type other than `application/json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -1314,31 +1662,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "503":
           description: The server is unhealthy
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -1352,56 +1700,126 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoginRequestModel'
+              $ref: "#/components/schemas/LoginRequestModel"
       responses:
         "200":
           description: The login was successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LoginResponseModel'
+                $ref: "#/components/schemas/LoginResponseModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: Token authentication is not available
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "409":
           description: An unexpected state was encountered
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "415":
           description: A media type other than `application/json` was supplied
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /openapi:
+    get:
+      tags:
+      - openapi
+      summary: Get the OpenAPI specification for the server
+      externalDocs:
+        description: Description of the OpenAPI document
+        url: https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.1.md
+      operationId: getSpec
+      responses:
+        "200":
+          description: The OpenAPI specification was returned successfully
+          content:
+            application/json:
+              example:
+                openapi: 3.0.1
+                info:
+                  version: 2.5.0
+                paths:
+                  /databases:
+                    get:
+                      parameters: []
+                      responses:
+                        "200":
+                          content:
+                            application/json:
+                              schema:
+                                $ref: "#/components/schemas/ItemList"
+                      security:
+                      - bearerAuth: []
+                components:
+                  schemas:
+                    ItemList:
+                      type: object
+                      properties:
+                        items:
+                          type: array
+                          items:
+                            type: object
+                  securitySchemes:
+                    bearerAuth:
+                      type: http
+                      scheme: BEARER
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -1412,6 +1830,37 @@ paths:
       summary: List the projects in the cluster
       operationId: getAllProjects
       parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
       - name: labelFilter
         in: query
         description: |-
@@ -1428,38 +1877,37 @@ paths:
           user does not have access privileges to list all resources at this level
         schema:
           type: boolean
-          default: false
       responses:
         "200":
           description: The list of projects was returned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemListString'
+                $ref: "#/components/schemas/ItemList"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -1475,6 +1923,37 @@ paths:
         required: true
         schema:
           type: string
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
       - name: labelFilter
         in: query
         description: |-
@@ -1491,38 +1970,37 @@ paths:
           user does not have access privileges to list all resources at this level
         schema:
           type: boolean
-          default: false
       responses:
         "200":
           description: The list of projects was returned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemListString'
+                $ref: "#/components/schemas/ItemList"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -1549,37 +2027,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProjectModel'
+                $ref: "#/components/schemas/ProjectModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The project does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -1603,7 +2081,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProjectModel'
+              $ref: "#/components/schemas/ProjectModel"
             examples:
               "0":
                 summary: Create project
@@ -1626,51 +2104,59 @@ paths:
       responses:
         "200":
           description: The project was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectModel"
         "201":
           description: The project was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The project could not be updated because it does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "409":
           description: The project could not be created or updated due to unexpected
             state
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "415":
           description: A media type other than `application/json` was supplied
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -1692,7 +2178,7 @@ paths:
           type: string
       - name: timeoutSeconds
         in: query
-        description: "The number of seconds to wait for the deletion to be finalized,\
+        description: "The number of seconds to wait for the operation to be finalized,\
           \ unless 0 is specified which indicates not to wait"
         schema:
           minimum: 0
@@ -1707,43 +2193,43 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The project does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "408":
           description: The project was not deleted within the specified timeout
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "409":
           description: The project could not be deleted because it has databases
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -1769,7 +2255,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/JsonPatchOperation'
+                $ref: "#/components/schemas/JsonPatchOperation"
             examples:
               "0":
                 summary: Change project tier
@@ -1818,48 +2304,52 @@ paths:
       responses:
         "200":
           description: The patch was applied to the project
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The project does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "409":
           description: The project could not be updated due to unexpected state
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "415":
           description: A media type other than `application/json-patch+json` was supplied
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -1870,6 +2360,37 @@ paths:
       summary: List the users in the cluster
       operationId: getAllUsers
       parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
       - name: labelFilter
         in: query
         description: |-
@@ -1886,38 +2407,37 @@ paths:
           user does not have access privileges to list all resources at this level
         schema:
           type: boolean
-          default: false
       responses:
         "200":
           description: The list of users was returned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemListString'
+                $ref: "#/components/schemas/ItemList"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -1933,6 +2453,37 @@ paths:
         required: true
         schema:
           type: string
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
       - name: labelFilter
         in: query
         description: |-
@@ -1949,38 +2500,37 @@ paths:
           user does not have access privileges to list all resources at this level
         schema:
           type: boolean
-          default: false
       responses:
         "200":
           description: The list of users was returned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemListString'
+                $ref: "#/components/schemas/ItemList"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -2007,37 +2557,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DbaasUserModel'
+                $ref: "#/components/schemas/DbaasUserModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The user does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -2067,7 +2617,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DbaasUserCreateUpdateModel'
+              $ref: "#/components/schemas/DbaasUserCreateUpdateModel"
             examples:
               "0":
                 summary: Create user
@@ -2098,51 +2648,59 @@ paths:
       responses:
         "200":
           description: The user was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DbaasUserModel"
         "201":
           description: The user was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DbaasUserModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The user could not be updated because it does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "409":
           description: The user could not be created or updated due to unexpected
             state
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "415":
           description: A media type other than `application/json` was supplied
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -2164,7 +2722,7 @@ paths:
           type: string
       - name: timeoutSeconds
         in: query
-        description: "The number of seconds to wait for the deletion to be finalized,\
+        description: "The number of seconds to wait for the operation to be finalized,\
           \ unless 0 is specified which indicates not to wait"
         schema:
           minimum: 0
@@ -2179,37 +2737,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The user does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "408":
           description: The user was not deleted within the specified timeout
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -2241,7 +2799,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/JsonPatchOperation'
+                $ref: "#/components/schemas/JsonPatchOperation"
             examples:
               "0":
                 summary: Change user password
@@ -2292,48 +2850,52 @@ paths:
       responses:
         "200":
           description: The patch was applied to the user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DbaasUserModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The user does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "409":
           description: The user could not be updated due to unexpected state
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "415":
           description: A media type other than `application/json-patch+json` was supplied
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -2343,37 +2905,69 @@ paths:
       - cluster/databasequotas
       summary: List the database quotas
       operationId: getDatabaseQuotas
+      parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
       responses:
         "200":
           description: The list of database quotas was returned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemListString'
+                $ref: "#/components/schemas/ItemList"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -2395,37 +2989,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatabaseQuotaModel'
+                $ref: "#/components/schemas/DatabaseQuotaModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The database quota does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -2444,57 +3038,65 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DatabaseQuotaModel'
+              $ref: "#/components/schemas/DatabaseQuotaModel"
         required: true
       responses:
         "200":
           description: The database quota was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatabaseQuotaModel"
         "201":
           description: The database quota was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatabaseQuotaModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The database quota could not be updated because it does not
             exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "409":
           description: The database quota could not be created or updated due to unexpected
             state
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "415":
           description: A media type other than `application/json` was supplied
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -2511,7 +3113,7 @@ paths:
           type: string
       - name: timeoutSeconds
         in: query
-        description: "The number of seconds to wait for the deletion to be finalized,\
+        description: "The number of seconds to wait for the operation to be finalized,\
           \ unless 0 is specified which indicates not to wait"
         schema:
           minimum: 0
@@ -2526,37 +3128,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The database quota does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "408":
           description: The database quota was not deleted within the specified timeout
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -2577,7 +3179,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/JsonPatchOperation'
+                $ref: "#/components/schemas/JsonPatchOperation"
         required: true
       responses:
         "200":
@@ -2587,43 +3189,43 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The database quota does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "409":
           description: The database quota could not be updated due to unexpected state
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "415":
           description: A media type other than `application/json-patch+json` was supplied
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -2633,37 +3235,69 @@ paths:
       - cluster/helmfeatures
       summary: List the Helm features
       operationId: getHelmFeatures
+      parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
       responses:
         "200":
           description: The list of Helm features was returned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemListString'
+                $ref: "#/components/schemas/ItemList"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -2685,37 +3319,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HelmFeatureModel'
+                $ref: "#/components/schemas/HelmFeatureModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The Helm feature does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -2734,56 +3368,64 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/HelmFeatureModel'
+              $ref: "#/components/schemas/HelmFeatureModel"
         required: true
       responses:
         "200":
           description: The Helm feature was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelmFeatureModel"
         "201":
           description: The Helm feature was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelmFeatureModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The Helm feature could not be updated because it does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "409":
           description: The Helm feature could not be created or updated due to unexpected
             state
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "415":
           description: A media type other than `application/json` was supplied
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -2800,7 +3442,7 @@ paths:
           type: string
       - name: timeoutSeconds
         in: query
-        description: "The number of seconds to wait for the deletion to be finalized,\
+        description: "The number of seconds to wait for the operation to be finalized,\
           \ unless 0 is specified which indicates not to wait"
         schema:
           minimum: 0
@@ -2815,37 +3457,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The Helm feature does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "408":
           description: The Helm feature was not deleted within the specified timeout
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -2866,7 +3508,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/JsonPatchOperation'
+                $ref: "#/components/schemas/JsonPatchOperation"
         required: true
       responses:
         "200":
@@ -2876,43 +3518,43 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The Helm feature does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "409":
           description: The Helm feature could not be updated due to unexpected state
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "415":
           description: A media type other than `application/json-patch+json` was supplied
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -2922,37 +3564,69 @@ paths:
       - cluster/servicetiers
       summary: List the service tiers
       operationId: getServiceTiers
+      parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
       responses:
         "200":
           description: The list of service tiers was returned
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemListString'
+                $ref: "#/components/schemas/ItemList"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -2974,37 +3648,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ServiceTierModel'
+                $ref: "#/components/schemas/ServiceTierModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The service tier does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -3023,56 +3697,64 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ServiceTierModel'
+              $ref: "#/components/schemas/ServiceTierModel"
         required: true
       responses:
         "200":
           description: The service tier was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceTierModel"
         "201":
           description: The service tier was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceTierModel"
         "400":
           description: The user request was invalid
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The service tier could not be updated because it does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "409":
           description: The service tier could not be created or updated due to unexpected
             state
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "415":
           description: A media type other than `application/json` was supplied
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -3089,7 +3771,7 @@ paths:
           type: string
       - name: timeoutSeconds
         in: query
-        description: "The number of seconds to wait for the deletion to be finalized,\
+        description: "The number of seconds to wait for the operation to be finalized,\
           \ unless 0 is specified which indicates not to wait"
         schema:
           minimum: 0
@@ -3104,37 +3786,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The service tier does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "408":
           description: The service tier was not deleted within the specified timeout
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -3155,7 +3837,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/JsonPatchOperation'
+                $ref: "#/components/schemas/JsonPatchOperation"
         required: true
       responses:
         "200":
@@ -3165,43 +3847,43 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "401":
           description: The user did not provide correct authentication credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user was not authorized to access the requested resource
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "404":
           description: The service tier does not exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "409":
           description: The service tier could not be updated due to unexpected state
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "415":
           description: A media type other than `application/json-patch+json` was supplied
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
         "500":
           description: A server error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorContent'
+                $ref: "#/components/schemas/ErrorContent"
       security:
       - basicAuth: []
         bearerAuth: []
@@ -3274,7 +3956,7 @@ components:
             tfsdk: labels
           x-order: 4
         importSource:
-          $ref: '#/components/schemas/ImportSourceModel'
+          $ref: "#/components/schemas/ImportSourceModel"
         resourceVersion:
           type: string
           description: "The version of the resource. When specified in a `PUT` request\
@@ -3284,7 +3966,7 @@ components:
           x-oapi-codegen-extra-tags:
             tfsdk: "-"
         status:
-          $ref: '#/components/schemas/BackupStatusModel'
+          $ref: "#/components/schemas/BackupStatusModel"
     BackupStatusModel:
       type: object
       properties:
@@ -3446,13 +4128,55 @@ components:
             hcl: labels
             tfsdk: labels
           x-order: 3
-    ItemListString:
+    ExpandedListEntry:
       type: object
       properties:
+        $ref:
+          type: string
+          description: The sub-path relative to the request URL that can be used to
+            obtain the resource
+          x-order: 0
+    ItemList:
+      type: object
+      properties:
+        offset:
+          type: integer
+          description: "The offset at which items are being listed, based on the user\
+            \ request"
+          format: int32
+          x-order: 0
+        cursor:
+          type: string
+          description: "The cursor at which items are being listed, based on the user\
+            \ request"
+          x-order: 1
+        limit:
+          type: integer
+          description: "The maximum number of items that could have been returned,\
+            \ based on the user request. If `limit` is equal to the number of items\
+            \ returned, then it is possible that more items are available (see `next`),\
+            \ which can be obtained by advancing the `offset` by `limit` or supplying\
+            \ the last value in the list (or its `$ref`) as `cursor`."
+          format: int32
+          x-order: 2
         items:
           type: array
+          description: "The list of items returned. If expansion of payload fields\
+            \ was requested using the query parameter `expand` or `expand.<field>`,\
+            \ then the items will be objects, otherwise, they will be strings representing\
+            \ the sub-paths at which the resource can be found."
           items:
-            type: string
+            type: object
+            oneOf:
+            - type: string
+            - $ref: "#/components/schemas/ExpandedListEntry"
+          x-order: 3
+        next:
+          type: string
+          description: "The URL to obtain the next list of items, if `limit` was specified\
+            \ and more items are available. The absence of the `next` field indicates\
+            \ that all items have been returned."
+          x-order: 4
     JsonNode:
       type: object
       oneOf:
@@ -3485,8 +4209,8 @@ components:
           type: string
           x-order: 2
         value:
-          $ref: '#/components/schemas/JsonNode'
-    DatabaseCreateUpdateModel:
+          $ref: "#/components/schemas/JsonNode"
+    DatabaseModel:
       required:
       - name
       - organization
@@ -3543,21 +4267,8 @@ components:
             hcl: labels
             tfsdk: labels
           x-order: 3
-        dbaPassword:
-          type: string
-          description: The password for the DBA user. Can only be specified when creating
-            a database.
-          writeOnly: true
-          x-tf-name: dba_password
-          x-oapi-codegen-extra-tags:
-            cty: dba_password
-            hcl: dba_password
-            tfsdk: dba_password
-          x-tf-sensitive: true
-          x-immutable: true
-          x-order: 4
         restoreFrom:
-          $ref: '#/components/schemas/RestoreFromModel'
+          $ref: "#/components/schemas/RestoreFromModel"
         tier:
           type: string
           description: "The service tier for the database. If omitted, the project\
@@ -3568,21 +4279,21 @@ components:
             cty: tier
             hcl: tier
             tfsdk: tier
-          x-order: 6
+          x-order: 5
         maintenance:
-          $ref: '#/components/schemas/MaintenanceModel'
+          $ref: "#/components/schemas/MaintenanceModel"
         properties:
-          $ref: '#/components/schemas/DatabasePropertiesModel'
+          $ref: "#/components/schemas/DatabasePropertiesModel"
         resourceVersion:
           type: string
           description: "The version of the resource. When specified in a `PUT` request\
             \ payload, indicates that the resoure should be updated, and is used by\
             \ the system to guard against concurrent updates."
-          x-order: 9
+          x-order: 8
           x-oapi-codegen-extra-tags:
             tfsdk: "-"
         status:
-          $ref: '#/components/schemas/DatabaseStatusModel'
+          $ref: "#/components/schemas/DatabaseStatusModel"
     DatabasePropertiesModel:
       type: object
       properties:
@@ -3785,7 +4496,7 @@ components:
         cty: restore_from
         hcl: restore_from
         tfsdk: restore_from
-    DatabaseModel:
+    DatabaseCreateUpdateModel:
       required:
       - name
       - organization
@@ -3842,8 +4553,20 @@ components:
             hcl: labels
             tfsdk: labels
           x-order: 3
+        dbaPassword:
+          type: string
+          description: The password for the DBA user. Can only be specified when creating
+            a database.
+          writeOnly: true
+          x-tf-name: dba_password
+          x-oapi-codegen-extra-tags:
+            cty: dba_password
+            hcl: dba_password
+            tfsdk: dba_password
+          x-tf-sensitive: true
+          x-order: 4
         restoreFrom:
-          $ref: '#/components/schemas/RestoreFromModel'
+          $ref: "#/components/schemas/RestoreFromModel"
         tier:
           type: string
           description: "The service tier for the database. If omitted, the project\
@@ -3854,21 +4577,41 @@ components:
             cty: tier
             hcl: tier
             tfsdk: tier
-          x-order: 5
+          x-order: 6
         maintenance:
-          $ref: '#/components/schemas/MaintenanceModel'
+          $ref: "#/components/schemas/MaintenanceModel"
         properties:
-          $ref: '#/components/schemas/DatabasePropertiesModel'
+          $ref: "#/components/schemas/DatabasePropertiesModel"
         resourceVersion:
           type: string
           description: "The version of the resource. When specified in a `PUT` request\
             \ payload, indicates that the resoure should be updated, and is used by\
             \ the system to guard against concurrent updates."
-          x-order: 8
+          x-order: 9
           x-oapi-codegen-extra-tags:
             tfsdk: "-"
         status:
-          $ref: '#/components/schemas/DatabaseStatusModel'
+          $ref: "#/components/schemas/DatabaseStatusModel"
+    UpdateDbaPasswordModel:
+      required:
+      - current
+      type: object
+      properties:
+        current:
+          type: string
+          description: "The current DBA password, which must be supplied for verification\
+            \ purposes"
+          x-order: 0
+        target:
+          type: string
+          description: The target DBA password
+          x-order: 1
+        resync:
+          type: boolean
+          description: "Whether to update configured DBA password so that it matches\
+            \ actual DBA password. If `true`, `current` is verified by connecting\
+            \ to the database directly before updating configured DBA password."
+          x-order: 2
     DbaasAccessRuleModel:
       type: object
       properties:
@@ -3898,7 +4641,7 @@ components:
           description: The authentication/authorization token
           x-order: 0
         accessRule:
-          $ref: '#/components/schemas/DbaasAccessRuleModel'
+          $ref: "#/components/schemas/DbaasAccessRuleModel"
         expiresAtTime:
           type: string
           description: The token expiration time
@@ -3998,9 +4741,9 @@ components:
             tfsdk: tier
           x-order: 4
         maintenance:
-          $ref: '#/components/schemas/MaintenanceModel'
+          $ref: "#/components/schemas/MaintenanceModel"
         properties:
-          $ref: '#/components/schemas/ProjectPropertiesModel'
+          $ref: "#/components/schemas/ProjectPropertiesModel"
         resourceVersion:
           type: string
           description: "The version of the resource. When specified in a `PUT` request\
@@ -4010,7 +4753,7 @@ components:
           x-oapi-codegen-extra-tags:
             tfsdk: "-"
         status:
-          $ref: '#/components/schemas/ProjectStatusModel'
+          $ref: "#/components/schemas/ProjectStatusModel"
     ProjectPropertiesModel:
       type: object
       properties:
@@ -4115,6 +4858,59 @@ components:
         cty: status
         hcl: status
         tfsdk: status
+    DbaasUserModel:
+      required:
+      - accessRule
+      - name
+      - organization
+      type: object
+      properties:
+        organization:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+          description: The organization that the user belongs to
+          x-tf-name: organization
+          x-oapi-codegen-extra-tags:
+            cty: organization
+            hcl: organization
+            tfsdk: organization
+          x-tf-identifier: true
+          x-order: 0
+        name:
+          pattern: "[a-z][a-z0-9]*"
+          type: string
+          description: The name of the user
+          x-tf-name: name
+          x-oapi-codegen-extra-tags:
+            cty: name
+            hcl: name
+            tfsdk: name
+          x-tf-identifier: true
+          x-order: 1
+        labels:
+          pattern: "(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])"
+          type: object
+          additionalProperties:
+            pattern: "(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])"
+            type: string
+          description: User-defined labels attached to the resource that can be used
+            for filtering
+          x-tf-name: labels
+          x-oapi-codegen-extra-tags:
+            cty: labels
+            hcl: labels
+            tfsdk: labels
+          x-order: 2
+        accessRule:
+          $ref: "#/components/schemas/DbaasAccessRuleModel"
+        resourceVersion:
+          type: string
+          description: "The version of the resource. When specified in a `PUT` request\
+            \ payload, indicates that the resoure should be updated, and is used by\
+            \ the system to guard against concurrent updates."
+          x-order: 4
+          x-oapi-codegen-extra-tags:
+            tfsdk: "-"
     DbaasUserCreateUpdateModel:
       required:
       - accessRule
@@ -4170,66 +4966,13 @@ components:
           x-tf-sensitive: true
           x-order: 3
         accessRule:
-          $ref: '#/components/schemas/DbaasAccessRuleModel'
+          $ref: "#/components/schemas/DbaasAccessRuleModel"
         resourceVersion:
           type: string
           description: "The version of the resource. When specified in a `PUT` request\
             \ payload, indicates that the resoure should be updated, and is used by\
             \ the system to guard against concurrent updates."
           x-order: 5
-          x-oapi-codegen-extra-tags:
-            tfsdk: "-"
-    DbaasUserModel:
-      required:
-      - accessRule
-      - name
-      - organization
-      type: object
-      properties:
-        organization:
-          pattern: "[a-z][a-z0-9]*"
-          type: string
-          description: The organization that the user belongs to
-          x-tf-name: organization
-          x-oapi-codegen-extra-tags:
-            cty: organization
-            hcl: organization
-            tfsdk: organization
-          x-tf-identifier: true
-          x-order: 0
-        name:
-          pattern: "[a-z][a-z0-9]*"
-          type: string
-          description: The name of the user
-          x-tf-name: name
-          x-oapi-codegen-extra-tags:
-            cty: name
-            hcl: name
-            tfsdk: name
-          x-tf-identifier: true
-          x-order: 1
-        labels:
-          pattern: "(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])"
-          type: object
-          additionalProperties:
-            pattern: "(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])"
-            type: string
-          description: User-defined labels attached to the resource that can be used
-            for filtering
-          x-tf-name: labels
-          x-oapi-codegen-extra-tags:
-            cty: labels
-            hcl: labels
-            tfsdk: labels
-          x-order: 2
-        accessRule:
-          $ref: '#/components/schemas/DbaasAccessRuleModel'
-        resourceVersion:
-          type: string
-          description: "The version of the resource. When specified in a `PUT` request\
-            \ payload, indicates that the resoure should be updated, and is used by\
-            \ the system to guard against concurrent updates."
-          x-order: 4
           x-oapi-codegen-extra-tags:
             tfsdk: "-"
     DatabaseQuotaModel:
@@ -4253,20 +4996,20 @@ components:
             \ the system to guard against concurrent updates."
           x-order: 2
         spec:
-          $ref: '#/components/schemas/DatabaseQuotaSpec'
+          $ref: "#/components/schemas/DatabaseQuotaSpec"
         status:
-          $ref: '#/components/schemas/DatabaseQuotaStatus'
+          $ref: "#/components/schemas/DatabaseQuotaStatus"
     DatabaseQuotaSpec:
       type: object
       properties:
         hard:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/IntOrString'
+            $ref: "#/components/schemas/IntOrString"
           description: The set of desired hard limits for each named resource.
           x-order: 0
         scope:
-          $ref: '#/components/schemas/Scope'
+          $ref: "#/components/schemas/Scope"
     DatabaseQuotaStatus:
       type: object
       properties:
@@ -4275,7 +5018,7 @@ components:
           additionalProperties:
             type: object
             additionalProperties:
-              $ref: '#/components/schemas/IntOrString'
+              $ref: "#/components/schemas/IntOrString"
           description: |-
             The current observed total usage of the named resources per scoped
             group.
@@ -4289,7 +5032,7 @@ components:
           description: "The list of field selector requirements, which are composed\
             \ with `AND`."
           items:
-            $ref: '#/components/schemas/databasequotaspec_scope_fieldselector_MatchExpressions'
+            $ref: "#/components/schemas/databasequotaspec_scope_fieldselector_MatchExpressions"
           x-order: 0
         matchFields:
           type: object
@@ -4314,7 +5057,7 @@ components:
           description: matchExpressions is a list of label selector requirements.
             The requirements are ANDed.
           items:
-            $ref: '#/components/schemas/databasequotaspec_scope_labelselector_MatchExpressions'
+            $ref: "#/components/schemas/databasequotaspec_scope_labelselector_MatchExpressions"
           x-order: 0
         matchLabels:
           type: object
@@ -4329,7 +5072,7 @@ components:
       type: object
       properties:
         fieldSelector:
-          $ref: '#/components/schemas/FieldSelector'
+          $ref: "#/components/schemas/FieldSelector"
         groupByLabels:
           type: array
           description: |-
@@ -4339,7 +5082,7 @@ components:
             type: string
           x-order: 1
         labelSelector:
-          $ref: '#/components/schemas/LabelSelector'
+          $ref: "#/components/schemas/LabelSelector"
     databasequotaspec_scope_fieldselector_MatchExpressions:
       required:
       - key
@@ -4414,9 +5157,9 @@ components:
             \ the system to guard against concurrent updates."
           x-order: 2
         spec:
-          $ref: '#/components/schemas/HelmFeatureSpec'
+          $ref: "#/components/schemas/HelmFeatureSpec"
         status:
-          $ref: '#/components/schemas/HelmFeatureStatus'
+          $ref: "#/components/schemas/HelmFeatureStatus"
     HelmFeatureSpec:
       type: object
       properties:
@@ -4434,7 +5177,7 @@ components:
         parameters:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/Parameters'
+            $ref: "#/components/schemas/Parameters"
           description: |-
             The parameter definitions referenced in values. For example, parameter
             named `foo` is referenced using `<< .meta.params.foo >>` template.
@@ -4446,7 +5189,7 @@ components:
             Helm feature.
           x-order: 3
         values:
-          $ref: '#/components/schemas/AnyType'
+          $ref: "#/components/schemas/AnyType"
     HelmFeatureStatus:
       type: object
       readOnly: true
@@ -4496,9 +5239,9 @@ components:
             \ the system to guard against concurrent updates."
           x-order: 2
         spec:
-          $ref: '#/components/schemas/ServiceTierSpec'
+          $ref: "#/components/schemas/ServiceTierSpec"
         status:
-          $ref: '#/components/schemas/ServiceTierStatus'
+          $ref: "#/components/schemas/ServiceTierStatus"
     ServiceTierSpec:
       type: object
       properties:
@@ -4506,7 +5249,7 @@ components:
           type: array
           description: The list of Helm features enabled for this service tier.
           items:
-            $ref: '#/components/schemas/Features'
+            $ref: "#/components/schemas/Features"
           x-order: 0
     ServiceTierStatus:
       type: object
@@ -4520,9 +5263,11 @@ components:
             Application-level error code that describes how the error should be handled and how the `detail` field should be interpreted:
               * `HTTP_ERROR` - The error should be handled based on the HTTP status code (`status`) of the response according to RFC-9910, and `detail` should be interpreted as a human-readable string.
               * `CONCURRENT_UPDATE` - A concurrent update caused the `PUT` or `PATCH` request to fail. A `PUT` request can be retried after using `GET` to obtain the latest resource version and applying the desired change to it. A `PATCH` request can be retried without any changes to the request content.
+              * `UNKNOWN_REQUEST` - The client request is unroutable due to an unknown content-type, method, or resource path. This can be indicate a versioning issue between the client and server.
           enum:
           - HTTP_ERROR
           - CONCURRENT_UPDATE
+          - UNKNOWN_REQUEST
           x-order: 0
         status:
           type: string

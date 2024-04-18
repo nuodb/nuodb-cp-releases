@@ -1,4 +1,4 @@
-:revnumber: 2.4.0
+:revnumber: 2.5.0
 :toc: left
 
 [#nuodb-cp]
@@ -58,8 +58,11 @@ List backups
 
 ....
 nuodb-cp backup list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                     [--trusted-cert=<trustedCert>] [-l=<labelFilter>]...
-                     [--list-accessible] RESOURCE
+                     [--token=<token>] [--trusted-cert=<trustedCert>]
+                     [-l=<labelFilter>]... [--list-accessible]
+                     [--limit=<limit>] [--offset=<offset> | --cursor=<cursor>]
+                     [--expand-all | --expand-field=<expandFields>
+                     [--expand-field=<expandFields>]...] RESOURCE
 ....
 
 [cols="1,3"]
@@ -79,15 +82,38 @@ nuodb-cp backup list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
 
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
 *default*: `${NUODB_CP_TRUSTED_CERT}`
+
+|`--offset`
+|The offset at which to list items +
+*required*
+
+|`--cursor`
+|The cursor at which to list items, which represents the last item returned` +
+*required*
+
+|`--expand-all`
+|Whether to expand payload fields +
+*required*
+
+|`--expand-field`
+|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
+*required*
 
 |`-l, --label-filter`
 |Filter to apply based on labels
 
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
+
+|`--limit`
+|The number of items to return
 
 |`-h, --help`
 |Show this help message and exit.
@@ -104,7 +130,7 @@ Get an existing backup
 
 ....
 nuodb-cp backup get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                    [--trusted-cert=<trustedCert>] BACKUP
+                    [--token=<token>] [--trusted-cert=<trustedCert>] BACKUP
 ....
 
 [cols="1,3"]
@@ -123,6 +149,10 @@ nuodb-cp backup get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`-p, --password`
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
 
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
@@ -143,7 +173,8 @@ Create a new backup
 
 ....
 nuodb-cp backup create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                       [--trusted-cert=<trustedCert>] [-l=<String=String>]...
+                       [--token=<token>] [--trusted-cert=<trustedCert>]
+                       [-l=<String=String>]...
                        [--import-source-handle=<backupHandle>]
                        [--import-source-plugin=<backupPlugin>] BACKUP BACKUP
 ....
@@ -167,6 +198,10 @@ nuodb-cp backup create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`-p, --password`
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
 
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
@@ -196,7 +231,8 @@ Update an existing backup
 
 ....
 nuodb-cp backup update [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                       [--trusted-cert=<trustedCert>] [--editor=<editor>] BACKUP
+                       [--token=<token>] [--trusted-cert=<trustedCert>]
+                       [--editor=<editor>] BACKUP
 ....
 
 [cols="1,3"]
@@ -215,6 +251,10 @@ nuodb-cp backup update [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`-p, --password`
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
 
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
@@ -239,8 +279,8 @@ Delete an existing backup
 
 ....
 nuodb-cp backup delete [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                       [--trusted-cert=<trustedCert>] [--timeout=<timeout>]
-                       BACKUP
+                       [--token=<token>] [--trusted-cert=<trustedCert>]
+                       [--timeout=<timeout>] BACKUP
 ....
 
 [cols="1,3"]
@@ -260,12 +300,16 @@ nuodb-cp backup delete [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
 
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
 *default*: `${NUODB_CP_TRUSTED_CERT}`
 
 |`--timeout`
-|The number of seconds to wait for the deletion to be finalized, unless 0 is specified which indicates not to wait
+|The number of seconds to wait for the operation to be finalized, unless 0 is specified which indicates not to wait
 
 |`-h, --help`
 |Show this help message and exit.
@@ -306,8 +350,12 @@ List databases
 
 ....
 nuodb-cp database list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                       [--trusted-cert=<trustedCert>] [-l=<labelFilter>]...
-                       [--list-accessible] RESOURCE
+                       [--token=<token>] [--trusted-cert=<trustedCert>]
+                       [-l=<labelFilter>]... [--list-accessible]
+                       [--limit=<limit>] [--offset=<offset> |
+                       --cursor=<cursor>] [--expand-all |
+                       --expand-field=<expandFields>
+                       [--expand-field=<expandFields>]...] RESOURCE
 ....
 
 [cols="1,3"]
@@ -327,15 +375,38 @@ nuodb-cp database list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
 
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
 *default*: `${NUODB_CP_TRUSTED_CERT}`
+
+|`--offset`
+|The offset at which to list items +
+*required*
+
+|`--cursor`
+|The cursor at which to list items, which represents the last item returned` +
+*required*
+
+|`--expand-all`
+|Whether to expand payload fields +
+*required*
+
+|`--expand-field`
+|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
+*required*
 
 |`-l, --label-filter`
 |Filter to apply based on labels
 
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
+
+|`--limit`
+|The number of items to return
 
 |`-h, --help`
 |Show this help message and exit.
@@ -352,7 +423,7 @@ Get an existing database
 
 ....
 nuodb-cp database get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                      [--trusted-cert=<trustedCert>] DATABASE
+                      [--token=<token>] [--trusted-cert=<trustedCert>] DATABASE
 ....
 
 [cols="1,3"]
@@ -371,6 +442,10 @@ nuodb-cp database get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`-p, --password`
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
 
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
@@ -391,9 +466,11 @@ Create a new database
 
 ....
 nuodb-cp database create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                         [--trusted-cert=<trustedCert>] [-l=<String=String>]...
-                         [--dba-password[=<dbaPassword>]] [--tier=<tier>]
+                         [--token=<token>] [--trusted-cert=<trustedCert>]
+                         [-l=<String=String>]... [--dba-password
+                         [=<dbaPassword>]] [--tier=<tier>]
                          [--expires-in=<expiresIn>] [--disabled]
+                         [--restore-from-backup=<restoreFromBackup>]
                          [--archive-size=<archiveSize>]
                          [--journal-size=<journalSize>]
                          [--tier-param=<String=String>]...
@@ -418,6 +495,10 @@ nuodb-cp database create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
 
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
 *default*: `${NUODB_CP_TRUSTED_CERT}`
@@ -436,6 +517,9 @@ nuodb-cp database create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 
 |`--disabled`
 |Set the database as disabled
+
+|`--restore-from-backup`
+|The backup to restore the database from
 
 |`--archive-size`
 |The size of database archives
@@ -467,8 +551,8 @@ Update an existing database
 
 ....
 nuodb-cp database update [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                         [--trusted-cert=<trustedCert>] [--editor=<editor>]
-                         DATABASE
+                         [--token=<token>] [--trusted-cert=<trustedCert>]
+                         [--editor=<editor>] DATABASE
 ....
 
 [cols="1,3"]
@@ -487,6 +571,10 @@ nuodb-cp database update [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`-p, --password`
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
 
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
@@ -511,8 +599,8 @@ Delete an existing database
 
 ....
 nuodb-cp database delete [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                         [--trusted-cert=<trustedCert>] [--timeout=<timeout>]
-                         DATABASE
+                         [--token=<token>] [--trusted-cert=<trustedCert>]
+                         [--timeout=<timeout>] DATABASE
 ....
 
 [cols="1,3"]
@@ -532,12 +620,16 @@ nuodb-cp database delete [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
 
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
 *default*: `${NUODB_CP_TRUSTED_CERT}`
 
 |`--timeout`
-|The number of seconds to wait for the deletion to be finalized, unless 0 is specified which indicates not to wait
+|The number of seconds to wait for the operation to be finalized, unless 0 is specified which indicates not to wait
 
 |`-h, --help`
 |Show this help message and exit.
@@ -554,8 +646,8 @@ Connect to a database
 
 ....
 nuodb-cp database connect [-sShV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                          [--trusted-cert=<trustedCert>] --db-user=<dbUser>
-                          [--db-password[=<dbPassword>]]
+                          [--token=<token>] [--trusted-cert=<trustedCert>]
+                          --db-user=<dbUser> [--db-password[=<dbPassword>]]
                           [--ingress-port=<ingressPort>]
                           [-P=<String=String>]... [-t=<truststore>]
                           [--truststore-password=<truststorePassword>]
@@ -579,6 +671,10 @@ nuodb-cp database connect [-sShV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`-p, --password`
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
 
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
@@ -661,8 +757,11 @@ List projects
 
 ....
 nuodb-cp project list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                      [--trusted-cert=<trustedCert>] [-l=<labelFilter>]...
-                      [--list-accessible] ORGANIZATION
+                      [--token=<token>] [--trusted-cert=<trustedCert>]
+                      [-l=<labelFilter>]... [--list-accessible]
+                      [--limit=<limit>] [--offset=<offset> | --cursor=<cursor>]
+                      [--expand-all | --expand-field=<expandFields>
+                      [--expand-field=<expandFields>]...] ORGANIZATION
 ....
 
 [cols="1,3"]
@@ -682,15 +781,38 @@ nuodb-cp project list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
 
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
 *default*: `${NUODB_CP_TRUSTED_CERT}`
+
+|`--offset`
+|The offset at which to list items +
+*required*
+
+|`--cursor`
+|The cursor at which to list items, which represents the last item returned` +
+*required*
+
+|`--expand-all`
+|Whether to expand payload fields +
+*required*
+
+|`--expand-field`
+|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
+*required*
 
 |`-l, --label-filter`
 |Filter to apply based on labels
 
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
+
+|`--limit`
+|The number of items to return
 
 |`-h, --help`
 |Show this help message and exit.
@@ -707,7 +829,7 @@ Get an existing project
 
 ....
 nuodb-cp project get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                     [--trusted-cert=<trustedCert>] PROJECT
+                     [--token=<token>] [--trusted-cert=<trustedCert>] PROJECT
 ....
 
 [cols="1,3"]
@@ -726,6 +848,10 @@ nuodb-cp project get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`-p, --password`
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
 
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
@@ -746,8 +872,8 @@ Create a new project
 
 ....
 nuodb-cp project create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                        [--trusted-cert=<trustedCert>] [-l=<String=String>]...
-                        --sla=<sla> --tier=<tier>
+                        [--token=<token>] [--trusted-cert=<trustedCert>]
+                        [-l=<String=String>]... --sla=<sla> --tier=<tier>
                         [--tier-param=<String=String>]...
                         [--product-version=<productVersion>]
                         [--expires-in=<expiresIn>] [--disabled] PROJECT
@@ -769,6 +895,10 @@ nuodb-cp project create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`-p, --password`
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
 
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
@@ -812,8 +942,8 @@ Update an existing project
 
 ....
 nuodb-cp project update [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                        [--trusted-cert=<trustedCert>] [--editor=<editor>]
-                        PROJECT
+                        [--token=<token>] [--trusted-cert=<trustedCert>]
+                        [--editor=<editor>] PROJECT
 ....
 
 [cols="1,3"]
@@ -832,6 +962,10 @@ nuodb-cp project update [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`-p, --password`
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
 
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
@@ -856,8 +990,8 @@ Delete an existing project
 
 ....
 nuodb-cp project delete [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                        [--trusted-cert=<trustedCert>] [--timeout=<timeout>]
-                        PROJECT
+                        [--token=<token>] [--trusted-cert=<trustedCert>]
+                        [--timeout=<timeout>] PROJECT
 ....
 
 [cols="1,3"]
@@ -877,12 +1011,16 @@ nuodb-cp project delete [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
 
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
 *default*: `${NUODB_CP_TRUSTED_CERT}`
 
 |`--timeout`
-|The number of seconds to wait for the deletion to be finalized, unless 0 is specified which indicates not to wait
+|The number of seconds to wait for the operation to be finalized, unless 0 is specified which indicates not to wait
 
 |`-h, --help`
 |Show this help message and exit.
@@ -922,8 +1060,11 @@ List users
 
 ....
 nuodb-cp user list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                   [--trusted-cert=<trustedCert>] [-l=<labelFilter>]...
-                   [--list-accessible] ORGANIZATION
+                   [--token=<token>] [--trusted-cert=<trustedCert>]
+                   [-l=<labelFilter>]... [--list-accessible] [--limit=<limit>]
+                   [--offset=<offset> | --cursor=<cursor>] [--expand-all |
+                   --expand-field=<expandFields>
+                   [--expand-field=<expandFields>]...] ORGANIZATION
 ....
 
 [cols="1,3"]
@@ -943,15 +1084,38 @@ nuodb-cp user list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
 
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
 *default*: `${NUODB_CP_TRUSTED_CERT}`
+
+|`--offset`
+|The offset at which to list items +
+*required*
+
+|`--cursor`
+|The cursor at which to list items, which represents the last item returned` +
+*required*
+
+|`--expand-all`
+|Whether to expand payload fields +
+*required*
+
+|`--expand-field`
+|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
+*required*
 
 |`-l, --label-filter`
 |Filter to apply based on labels
 
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
+
+|`--limit`
+|The number of items to return
 
 |`-h, --help`
 |Show this help message and exit.
@@ -968,7 +1132,7 @@ Get an existing user
 
 ....
 nuodb-cp user get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                  [--trusted-cert=<trustedCert>] USER
+                  [--token=<token>] [--trusted-cert=<trustedCert>] USER
 ....
 
 [cols="1,3"]
@@ -987,6 +1151,10 @@ nuodb-cp user get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`-p, --password`
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
 
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
@@ -1007,8 +1175,9 @@ Create a new user
 
 ....
 nuodb-cp user create [-XhV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                     [--trusted-cert=<trustedCert>] [-l=<String=String>]... [-P
-                     [=<password>]] [-a=<allow>]... [-d=<deny>]... USER
+                     [--token=<token>] [--trusted-cert=<trustedCert>]
+                     [-l=<String=String>]... [-P[=<password>]] [-a=<allow>]...
+                     [-d=<deny>]... USER
 ....
 
 [cols="1,3"]
@@ -1027,6 +1196,10 @@ nuodb-cp user create [-XhV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`-p, --password`
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
 
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
@@ -1061,8 +1234,9 @@ nuodb-cp user create [-XhV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 Update an existing user
 
 ....
-nuodb-cp user update [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                     [--trusted-cert=<trustedCert>] [--editor=<editor>] USER
+nuodb-cp user update [-XhV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
+                     [--token=<token>] [--trusted-cert=<trustedCert>]
+                     [--editor=<editor>] USER
 ....
 
 [cols="1,3"]
@@ -1082,6 +1256,10 @@ nuodb-cp user update [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
 
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
 *default*: `${NUODB_CP_TRUSTED_CERT}`
@@ -1089,6 +1267,9 @@ nuodb-cp user update [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--editor`
 |The editor to use to update the resource +
 *default*: `${NUODB_CP_EDITOR:-vi}`
+
+|`-X, --allow-cross-organization`
+|Allow user to have access outside of its organization
 
 |`-h, --help`
 |Show this help message and exit.
@@ -1105,7 +1286,8 @@ Delete an existing user
 
 ....
 nuodb-cp user delete [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                     [--trusted-cert=<trustedCert>] [--timeout=<timeout>] USER
+                     [--token=<token>] [--trusted-cert=<trustedCert>]
+                     [--timeout=<timeout>] USER
 ....
 
 [cols="1,3"]
@@ -1125,12 +1307,16 @@ nuodb-cp user delete [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
 
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
 *default*: `${NUODB_CP_TRUSTED_CERT}`
 
 |`--timeout`
-|The number of seconds to wait for the deletion to be finalized, unless 0 is specified which indicates not to wait
+|The number of seconds to wait for the operation to be finalized, unless 0 is specified which indicates not to wait
 
 |`-h, --help`
 |Show this help message and exit.
@@ -1147,9 +1333,10 @@ Issue an HTTP/REST request
 
 ....
 nuodb-cp httpclient [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                    [--trusted-cert=<trustedCert>] [-q=<String=String>]...
-                    [-d=<data>] [-j=<jsonPath>] [--full-response]
-                    [--pretty-print] METHOD PATH...
+                    [--token=<token>] [--trusted-cert=<trustedCert>]
+                    [-q=<String=String>]... [-d=<data>] [-j=<jsonPath>]
+                    [--full-response] [--pretty-print] [--unquote] METHOD
+                    PATH...
 ....
 
 [cols="1,3"]
@@ -1172,6 +1359,10 @@ nuodb-cp httpclient [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |The password to authenticate the user +
 *default*: `${NUODB_CP_PASSWORD}`
 
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
 *default*: `${NUODB_CP_TRUSTED_CERT}`
@@ -1190,6 +1381,9 @@ nuodb-cp httpclient [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 
 |`--pretty-print`
 |Whether to pretty print the response payload
+
+|`--unquote`
+|Whether to unquote the filtered response if it is a string
 
 |`-h, --help`
 |Show this help message and exit.
@@ -1232,6 +1426,9 @@ nuodb-cp server start [-hV] [-p=<String=String>]...
 |===
 |`-p, --property`
 |A server property override
+
+|`--shutdown-immediately`
+|
 
 |`-h, --help`
 |Show this help message and exit.
