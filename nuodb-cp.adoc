@@ -1,4 +1,4 @@
-:revnumber: 2.5.0
+:revnumber: 2.6.0
 :toc: left
 
 [#nuodb-cp]
@@ -8,6 +8,7 @@ Command-line interface for the NuoDB Control Plane REST Service
 
 ....
 nuodb-cp [-hV] [backup
+               |backuppolicy
                |database
                |project
                |user
@@ -112,8 +113,24 @@ nuodb-cp backup list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
 
+|`--offset`
+|The offset at which to list items +
+*required*
+
+|`--cursor`
+|The cursor at which to list items, which represents the last item returned` +
+*required*
+
 |`--limit`
 |The number of items to return
+
+|`--expand-all`
+|Whether to expand payload fields +
+*required*
+
+|`--expand-field`
+|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
+*required*
 
 |`-h, --help`
 |Show this help message and exit.
@@ -319,6 +336,538 @@ nuodb-cp backup delete [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 
 |===
 
+[#backuppolicy]
+== backuppolicy
+
+Inspect and manage backup policies using the DBaaS REST service
+
+....
+nuodb-cp backuppolicy [-hV] [list
+                            |list-backups
+                            |list-databases
+                            |get
+                            |create
+                            |update
+                            |delete]
+....
+
+[cols="1,3"]
+|===
+|`-h, --help`
+|Show this help message and exit.
+
+|`-V, --version`
+|Print version information and exit.
+
+|===
+
+[#backuppolicy-list]
+=== list
+
+List backup policies
+
+....
+nuodb-cp backuppolicy list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
+                           [--token=<token>] [--trusted-cert=<trustedCert>]
+                           [-l=<labelFilter>]... [--list-accessible]
+                           [--limit=<limit>] [--offset=<offset> |
+                           --cursor=<cursor>] [--expand-all |
+                           --expand-field=<expandFields>
+                           [--expand-field=<expandFields>]...] ORGANIZATION
+....
+
+[cols="1,3"]
+|===
+|`ORGANIZATION`
+|The name of the organization, or `/` to list backup policies across all organizations
+
+|`-b, --url-base`
+|The base URL for the server, including the protocol +
+*default*: `${NUODB_CP_URL_BASE:-http://localhost:8080}`
+
+|`-u, --user`
+|The name of the user issuing the request +
+*default*: `${NUODB_CP_USER}`
+
+|`-p, --password`
+|The password to authenticate the user +
+*default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
+|`--trusted-cert`
+|The certificate used to verify the HTTPS server in PEM format +
+*default*: `${NUODB_CP_TRUSTED_CERT}`
+
+|`--offset`
+|The offset at which to list items +
+*required*
+
+|`--cursor`
+|The cursor at which to list items, which represents the last item returned` +
+*required*
+
+|`--expand-all`
+|Whether to expand payload fields +
+*required*
+
+|`--expand-field`
+|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
+*required*
+
+|`-l, --label-filter`
+|Filter to apply based on labels
+
+|`--list-accessible`
+|Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
+
+|`--offset`
+|The offset at which to list items +
+*required*
+
+|`--cursor`
+|The cursor at which to list items, which represents the last item returned` +
+*required*
+
+|`--limit`
+|The number of items to return
+
+|`--expand-all`
+|Whether to expand payload fields +
+*required*
+
+|`--expand-field`
+|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
+*required*
+
+|`-h, --help`
+|Show this help message and exit.
+
+|`-V, --version`
+|Print version information and exit.
+
+|===
+
+[#backuppolicy-list-backups]
+=== list-backups
+
+List the backups taken by the backup policy
+
+....
+nuodb-cp backuppolicy list-backups [-hV] [-b=<urlBase>] [-u=<user>] [-p
+                                   [=<password>]] [--token=<token>]
+                                   [--trusted-cert=<trustedCert>]
+                                   [-l=<labelFilter>]... [--list-accessible]
+                                   [--limit=<limit>] [--offset=<offset> |
+                                   --cursor=<cursor>] [--expand-all |
+                                   --expand-field=<expandFields>
+                                   [--expand-field=<expandFields>]...] POLICY
+....
+
+[cols="1,3"]
+|===
+|`POLICY`
+|The fully-qualified name of the backup policy in the format `<organization>/<policy>`
+
+|`-b, --url-base`
+|The base URL for the server, including the protocol +
+*default*: `${NUODB_CP_URL_BASE:-http://localhost:8080}`
+
+|`-u, --user`
+|The name of the user issuing the request +
+*default*: `${NUODB_CP_USER}`
+
+|`-p, --password`
+|The password to authenticate the user +
+*default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
+|`--trusted-cert`
+|The certificate used to verify the HTTPS server in PEM format +
+*default*: `${NUODB_CP_TRUSTED_CERT}`
+
+|`--offset`
+|The offset at which to list items +
+*required*
+
+|`--cursor`
+|The cursor at which to list items, which represents the last item returned` +
+*required*
+
+|`--expand-all`
+|Whether to expand payload fields +
+*required*
+
+|`--expand-field`
+|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
+*required*
+
+|`-l, --label-filter`
+|Filter to apply based on labels
+
+|`--list-accessible`
+|Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
+
+|`--offset`
+|The offset at which to list items +
+*required*
+
+|`--cursor`
+|The cursor at which to list items, which represents the last item returned` +
+*required*
+
+|`--limit`
+|The number of items to return
+
+|`--expand-all`
+|Whether to expand payload fields +
+*required*
+
+|`--expand-field`
+|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
+*required*
+
+|`-h, --help`
+|Show this help message and exit.
+
+|`-V, --version`
+|Print version information and exit.
+
+|===
+
+[#backuppolicy-list-databases]
+=== list-databases
+
+List the databases that the backup policy applies to
+
+....
+nuodb-cp backuppolicy list-databases [-hV] [-b=<urlBase>] [-u=<user>] [-p
+                                     [=<password>]] [--token=<token>]
+                                     [--trusted-cert=<trustedCert>]
+                                     [-l=<labelFilter>]... [--list-accessible]
+                                     [--limit=<limit>] [--offset=<offset> |
+                                     --cursor=<cursor>] [--expand-all |
+                                     --expand-field=<expandFields>
+                                     [--expand-field=<expandFields>]...] POLICY
+....
+
+[cols="1,3"]
+|===
+|`POLICY`
+|The fully-qualified name of the backup policy in the format `<organization>/<policy>`
+
+|`-b, --url-base`
+|The base URL for the server, including the protocol +
+*default*: `${NUODB_CP_URL_BASE:-http://localhost:8080}`
+
+|`-u, --user`
+|The name of the user issuing the request +
+*default*: `${NUODB_CP_USER}`
+
+|`-p, --password`
+|The password to authenticate the user +
+*default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
+|`--trusted-cert`
+|The certificate used to verify the HTTPS server in PEM format +
+*default*: `${NUODB_CP_TRUSTED_CERT}`
+
+|`--offset`
+|The offset at which to list items +
+*required*
+
+|`--cursor`
+|The cursor at which to list items, which represents the last item returned` +
+*required*
+
+|`--expand-all`
+|Whether to expand payload fields +
+*required*
+
+|`--expand-field`
+|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
+*required*
+
+|`-l, --label-filter`
+|Filter to apply based on labels
+
+|`--list-accessible`
+|Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
+
+|`--offset`
+|The offset at which to list items +
+*required*
+
+|`--cursor`
+|The cursor at which to list items, which represents the last item returned` +
+*required*
+
+|`--limit`
+|The number of items to return
+
+|`--expand-all`
+|Whether to expand payload fields +
+*required*
+
+|`--expand-field`
+|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
+*required*
+
+|`-h, --help`
+|Show this help message and exit.
+
+|`-V, --version`
+|Print version information and exit.
+
+|===
+
+[#backuppolicy-get]
+=== get
+
+Get an existing backup policy
+
+....
+nuodb-cp backuppolicy get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
+                          [--token=<token>] [--trusted-cert=<trustedCert>]
+                          POLICY
+....
+
+[cols="1,3"]
+|===
+|`POLICY`
+|The fully-qualified name of the backup policy in the format `<organization>/<policy>`
+
+|`-b, --url-base`
+|The base URL for the server, including the protocol +
+*default*: `${NUODB_CP_URL_BASE:-http://localhost:8080}`
+
+|`-u, --user`
+|The name of the user issuing the request +
+*default*: `${NUODB_CP_USER}`
+
+|`-p, --password`
+|The password to authenticate the user +
+*default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
+|`--trusted-cert`
+|The certificate used to verify the HTTPS server in PEM format +
+*default*: `${NUODB_CP_TRUSTED_CERT}`
+
+|`-h, --help`
+|Show this help message and exit.
+
+|`-V, --version`
+|Print version information and exit.
+
+|===
+
+[#backuppolicy-create]
+=== create
+
+Create a new backup policy
+
+....
+nuodb-cp backuppolicy create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
+                             [--token=<token>] [--trusted-cert=<trustedCert>]
+                             [-l=<String=String>]... --frequency=<frequency>
+                             --selector-scope=<selectorScope>
+                             [--selector-sla=<selectorSlas>]...
+                             [--selector-tier=<selectorTiers>]...
+                             [--selector-label=<String=String>]...
+                             [--hourly-retention=<hourlyRetention>]
+                             [--daily-retention=<dailyRetention>]
+                             [--weekly-retention=<weeklyRetention>]
+                             [--monthly-retention=<monthlyRetention>]
+                             [--yearly-retention=<yearlyRetention>]
+                             [--suspended] [--disable-policy-label-propagation]
+                             [--disable-db-label-propagation] POLICY
+....
+
+[cols="1,3"]
+|===
+|`POLICY`
+|The fully-qualified name of the backup policy in the format `<organization>/<policy>`
+
+|`-b, --url-base`
+|The base URL for the server, including the protocol +
+*default*: `${NUODB_CP_URL_BASE:-http://localhost:8080}`
+
+|`-u, --user`
+|The name of the user issuing the request +
+*default*: `${NUODB_CP_USER}`
+
+|`-p, --password`
+|The password to authenticate the user +
+*default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
+|`--trusted-cert`
+|The certificate used to verify the HTTPS server in PEM format +
+*default*: `${NUODB_CP_TRUSTED_CERT}`
+
+|`-l, --label`
+|Label to attach to resource
+
+|`--frequency`
+|The frequency to schedule backups at, in cron format +
+*required*
+
+|`--selector-scope`
+|The scope that the backup policy applies to +
+*required*
+
+|`--selector-sla`
+|SLA to filter databases on
+
+|`--selector-tier`
+|Tier to filter databases on
+
+|`--selector-label`
+|Label to filter databases on
+
+|`--hourly-retention`
+|The number of hourly backups to retain
+
+|`--daily-retention`
+|The number of daily backups to retain
+
+|`--weekly-retention`
+|The number of weekly backups to retain
+
+|`--monthly-retention`
+|The number of monthly backups to retain
+
+|`--yearly-retention`
+|The number of yearly backups to retain
+
+|`--suspended`
+|Whether backups from the policy are suspended
+
+|`--disable-policy-label-propagation`
+|Whether to disable propagation of policy labels to backups created from the policy
+
+|`--disable-db-label-propagation`
+|Whether to disable propagation of database labels to backups created from the policy
+
+|`-h, --help`
+|Show this help message and exit.
+
+|`-V, --version`
+|Print version information and exit.
+
+|===
+
+[#backuppolicy-update]
+=== update
+
+Update an existing backup policy
+
+....
+nuodb-cp backuppolicy update [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
+                             [--token=<token>] [--trusted-cert=<trustedCert>]
+                             [--editor=<editor>] POLICY
+....
+
+[cols="1,3"]
+|===
+|`POLICY`
+|The fully-qualified name of the backup policy in the format `<organization>/<policy>`
+
+|`-b, --url-base`
+|The base URL for the server, including the protocol +
+*default*: `${NUODB_CP_URL_BASE:-http://localhost:8080}`
+
+|`-u, --user`
+|The name of the user issuing the request +
+*default*: `${NUODB_CP_USER}`
+
+|`-p, --password`
+|The password to authenticate the user +
+*default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
+|`--trusted-cert`
+|The certificate used to verify the HTTPS server in PEM format +
+*default*: `${NUODB_CP_TRUSTED_CERT}`
+
+|`--editor`
+|The editor to use to update the resource +
+*default*: `${NUODB_CP_EDITOR:-vi}`
+
+|`-h, --help`
+|Show this help message and exit.
+
+|`-V, --version`
+|Print version information and exit.
+
+|===
+
+[#backuppolicy-delete]
+=== delete
+
+Delete an existing backup policy
+
+....
+nuodb-cp backuppolicy delete [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
+                             [--token=<token>] [--trusted-cert=<trustedCert>]
+                             [--timeout=<timeout>] POLICY
+....
+
+[cols="1,3"]
+|===
+|`POLICY`
+|The fully-qualified name of the backup policy in the format `<organization>/<policy>`
+
+|`-b, --url-base`
+|The base URL for the server, including the protocol +
+*default*: `${NUODB_CP_URL_BASE:-http://localhost:8080}`
+
+|`-u, --user`
+|The name of the user issuing the request +
+*default*: `${NUODB_CP_USER}`
+
+|`-p, --password`
+|The password to authenticate the user +
+*default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
+|`--trusted-cert`
+|The certificate used to verify the HTTPS server in PEM format +
+*default*: `${NUODB_CP_TRUSTED_CERT}`
+
+|`--timeout`
+|The number of seconds to wait for the operation to be finalized, unless 0 is specified which indicates not to wait
+
+|`-h, --help`
+|Show this help message and exit.
+
+|`-V, --version`
+|Print version information and exit.
+
+|===
+
 [#database]
 == database
 
@@ -405,8 +954,24 @@ nuodb-cp database list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
 
+|`--offset`
+|The offset at which to list items +
+*required*
+
+|`--cursor`
+|The cursor at which to list items, which represents the last item returned` +
+*required*
+
 |`--limit`
 |The number of items to return
+
+|`--expand-all`
+|Whether to expand payload fields +
+*required*
+
+|`--expand-field`
+|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
+*required*
 
 |`-h, --help`
 |Show this help message and exit.
@@ -811,8 +1376,24 @@ nuodb-cp project list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
 
+|`--offset`
+|The offset at which to list items +
+*required*
+
+|`--cursor`
+|The cursor at which to list items, which represents the last item returned` +
+*required*
+
 |`--limit`
 |The number of items to return
+
+|`--expand-all`
+|Whether to expand payload fields +
+*required*
+
+|`--expand-field`
+|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
+*required*
 
 |`-h, --help`
 |Show this help message and exit.
@@ -1114,8 +1695,24 @@ nuodb-cp user list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
 
+|`--offset`
+|The offset at which to list items +
+*required*
+
+|`--cursor`
+|The cursor at which to list items, which represents the last item returned` +
+*required*
+
 |`--limit`
 |The number of items to return
+
+|`--expand-all`
+|Whether to expand payload fields +
+*required*
+
+|`--expand-field`
+|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
+*required*
 
 |`-h, --help`
 |Show this help message and exit.
