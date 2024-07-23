@@ -1,4 +1,4 @@
-:revnumber: 2.6.0
+:revnumber: 2.6.1
 :toc: left
 
 [#nuodb-cp]
@@ -113,24 +113,8 @@ nuodb-cp backup list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
 
-|`--offset`
-|The offset at which to list items +
-*required*
-
-|`--cursor`
-|The cursor at which to list items, which represents the last item returned` +
-*required*
-
 |`--limit`
 |The number of items to return
-
-|`--expand-all`
-|Whether to expand payload fields +
-*required*
-
-|`--expand-field`
-|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
-*required*
 
 |`-h, --help`
 |Show this help message and exit.
@@ -423,24 +407,8 @@ nuodb-cp backuppolicy list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
 
-|`--offset`
-|The offset at which to list items +
-*required*
-
-|`--cursor`
-|The cursor at which to list items, which represents the last item returned` +
-*required*
-
 |`--limit`
 |The number of items to return
-
-|`--expand-all`
-|Whether to expand payload fields +
-*required*
-
-|`--expand-field`
-|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
-*required*
 
 |`-h, --help`
 |Show this help message and exit.
@@ -513,24 +481,8 @@ nuodb-cp backuppolicy list-backups [-hV] [-b=<urlBase>] [-u=<user>] [-p
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
 
-|`--offset`
-|The offset at which to list items +
-*required*
-
-|`--cursor`
-|The cursor at which to list items, which represents the last item returned` +
-*required*
-
 |`--limit`
 |The number of items to return
-
-|`--expand-all`
-|Whether to expand payload fields +
-*required*
-
-|`--expand-field`
-|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
-*required*
 
 |`-h, --help`
 |Show this help message and exit.
@@ -603,24 +555,8 @@ nuodb-cp backuppolicy list-databases [-hV] [-b=<urlBase>] [-u=<user>] [-p
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
 
-|`--offset`
-|The offset at which to list items +
-*required*
-
-|`--cursor`
-|The cursor at which to list items, which represents the last item returned` +
-*required*
-
 |`--limit`
 |The number of items to return
-
-|`--expand-all`
-|Whether to expand payload fields +
-*required*
-
-|`--expand-field`
-|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
-*required*
 
 |`-h, --help`
 |Show this help message and exit.
@@ -954,24 +890,8 @@ nuodb-cp database list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
 
-|`--offset`
-|The offset at which to list items +
-*required*
-
-|`--cursor`
-|The cursor at which to list items, which represents the last item returned` +
-*required*
-
 |`--limit`
 |The number of items to return
-
-|`--expand-all`
-|Whether to expand payload fields +
-*required*
-
-|`--expand-field`
-|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
-*required*
 
 |`-h, --help`
 |Show this help message and exit.
@@ -1376,24 +1296,8 @@ nuodb-cp project list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
 
-|`--offset`
-|The offset at which to list items +
-*required*
-
-|`--cursor`
-|The cursor at which to list items, which represents the last item returned` +
-*required*
-
 |`--limit`
 |The number of items to return
-
-|`--expand-all`
-|Whether to expand payload fields +
-*required*
-
-|`--expand-field`
-|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
-*required*
 
 |`-h, --help`
 |Show this help message and exit.
@@ -1695,24 +1599,8 @@ nuodb-cp user list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
 
-|`--offset`
-|The offset at which to list items +
-*required*
-
-|`--cursor`
-|The cursor at which to list items, which represents the last item returned` +
-*required*
-
 |`--limit`
 |The number of items to return
-
-|`--expand-all`
-|Whether to expand payload fields +
-*required*
-
-|`--expand-field`
-|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
-*required*
 
 |`-h, --help`
 |Show this help message and exit.
