@@ -10,12 +10,12 @@ Their [Custom Resource Definitions][2] (CRDs) act as contracts between NuoDB Ope
 
 ## Documentation
 
-The NuoDB Control Plane documentation is available in [docs](./docs) directory of this repository.
+The NuoDB Control Plane documentation is available at [documentation](https://nuodb.github.io/nuodb-cp-docs/).
 The REST API non-interactive documentation is available at [API documentation][3].
 
 ### Get Started
 
-- [Quick Start Guide](./docs/QuickStart.md)
+- [Quick Start Guide](https://nuodb.github.io/nuodb-cp-docs/docs/getting-started/deploy-nuodb-control-plane/)
 
 ## Installation
 
