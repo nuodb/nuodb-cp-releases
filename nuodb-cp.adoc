@@ -1,4 +1,4 @@
-:revnumber: 2.6.0
+:revnumber: 2.7.0
 :toc: left
 
 [#nuodb-cp]
@@ -14,6 +14,7 @@ nuodb-cp [-hV] [backup
                |user
                |httpclient
                |server
+               |external-operator
                |k8s
                |generate-completion
                |generate-doc]
@@ -113,24 +114,8 @@ nuodb-cp backup list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
 
-|`--offset`
-|The offset at which to list items +
-*required*
-
-|`--cursor`
-|The cursor at which to list items, which represents the last item returned` +
-*required*
-
 |`--limit`
 |The number of items to return
-
-|`--expand-all`
-|Whether to expand payload fields +
-*required*
-
-|`--expand-field`
-|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
-*required*
 
 |`-h, --help`
 |Show this help message and exit.
@@ -146,8 +131,9 @@ nuodb-cp backup list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 Get an existing backup
 
 ....
-nuodb-cp backup get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                    [--token=<token>] [--trusted-cert=<trustedCert>] BACKUP
+nuodb-cp backup get [-whV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
+                    [--token=<token>] [--trusted-cert=<trustedCert>]
+                    [--watch-non-interactive] BACKUP
 ....
 
 [cols="1,3"]
@@ -174,6 +160,12 @@ nuodb-cp backup get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
 *default*: `${NUODB_CP_TRUSTED_CERT}`
+
+|`-w, --watch`
+|Whether to stream events on resource. Non-interactive mode is automatically enabled if standard input or output is not connected to a TTY.
+
+|`--watch-non-interactive`
+|Whether to stream events on resource in non-interactive mode
 
 |`-h, --help`
 |Show this help message and exit.
@@ -279,7 +271,7 @@ nuodb-cp backup update [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 
 |`--editor`
 |The editor to use to update the resource +
-*default*: `${NUODB_CP_EDITOR:-vi}`
+*default*: `${NUODB_CP_EDITOR}`
 
 |`-h, --help`
 |Show this help message and exit.
@@ -423,24 +415,8 @@ nuodb-cp backuppolicy list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
 
-|`--offset`
-|The offset at which to list items +
-*required*
-
-|`--cursor`
-|The cursor at which to list items, which represents the last item returned` +
-*required*
-
 |`--limit`
 |The number of items to return
-
-|`--expand-all`
-|Whether to expand payload fields +
-*required*
-
-|`--expand-field`
-|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
-*required*
 
 |`-h, --help`
 |Show this help message and exit.
@@ -513,24 +489,8 @@ nuodb-cp backuppolicy list-backups [-hV] [-b=<urlBase>] [-u=<user>] [-p
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
 
-|`--offset`
-|The offset at which to list items +
-*required*
-
-|`--cursor`
-|The cursor at which to list items, which represents the last item returned` +
-*required*
-
 |`--limit`
 |The number of items to return
-
-|`--expand-all`
-|Whether to expand payload fields +
-*required*
-
-|`--expand-field`
-|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
-*required*
 
 |`-h, --help`
 |Show this help message and exit.
@@ -603,24 +563,8 @@ nuodb-cp backuppolicy list-databases [-hV] [-b=<urlBase>] [-u=<user>] [-p
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
 
-|`--offset`
-|The offset at which to list items +
-*required*
-
-|`--cursor`
-|The cursor at which to list items, which represents the last item returned` +
-*required*
-
 |`--limit`
 |The number of items to return
-
-|`--expand-all`
-|Whether to expand payload fields +
-*required*
-
-|`--expand-field`
-|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
-*required*
 
 |`-h, --help`
 |Show this help message and exit.
@@ -636,9 +580,9 @@ nuodb-cp backuppolicy list-databases [-hV] [-b=<urlBase>] [-u=<user>] [-p
 Get an existing backup policy
 
 ....
-nuodb-cp backuppolicy get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
+nuodb-cp backuppolicy get [-whV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
                           [--token=<token>] [--trusted-cert=<trustedCert>]
-                          POLICY
+                          [--watch-non-interactive] POLICY
 ....
 
 [cols="1,3"]
@@ -666,6 +610,12 @@ nuodb-cp backuppolicy get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |The certificate used to verify the HTTPS server in PEM format +
 *default*: `${NUODB_CP_TRUSTED_CERT}`
 
+|`-w, --watch`
+|Whether to stream events on resource. Non-interactive mode is automatically enabled if standard input or output is not connected to a TTY.
+
+|`--watch-non-interactive`
+|Whether to stream events on resource in non-interactive mode
+
 |`-h, --help`
 |Show this help message and exit.
 
@@ -692,7 +642,11 @@ nuodb-cp backuppolicy create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
                              [--weekly-retention=<weeklyRetention>]
                              [--monthly-retention=<monthlyRetention>]
                              [--yearly-retention=<yearlyRetention>]
-                             [--suspended] [--disable-policy-label-propagation]
+                             [--day-of-week=<dayOfWeek>] [--month=<month>]
+                             [--use-current-time] [--promote-latest-to-hourly]
+                             [--promote-latest-to-daily]
+                             [--promote-latest-to-monthly] [--suspended]
+                             [--disable-policy-label-propagation]
                              [--disable-db-label-propagation] POLICY
 ....
 
@@ -756,6 +710,24 @@ nuodb-cp backuppolicy create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--yearly-retention`
 |The number of yearly backups to retain
 
+|`--day-of-week`
+|The day of the week used to promote backup to weekly
+
+|`--month`
+|The month of the year used to promote backup to yearly
+
+|`--use-current-time`
+|Whether to apply the backup rotation scheme relative to the current time instead to the last successful backup
+
+|`--promote-latest-to-hourly`
+|Whether to promote the latest backup within the hour if multiple backups exist for that hour
+
+|`--promote-latest-to-daily`
+|Whether to promote the latest backup within the day if multiple backups exist for that day
+
+|`--promote-latest-to-monthly`
+|Whether to promote the latest backup within the month if multiple backups exist for that month
+
 |`--suspended`
 |Whether backups from the policy are suspended
 
@@ -811,7 +783,7 @@ nuodb-cp backuppolicy update [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 
 |`--editor`
 |The editor to use to update the resource +
-*default*: `${NUODB_CP_EDITOR:-vi}`
+*default*: `${NUODB_CP_EDITOR}`
 
 |`-h, --help`
 |Show this help message and exit.
@@ -954,24 +926,8 @@ nuodb-cp database list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
 
-|`--offset`
-|The offset at which to list items +
-*required*
-
-|`--cursor`
-|The cursor at which to list items, which represents the last item returned` +
-*required*
-
 |`--limit`
 |The number of items to return
-
-|`--expand-all`
-|Whether to expand payload fields +
-*required*
-
-|`--expand-field`
-|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
-*required*
 
 |`-h, --help`
 |Show this help message and exit.
@@ -987,8 +943,9 @@ nuodb-cp database list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 Get an existing database
 
 ....
-nuodb-cp database get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                      [--token=<token>] [--trusted-cert=<trustedCert>] DATABASE
+nuodb-cp database get [-whV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
+                      [--token=<token>] [--trusted-cert=<trustedCert>]
+                      [--watch-non-interactive] DATABASE
 ....
 
 [cols="1,3"]
@@ -1015,6 +972,12 @@ nuodb-cp database get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
 *default*: `${NUODB_CP_TRUSTED_CERT}`
+
+|`-w, --watch`
+|Whether to stream events on resource. Non-interactive mode is automatically enabled if standard input or output is not connected to a TTY.
+
+|`--watch-non-interactive`
+|Whether to stream events on resource in non-interactive mode
 
 |`-h, --help`
 |Show this help message and exit.
@@ -1099,7 +1062,7 @@ nuodb-cp database create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |Whether to inherit tier parameters from the project if the database service tier matches the project.
 
 |`--product-version`
-|The version/tag of the NuoDB image to use. For available tags, see https://hub.docker.com/r/nuodb/nuodb-ce/tags. If omitted, the database version will be inherited from the project.
+|The version/tag of the NuoDB image to use. For available tags, see https://hub.docker.com/r/nuodb/nuodb/tags. If omitted, the database version will be inherited from the project.
 
 |`-h, --help`
 |Show this help message and exit.
@@ -1147,7 +1110,7 @@ nuodb-cp database update [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 
 |`--editor`
 |The editor to use to update the resource +
-*default*: `${NUODB_CP_EDITOR:-vi}`
+*default*: `${NUODB_CP_EDITOR}`
 
 |`-h, --help`
 |Show this help message and exit.
@@ -1376,24 +1339,8 @@ nuodb-cp project list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
 
-|`--offset`
-|The offset at which to list items +
-*required*
-
-|`--cursor`
-|The cursor at which to list items, which represents the last item returned` +
-*required*
-
 |`--limit`
 |The number of items to return
-
-|`--expand-all`
-|Whether to expand payload fields +
-*required*
-
-|`--expand-field`
-|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
-*required*
 
 |`-h, --help`
 |Show this help message and exit.
@@ -1409,8 +1356,9 @@ nuodb-cp project list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 Get an existing project
 
 ....
-nuodb-cp project get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                     [--token=<token>] [--trusted-cert=<trustedCert>] PROJECT
+nuodb-cp project get [-whV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
+                     [--token=<token>] [--trusted-cert=<trustedCert>]
+                     [--watch-non-interactive] PROJECT
 ....
 
 [cols="1,3"]
@@ -1437,6 +1385,12 @@ nuodb-cp project get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
 *default*: `${NUODB_CP_TRUSTED_CERT}`
+
+|`-w, --watch`
+|Whether to stream events on resource. Non-interactive mode is automatically enabled if standard input or output is not connected to a TTY.
+
+|`--watch-non-interactive`
+|Whether to stream events on resource in non-interactive mode
 
 |`-h, --help`
 |Show this help message and exit.
@@ -1500,7 +1454,7 @@ nuodb-cp project create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |Opaque parameter supplied to service tier
 
 |`--product-version`
-|The version/tag of the NuoDB image to use. For available tags, see https://hub.docker.com/r/nuodb/nuodb-ce/tags. If omitted, the project version will be resolved based on the SLA and cluster configuration.
+|The version/tag of the NuoDB image to use. For available tags, see https://hub.docker.com/r/nuodb/nuodb/tags. If omitted, the project version will be resolved based on the SLA and cluster configuration.
 
 |`--expires-in`
 |Set the database to expire after elapsed time
@@ -1554,7 +1508,7 @@ nuodb-cp project update [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 
 |`--editor`
 |The editor to use to update the resource +
-*default*: `${NUODB_CP_EDITOR:-vi}`
+*default*: `${NUODB_CP_EDITOR}`
 
 |`-h, --help`
 |Show this help message and exit.
@@ -1695,24 +1649,8 @@ nuodb-cp user list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--list-accessible`
 |Whether to return any accessible sub-resources even if the current user does not have access privileges to list all resources at this level
 
-|`--offset`
-|The offset at which to list items +
-*required*
-
-|`--cursor`
-|The cursor at which to list items, which represents the last item returned` +
-*required*
-
 |`--limit`
 |The number of items to return
-
-|`--expand-all`
-|Whether to expand payload fields +
-*required*
-
-|`--expand-field`
-|Field to expand, in the format `<field>` or `<field>=<JSONPath expression>` +
-*required*
 
 |`-h, --help`
 |Show this help message and exit.
@@ -1728,8 +1666,9 @@ nuodb-cp user list [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 Get an existing user
 
 ....
-nuodb-cp user get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
-                  [--token=<token>] [--trusted-cert=<trustedCert>] USER
+nuodb-cp user get [-whV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
+                  [--token=<token>] [--trusted-cert=<trustedCert>]
+                  [--watch-non-interactive] USER
 ....
 
 [cols="1,3"]
@@ -1756,6 +1695,12 @@ nuodb-cp user get [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--trusted-cert`
 |The certificate used to verify the HTTPS server in PEM format +
 *default*: `${NUODB_CP_TRUSTED_CERT}`
+
+|`-w, --watch`
+|Whether to stream events on resource. Non-interactive mode is automatically enabled if standard input or output is not connected to a TTY.
+
+|`--watch-non-interactive`
+|Whether to stream events on resource in non-interactive mode
 
 |`-h, --help`
 |Show this help message and exit.
@@ -1863,7 +1808,7 @@ nuodb-cp user update [-XhV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 
 |`--editor`
 |The editor to use to update the resource +
-*default*: `${NUODB_CP_EDITOR:-vi}`
+*default*: `${NUODB_CP_EDITOR}`
 
 |`-X, --allow-cross-organization`
 |Allow user to have access outside of its organization
@@ -2052,6 +1997,105 @@ nuodb-cp server get-spec [-hV] [-u=<url>] [-f=<format>]
 |`-f, --format`
 |The output format to use +
 *default*: `json`
+
+|`-h, --help`
+|Show this help message and exit.
+
+|`-V, --version`
+|Print version information and exit.
+
+|===
+
+[#external-operator]
+== external-operator
+
+Subcommands related to the DBaaS External Operator
+
+....
+nuodb-cp external-operator [-hV] [start
+                                 |generate-crds]
+....
+
+[cols="1,3"]
+|===
+|`-h, --help`
+|Show this help message and exit.
+
+|`-V, --version`
+|Print version information and exit.
+
+|===
+
+[#external-operator-start]
+=== start
+
+Start the DBaaS External Operator
+
+....
+nuodb-cp external-operator start [-hV] [--log-levels=<logLevels>]
+                                 [--kubeconfig=<kubeconfig>]
+                                 [--enable-leader-election]
+                                 [--property=<String=String>]... [-b=<urlBase>]
+                                 [-u=<user>] [-p[=<password>]]
+                                 [--token=<token>]
+                                 [--trusted-cert=<trustedCert>]
+....
+
+[cols="1,3"]
+|===
+|`--log-levels`
+|Log levels in the format `<logger name>:<level>,...`, where level is one of OFF, TRACE, DEBUG, INFO, WARN, ERROR, ALL. If `<logger name>:` is omitted, then the root logger is assumed.
+
+|`--kubeconfig`
+|The kubeconfig file to use to configure the Kubernetes client
+
+|`--enable-leader-election`
+|Whether to enable leader election
+
+|`--property`
+|A server property override
+
+|`-b, --url-base`
+|The base URL for the server, including the protocol +
+*default*: `${NUODB_CP_URL_BASE:-http://localhost:8080}`
+
+|`-u, --user`
+|The name of the user issuing the request +
+*default*: `${NUODB_CP_USER}`
+
+|`-p, --password`
+|The password to authenticate the user +
+*default*: `${NUODB_CP_PASSWORD}`
+
+|`--token`
+|The token used to authenticate the user +
+*default*: `${NUODB_CP_TOKEN}`
+
+|`--trusted-cert`
+|The certificate used to verify the HTTPS server in PEM format +
+*default*: `${NUODB_CP_TRUSTED_CERT}`
+
+|`-h, --help`
+|Show this help message and exit.
+
+|`-V, --version`
+|Print version information and exit.
+
+|===
+
+[#external-operator-generate-crds]
+=== generate-crds
+
+Generate CRDs for the DBaaS External Operator
+
+....
+nuodb-cp external-operator generate-crds [-hV] [--output-dir=<outputDir>]
+....
+
+[cols="1,3"]
+|===
+|`--output-dir`
+|The directory to output CRDs to
 
 |`-h, --help`
 |Show this help message and exit.

@@ -7,7 +7,7 @@ info:
   contact:
     url: https://nuodb.com
     email: NuoDB.Support@3ds.com
-  version: 2.6.0
+  version: 2.7.0
 servers:
 - url: https://example.nuodb.com
 paths:
@@ -45,7 +45,7 @@ paths:
         description: "Whether to expand payload fields. If `expand=true`, then all\
           \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
           \ the value is interpreted as a comma-separated list of top-level fields\
-          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
@@ -140,7 +140,7 @@ paths:
         description: "Whether to expand payload fields. If `expand=true`, then all\
           \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
           \ the value is interpreted as a comma-separated list of top-level fields\
-          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
@@ -613,7 +613,7 @@ paths:
         description: "Whether to expand payload fields. If `expand=true`, then all\
           \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
           \ the value is interpreted as a comma-separated list of top-level fields\
-          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
@@ -719,7 +719,7 @@ paths:
         description: "Whether to expand payload fields. If `expand=true`, then all\
           \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
           \ the value is interpreted as a comma-separated list of top-level fields\
-          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
@@ -815,7 +815,7 @@ paths:
         description: "Whether to expand payload fields. If `expand=true`, then all\
           \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
           \ the value is interpreted as a comma-separated list of top-level fields\
-          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
@@ -910,7 +910,7 @@ paths:
         description: "Whether to expand payload fields. If `expand=true`, then all\
           \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
           \ the value is interpreted as a comma-separated list of top-level fields\
-          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
@@ -1010,7 +1010,7 @@ paths:
         description: "Whether to expand payload fields. If `expand=true`, then all\
           \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
           \ the value is interpreted as a comma-separated list of top-level fields\
-          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
@@ -1115,7 +1115,7 @@ paths:
         description: "Whether to expand payload fields. If `expand=true`, then all\
           \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
           \ the value is interpreted as a comma-separated list of top-level fields\
-          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
@@ -1669,7 +1669,7 @@ paths:
         description: "Whether to expand payload fields. If `expand=true`, then all\
           \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
           \ the value is interpreted as a comma-separated list of top-level fields\
-          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
@@ -1764,7 +1764,7 @@ paths:
         description: "Whether to expand payload fields. If `expand=true`, then all\
           \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
           \ the value is interpreted as a comma-separated list of top-level fields\
-          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
@@ -1864,7 +1864,7 @@ paths:
         description: "Whether to expand payload fields. If `expand=true`, then all\
           \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
           \ the value is interpreted as a comma-separated list of top-level fields\
-          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
@@ -2452,6 +2452,1615 @@ paths:
         bearerAuth: []
       x-ui:
         enabled: true
+  /events/backuppolicies:
+    get:
+      tags:
+      - events/backuppolicies
+      summary: List the backup policies in the cluster and stream events on them
+      operationId: streamAllBackupPolicies
+      parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If omitted or `expand=true`,\
+          \ then all payload fields are expanded. If `expand=<field>,...` is supplied,\
+          \ then the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field. If\
+          \ `expand=false`, then expansion is disabled and only the resource names\
+          \ relative to the request path are returned."
+        schema:
+          type: string
+          default: "true"
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+      - name: watchAll
+        in: query
+        description: "Whether to watch for events on all resources in a scope, including\
+          \ ones not present in `RESYNC` message"
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: The event stream was successfully created
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/BackupPolicyEventModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /events/backuppolicies/{organization}:
+    get:
+      tags:
+      - events/backuppolicies
+      summary: List the backup policies in an organization and stream events on them
+      operationId: streamBackupPolicies
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If omitted or `expand=true`,\
+          \ then all payload fields are expanded. If `expand=<field>,...` is supplied,\
+          \ then the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field. If\
+          \ `expand=false`, then expansion is disabled and only the resource names\
+          \ relative to the request path are returned."
+        schema:
+          type: string
+          default: "true"
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+      - name: watchAll
+        in: query
+        description: "Whether to watch for events on all resources in a scope, including\
+          \ ones not present in `RESYNC` message"
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: The event stream was successfully created
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/BackupPolicyEventModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /events/backuppolicies/{organization}/{policy}:
+    get:
+      tags:
+      - events/backuppolicies
+      summary: Get a backup policy and stream events on it
+      operationId: streamBackupPolicy
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: policy
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The event stream was successfully created
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/BackupPolicyEventModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /events/backups:
+    get:
+      tags:
+      - events/backups
+      summary: List the backups in the cluster and stream events on them
+      operationId: streamAllBackups
+      parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If omitted or `expand=true`,\
+          \ then all payload fields are expanded. If `expand=<field>,...` is supplied,\
+          \ then the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field. If\
+          \ `expand=false`, then expansion is disabled and only the resource names\
+          \ relative to the request path are returned."
+        schema:
+          type: string
+          default: "true"
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+      - name: watchAll
+        in: query
+        description: "Whether to watch for events on all resources in a scope, including\
+          \ ones not present in `RESYNC` message"
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: The event stream was successfully created
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/BackupEventModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /events/backups/{organization}:
+    get:
+      tags:
+      - events/backups
+      summary: List the backups in an organization and stream events on them
+      operationId: streamOrganizationBackups
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If omitted or `expand=true`,\
+          \ then all payload fields are expanded. If `expand=<field>,...` is supplied,\
+          \ then the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field. If\
+          \ `expand=false`, then expansion is disabled and only the resource names\
+          \ relative to the request path are returned."
+        schema:
+          type: string
+          default: "true"
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+      - name: watchAll
+        in: query
+        description: "Whether to watch for events on all resources in a scope, including\
+          \ ones not present in `RESYNC` message"
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: The event stream was successfully created
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/BackupEventModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /events/backups/{organization}/{project}:
+    get:
+      tags:
+      - events/backups
+      summary: List the backups in a project and stream events on them
+      operationId: streamProjectBackups
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If omitted or `expand=true`,\
+          \ then all payload fields are expanded. If `expand=<field>,...` is supplied,\
+          \ then the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field. If\
+          \ `expand=false`, then expansion is disabled and only the resource names\
+          \ relative to the request path are returned."
+        schema:
+          type: string
+          default: "true"
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+      - name: watchAll
+        in: query
+        description: "Whether to watch for events on all resources in a scope, including\
+          \ ones not present in `RESYNC` message"
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: The event stream was successfully created
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/BackupEventModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The project does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /events/backups/{organization}/{project}/{database}:
+    get:
+      tags:
+      - events/backups
+      summary: List the backups in a database and stream events on them
+      operationId: streamBackups
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: database
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If omitted or `expand=true`,\
+          \ then all payload fields are expanded. If `expand=<field>,...` is supplied,\
+          \ then the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field. If\
+          \ `expand=false`, then expansion is disabled and only the resource names\
+          \ relative to the request path are returned."
+        schema:
+          type: string
+          default: "true"
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+      - name: watchAll
+        in: query
+        description: "Whether to watch for events on all resources in a scope, including\
+          \ ones not present in `RESYNC` message"
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: The event stream was successfully created
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/BackupEventModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The project does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /events/backups/{organization}/{project}/{database}/{backup}:
+    get:
+      tags:
+      - events/backups
+      summary: Get a backup and stream events on it
+      operationId: streamBackup
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: database
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: backup
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The event stream was successfully created
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/BackupEventModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /events/databases:
+    get:
+      tags:
+      - events/databases
+      summary: List the databases in the cluster and stream events on them
+      operationId: streamAllDatabases
+      parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If omitted or `expand=true`,\
+          \ then all payload fields are expanded. If `expand=<field>,...` is supplied,\
+          \ then the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field. If\
+          \ `expand=false`, then expansion is disabled and only the resource names\
+          \ relative to the request path are returned."
+        schema:
+          type: string
+          default: "true"
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+      - name: watchAll
+        in: query
+        description: "Whether to watch for events on all resources in a scope, including\
+          \ ones not present in `RESYNC` message"
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: The event stream was successfully created
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/DatabaseEventModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /events/databases/{organization}:
+    get:
+      tags:
+      - events/databases
+      summary: List the databases in an organization and stream events on them
+      operationId: streamOrganizationDatabases
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If omitted or `expand=true`,\
+          \ then all payload fields are expanded. If `expand=<field>,...` is supplied,\
+          \ then the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field. If\
+          \ `expand=false`, then expansion is disabled and only the resource names\
+          \ relative to the request path are returned."
+        schema:
+          type: string
+          default: "true"
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+      - name: watchAll
+        in: query
+        description: "Whether to watch for events on all resources in a scope, including\
+          \ ones not present in `RESYNC` message"
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: The event stream was successfully created
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/DatabaseEventModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /events/databases/{organization}/{project}:
+    get:
+      tags:
+      - events/databases
+      summary: List the databases in a project and stream events on them
+      operationId: streamDatabases
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If omitted or `expand=true`,\
+          \ then all payload fields are expanded. If `expand=<field>,...` is supplied,\
+          \ then the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field. If\
+          \ `expand=false`, then expansion is disabled and only the resource names\
+          \ relative to the request path are returned."
+        schema:
+          type: string
+          default: "true"
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+      - name: watchAll
+        in: query
+        description: "Whether to watch for events on all resources in a scope, including\
+          \ ones not present in `RESYNC` message"
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: The event stream was successfully created
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/DatabaseEventModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The project does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /events/databases/{organization}/{project}/{database}:
+    get:
+      tags:
+      - events/databases
+      summary: Get a database and stream events on it
+      operationId: streamDatabase
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: database
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The event stream was successfully created
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/DatabaseEventModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /events/projects:
+    get:
+      tags:
+      - events/projects
+      summary: List the projects in the cluster and stream events on them
+      operationId: streamAllProjects
+      parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If omitted or `expand=true`,\
+          \ then all payload fields are expanded. If `expand=<field>,...` is supplied,\
+          \ then the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field. If\
+          \ `expand=false`, then expansion is disabled and only the resource names\
+          \ relative to the request path are returned."
+        schema:
+          type: string
+          default: "true"
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+      - name: watchAll
+        in: query
+        description: "Whether to watch for events on all resources in a scope, including\
+          \ ones not present in `RESYNC` message"
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: The event stream was successfully created
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/ProjectEventModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /events/projects/{organization}:
+    get:
+      tags:
+      - events/projects
+      summary: List the projects in an organization and stream events on them
+      operationId: streamProjects
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If omitted or `expand=true`,\
+          \ then all payload fields are expanded. If `expand=<field>,...` is supplied,\
+          \ then the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field. If\
+          \ `expand=false`, then expansion is disabled and only the resource names\
+          \ relative to the request path are returned."
+        schema:
+          type: string
+          default: "true"
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+      - name: watchAll
+        in: query
+        description: "Whether to watch for events on all resources in a scope, including\
+          \ ones not present in `RESYNC` message"
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: The event stream was successfully created
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/ProjectEventModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /events/projects/{organization}/{project}:
+    get:
+      tags:
+      - events/projects
+      summary: Get a project and stream events on it
+      operationId: streamProject
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The event stream was successfully created
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/ProjectEventModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /events/users:
+    get:
+      tags:
+      - events/users
+      summary: List the users in the cluster and stream events on them
+      operationId: streamAllUsers
+      parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If omitted or `expand=true`,\
+          \ then all payload fields are expanded. If `expand=<field>,...` is supplied,\
+          \ then the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field. If\
+          \ `expand=false`, then expansion is disabled and only the resource names\
+          \ relative to the request path are returned."
+        schema:
+          type: string
+          default: "true"
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+      - name: watchAll
+        in: query
+        description: "Whether to watch for events on all resources in a scope, including\
+          \ ones not present in `RESYNC` message"
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: The event stream was successfully created
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/UserEventModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /events/users/{organization}:
+    get:
+      tags:
+      - events/users
+      summary: List the users in an organization and stream events on them
+      operationId: streamUsers
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If omitted or `expand=true`,\
+          \ then all payload fields are expanded. If `expand=<field>,...` is supplied,\
+          \ then the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field. If\
+          \ `expand=false`, then expansion is disabled and only the resource names\
+          \ relative to the request path are returned."
+        schema:
+          type: string
+          default: "true"
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+      - name: watchAll
+        in: query
+        description: "Whether to watch for events on all resources in a scope, including\
+          \ ones not present in `RESYNC` message"
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: The event stream was successfully created
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/UserEventModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /events/users/{organization}/{user}:
+    get:
+      tags:
+      - events/users
+      summary: Get a user and stream events on it
+      operationId: streamUser
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: user
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The event stream was successfully created
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/UserEventModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
   /healthz:
     get:
       tags:
@@ -2661,7 +4270,7 @@ paths:
         description: "Whether to expand payload fields. If `expand=true`, then all\
           \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
           \ the value is interpreted as a comma-separated list of top-level fields\
-          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
@@ -2756,7 +4365,7 @@ paths:
         description: "Whether to expand payload fields. If `expand=true`, then all\
           \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
           \ the value is interpreted as a comma-separated list of top-level fields\
-          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
@@ -3203,7 +4812,7 @@ paths:
         description: "Whether to expand payload fields. If `expand=true`, then all\
           \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
           \ the value is interpreted as a comma-separated list of top-level fields\
-          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
@@ -3298,7 +4907,7 @@ paths:
         description: "Whether to expand payload fields. If `expand=true`, then all\
           \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
           \ the value is interpreted as a comma-separated list of top-level fields\
-          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
@@ -3761,7 +5370,7 @@ paths:
         description: "Whether to expand payload fields. If `expand=true`, then all\
           \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
           \ the value is interpreted as a comma-separated list of top-level fields\
-          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
@@ -4095,7 +5704,7 @@ paths:
         description: "Whether to expand payload fields. If `expand=true`, then all\
           \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
           \ the value is interpreted as a comma-separated list of top-level fields\
-          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
@@ -4428,7 +6037,7 @@ paths:
         description: "Whether to expand payload fields. If `expand=true`, then all\
           \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
           \ the value is interpreted as a comma-separated list of top-level fields\
-          \ to expand. If `expand.<field>=<JSONPath expression> is supplied, then\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
@@ -4729,6 +6338,51 @@ paths:
         bearerAuth: []
 components:
   schemas:
+    BackupPolicyMissedBackup:
+      type: object
+      properties:
+        missedTime:
+          type: string
+          description: The time that a backup was missed by this policy
+          format: date-time
+          example: 2024-01-01T00:00:00Z
+          x-tf-name: missed_time
+          x-oapi-codegen-extra-tags:
+            cty: missed_time
+            hcl: missed_time
+            tfsdk: missed_time
+          x-go-type: string
+          x-order: 0
+        database:
+          type: string
+          description: The fully-qualified database name for which a backup was missed
+            by this policy
+          x-tf-name: database
+          x-oapi-codegen-extra-tags:
+            cty: database
+            hcl: database
+            tfsdk: database
+          x-order: 1
+        reason:
+          type: string
+          description: A programmatic identifier indicating the reason for missing
+            a backup by this policy
+          x-tf-name: reason
+          x-oapi-codegen-extra-tags:
+            cty: reason
+            hcl: reason
+            tfsdk: reason
+          x-order: 2
+        message:
+          type: string
+          description: A human readable message indicating details about the missed
+            backup by this policy
+          x-tf-name: message
+          x-oapi-codegen-extra-tags:
+            cty: message
+            hcl: message
+            tfsdk: message
+          x-order: 3
     BackupPolicyModel:
       required:
       - frequency
@@ -4738,6 +6392,8 @@ components:
       type: object
       properties:
         organization:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The organization that the backup policy belongs to
@@ -4749,6 +6405,8 @@ components:
           x-tf-identifier: true
           x-order: 0
         name:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The name of the backup policy
@@ -4876,6 +6534,17 @@ components:
             tfsdk: next_schedule_time
           x-go-type: string
           x-order: 2
+        lastMissedBackups:
+          type: array
+          description: The last database backups that were not scheduled by this policy
+          items:
+            $ref: "#/components/schemas/BackupPolicyMissedBackup"
+          x-tf-name: last_missed_backups
+          x-oapi-codegen-extra-tags:
+            cty: last_missed_backups
+            hcl: last_missed_backups
+            tfsdk: last_missed_backups
+          x-order: 3
       readOnly: true
       x-tf-name: status
       x-oapi-codegen-extra-tags:
@@ -4935,11 +6604,103 @@ components:
             hcl: yearly
             tfsdk: yearly
           x-order: 4
+        settings:
+          $ref: "#/components/schemas/RotationSettingsModel"
       x-tf-name: retention
       x-oapi-codegen-extra-tags:
         cty: retention
         hcl: retention
         tfsdk: retention
+    RotationSettingsModel:
+      type: object
+      properties:
+        dayOfWeek:
+          type: string
+          description: The day of the week used to promote backup to weekly
+          default: Sunday
+          enum:
+          - Monday
+          - Tuesday
+          - Wednesday
+          - Thursday
+          - Friday
+          - Saturday
+          - Sunday
+          x-tf-name: day_of_week
+          x-oapi-codegen-extra-tags:
+            cty: day_of_week
+            hcl: day_of_week
+            tfsdk: day_of_week
+          x-order: 0
+        month:
+          type: string
+          description: The month of the year used to promote backup to yearly
+          default: January
+          enum:
+          - January
+          - February
+          - March
+          - April
+          - May
+          - June
+          - July
+          - August
+          - September
+          - October
+          - November
+          - December
+          x-tf-name: month
+          x-oapi-codegen-extra-tags:
+            cty: month
+            hcl: month
+            tfsdk: month
+          x-order: 1
+        relativeToLast:
+          type: boolean
+          description: Whether to apply the backup rotation scheme relative to the
+            last successful backup instead to the current time
+          default: true
+          x-tf-name: relative_to_last
+          x-oapi-codegen-extra-tags:
+            cty: relative_to_last
+            hcl: relative_to_last
+            tfsdk: relative_to_last
+          x-order: 2
+        promoteLatestToHourly:
+          type: boolean
+          description: Whether to promote the latest backup within the hour if multiple
+            backups exist for that hour
+          x-tf-name: promote_latest_to_hourly
+          x-oapi-codegen-extra-tags:
+            cty: promote_latest_to_hourly
+            hcl: promote_latest_to_hourly
+            tfsdk: promote_latest_to_hourly
+          x-order: 3
+        promoteLatestToDaily:
+          type: boolean
+          description: Whether to promote the latest backup within the day if multiple
+            backups exist for that day
+          x-tf-name: promote_latest_to_daily
+          x-oapi-codegen-extra-tags:
+            cty: promote_latest_to_daily
+            hcl: promote_latest_to_daily
+            tfsdk: promote_latest_to_daily
+          x-order: 4
+        promoteLatestToMonthly:
+          type: boolean
+          description: Whether to promote the latest backup within the month if multiple
+            backups exist for that month
+          x-tf-name: promote_latest_to_monthly
+          x-oapi-codegen-extra-tags:
+            cty: promote_latest_to_monthly
+            hcl: promote_latest_to_monthly
+            tfsdk: promote_latest_to_monthly
+          x-order: 5
+      x-tf-name: settings
+      x-oapi-codegen-extra-tags:
+        cty: settings
+        hcl: settings
+        tfsdk: settings
     SelectorModel:
       required:
       - scope
@@ -5072,6 +6833,7 @@ components:
           type: string
           x-order: 1
         path:
+          minLength: 1
           pattern: /.*
           type: string
           x-order: 2
@@ -5086,6 +6848,8 @@ components:
       type: object
       properties:
         organization:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The organization that the backup belongs to
@@ -5097,6 +6861,8 @@ components:
           x-tf-identifier: true
           x-order: 0
         project:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The project that the backup belongs to
@@ -5108,6 +6874,8 @@ components:
           x-tf-identifier: true
           x-order: 1
         database:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The database that the backup belongs to
@@ -5235,6 +7003,23 @@ components:
             hcl: created_by_policy
             tfsdk: created_by_policy
           x-order: 6
+        retainedAs:
+          type: array
+          description: The matching retention cycles by this backup
+          items:
+            type: string
+            enum:
+            - hourly
+            - daily
+            - weekly
+            - monthly
+            - yearly
+          x-tf-name: retained_as
+          x-oapi-codegen-extra-tags:
+            cty: retained_as
+            hcl: retained_as
+            tfsdk: retained_as
+          x-order: 7
       readOnly: true
       x-tf-name: status
       x-oapi-codegen-extra-tags:
@@ -5248,6 +7033,7 @@ components:
       type: object
       properties:
         backupHandle:
+          minLength: 1
           type: string
           description: The existing backup handle to import
           x-tf-name: backup_handle
@@ -5258,6 +7044,7 @@ components:
           x-immutable: true
           x-order: 0
         backupPlugin:
+          minLength: 1
           type: string
           description: The plugin used to create the backup to import
           x-tf-name: backup_plugin
@@ -5280,6 +7067,8 @@ components:
       type: object
       properties:
         organization:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The organization that the backup belongs to
@@ -5291,6 +7080,8 @@ components:
           x-tf-identifier: true
           x-order: 0
         project:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The project that the backup belongs to
@@ -5302,6 +7093,8 @@ components:
           x-tf-identifier: true
           x-order: 1
         database:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The database that the backup belongs to
@@ -5334,6 +7127,8 @@ components:
       type: object
       properties:
         organization:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The organization that the database belongs to
@@ -5346,6 +7141,8 @@ components:
           x-immutable: true
           x-order: 0
         project:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The project that the database belongs to
@@ -5358,6 +7155,8 @@ components:
           x-immutable: true
           x-order: 1
         name:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The name of the database
@@ -5460,7 +7259,7 @@ components:
           pattern: "([1-9][0-9]*|[1-9][0-9]*\\.[0-9]+|[1-9][0-9]*\\.[0-9]+\\.[0-9]+)([._-][a-z0-9._-]+)?"
           type: string
           description: "The version/tag of the NuoDB image to use. For available tags,\
-            \ see https://hub.docker.com/r/nuodb/nuodb-ce/tags. If omitted, the database\
+            \ see https://hub.docker.com/r/nuodb/nuodb/tags. If omitted, the database\
             \ version will be inherited from the project."
           x-tf-name: product_version
           x-oapi-codegen-extra-tags:
@@ -5535,6 +7334,7 @@ components:
               * `Failed` - The database has failed to achieve a usable state
               * `Deleting` - The database has been marked for deletion, which is in progress
               * `Restoring` - Restore from backup is in progress for this database
+              * `RotatingCertificates` - TLS certificates rotation is in progress for this database
           enum:
           - Available
           - Creating
@@ -5545,6 +7345,7 @@ components:
           - Failed
           - Deleting
           - Restoring
+          - RotatingCertificates
           x-tf-name: state
           x-oapi-codegen-extra-tags:
             cty: state
@@ -5620,6 +7421,8 @@ components:
       type: object
       properties:
         organization:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The organization that the database belongs to
@@ -5632,6 +7435,8 @@ components:
           x-immutable: true
           x-order: 0
         project:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The project that the database belongs to
@@ -5644,6 +7449,8 @@ components:
           x-immutable: true
           x-order: 1
         name:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The name of the database
@@ -5714,6 +7521,7 @@ components:
       type: object
       properties:
         current:
+          minLength: 1
           type: string
           description: "The current DBA password, which must be supplied for verification\
             \ purposes"
@@ -5797,6 +7605,8 @@ components:
       type: object
       properties:
         organization:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The organization that the project belongs to
@@ -5809,6 +7619,8 @@ components:
           x-immutable: true
           x-order: 0
         name:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The name of the project
@@ -5835,6 +7647,7 @@ components:
             tfsdk: labels
           x-order: 2
         sla:
+          minLength: 1
           type: string
           description: The SLA for the project. Cannot be updated once the project
             is created.
@@ -5847,6 +7660,7 @@ components:
           x-immutable: true
           x-order: 3
         tier:
+          minLength: 1
           type: string
           description: The service tier for the project
           example: n0.small
@@ -5888,7 +7702,7 @@ components:
           pattern: "([1-9][0-9]*|[1-9][0-9]*\\.[0-9]+|[1-9][0-9]*\\.[0-9]+\\.[0-9]+)([._-][a-z0-9._-]+)?"
           type: string
           description: "The version/tag of the NuoDB image to use. For available tags,\
-            \ see https://hub.docker.com/r/nuodb/nuodb-ce/tags. If omitted, the project\
+            \ see https://hub.docker.com/r/nuodb/nuodb/tags. If omitted, the project\
             \ version will be resolved based on the SLA and cluster configuration."
           x-tf-name: product_version
           x-oapi-codegen-extra-tags:
@@ -5953,6 +7767,7 @@ components:
               * `Expired` - The project and its databases have expired
               * `Failed` - The project has failed to achieve a usable state
               * `Deleting` - The project has been marked for deletion, which is in progress
+              * `RotatingCertificates` - TLS certificates rotation is in progress for this domain
           enum:
           - Available
           - Creating
@@ -5962,6 +7777,7 @@ components:
           - Expired
           - Failed
           - Deleting
+          - RotatingCertificates
           x-tf-name: state
           x-oapi-codegen-extra-tags:
             cty: state
@@ -5982,6 +7798,8 @@ components:
       type: object
       properties:
         organization:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The organization that the user belongs to
@@ -5993,6 +7811,8 @@ components:
           x-tf-identifier: true
           x-order: 0
         name:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The name of the user
@@ -6035,6 +7855,8 @@ components:
       type: object
       properties:
         organization:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The organization that the user belongs to
@@ -6046,6 +7868,8 @@ components:
           x-tf-identifier: true
           x-order: 0
         name:
+          maxLength: 63
+          minLength: 1
           pattern: "[a-z][a-z0-9]*"
           type: string
           description: The name of the user
@@ -6098,6 +7922,7 @@ components:
       type: object
       properties:
         name:
+          minLength: 1
           type: string
           description: The name of the resource
           x-order: 0
@@ -6259,6 +8084,7 @@ components:
       type: object
       properties:
         name:
+          minLength: 1
           type: string
           description: The name of the resource
           x-order: 0
@@ -6341,6 +8167,7 @@ components:
       type: object
       properties:
         name:
+          minLength: 1
           type: string
           description: The name of the resource
           x-order: 0
@@ -6370,6 +8197,136 @@ components:
     ServiceTierStatus:
       type: object
       readOnly: true
+    BackupEventModel:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The name of the resource the event is on relative to the request
+            path
+          x-order: 0
+        event:
+          type: string
+          description: |-
+            The type of event:
+              * `RESYNC` - The event stream was established and the current state of the resource is being returned
+              * `CREATED` - The resource was created
+              * `UPDATED` - The resource was updated
+              * `DELETED` - The resource was deleted
+              * `HEARTBEAT` - The server is sending an empty message to ensure that the event stream remains open
+          enum:
+          - RESYNC
+          - CREATED
+          - UPDATED
+          - DELETED
+          - HEARTBEAT
+          x-order: 1
+        data:
+          $ref: "#/components/schemas/BackupModel"
+    BackupPolicyEventModel:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The name of the resource the event is on relative to the request
+            path
+          x-order: 0
+        event:
+          type: string
+          description: |-
+            The type of event:
+              * `RESYNC` - The event stream was established and the current state of the resource is being returned
+              * `CREATED` - The resource was created
+              * `UPDATED` - The resource was updated
+              * `DELETED` - The resource was deleted
+              * `HEARTBEAT` - The server is sending an empty message to ensure that the event stream remains open
+          enum:
+          - RESYNC
+          - CREATED
+          - UPDATED
+          - DELETED
+          - HEARTBEAT
+          x-order: 1
+        data:
+          $ref: "#/components/schemas/BackupPolicyModel"
+    DatabaseEventModel:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The name of the resource the event is on relative to the request
+            path
+          x-order: 0
+        event:
+          type: string
+          description: |-
+            The type of event:
+              * `RESYNC` - The event stream was established and the current state of the resource is being returned
+              * `CREATED` - The resource was created
+              * `UPDATED` - The resource was updated
+              * `DELETED` - The resource was deleted
+              * `HEARTBEAT` - The server is sending an empty message to ensure that the event stream remains open
+          enum:
+          - RESYNC
+          - CREATED
+          - UPDATED
+          - DELETED
+          - HEARTBEAT
+          x-order: 1
+        data:
+          $ref: "#/components/schemas/DatabaseModel"
+    ProjectEventModel:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The name of the resource the event is on relative to the request
+            path
+          x-order: 0
+        event:
+          type: string
+          description: |-
+            The type of event:
+              * `RESYNC` - The event stream was established and the current state of the resource is being returned
+              * `CREATED` - The resource was created
+              * `UPDATED` - The resource was updated
+              * `DELETED` - The resource was deleted
+              * `HEARTBEAT` - The server is sending an empty message to ensure that the event stream remains open
+          enum:
+          - RESYNC
+          - CREATED
+          - UPDATED
+          - DELETED
+          - HEARTBEAT
+          x-order: 1
+        data:
+          $ref: "#/components/schemas/ProjectModel"
+    UserEventModel:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The name of the resource the event is on relative to the request
+            path
+          x-order: 0
+        event:
+          type: string
+          description: |-
+            The type of event:
+              * `RESYNC` - The event stream was established and the current state of the resource is being returned
+              * `CREATED` - The resource was created
+              * `UPDATED` - The resource was updated
+              * `DELETED` - The resource was deleted
+              * `HEARTBEAT` - The server is sending an empty message to ensure that the event stream remains open
+          enum:
+          - RESYNC
+          - CREATED
+          - UPDATED
+          - DELETED
+          - HEARTBEAT
+          x-order: 1
+        data:
+          $ref: "#/components/schemas/DbaasUserModel"
     ErrorContent:
       type: object
       properties:
