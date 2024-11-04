@@ -1,4 +1,4 @@
-# NuoDB Control Plane
+# NuoDB Control Plane (modified)
 
 This repository is for releases and documentation for the NuoDB Control Plane, which enables automatic management of NuoDB databases in Kubernetes.
 
