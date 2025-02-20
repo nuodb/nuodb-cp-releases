@@ -1,4 +1,4 @@
-:revnumber: 2.7.0
+:revnumber: 2.8.0
 :toc: left
 
 [#nuodb-cp]
@@ -1997,6 +1997,9 @@ nuodb-cp server get-spec [-hV] [-u=<url>] [-f=<format>]
 |`-f, --format`
 |The output format to use +
 *default*: `json`
+
+|`--server-version`
+|
 
 |`-h, --help`
 |Show this help message and exit.

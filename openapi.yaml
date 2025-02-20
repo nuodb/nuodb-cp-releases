@@ -7,7 +7,7 @@ info:
   contact:
     url: https://nuodb.com
     email: NuoDB.Support@3ds.com
-  version: 2.7.0
+  version: 2.8.0
 servers:
 - url: https://example.nuodb.com
 paths:
@@ -57,6 +57,16 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -152,6 +162,16 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -627,6 +647,16 @@ paths:
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
         schema:
           type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+        schema:
+          type: string
       - name: listAccessible
         in: query
         description: Whether to return any accessible sub-resources even if the current
@@ -733,6 +763,16 @@ paths:
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
         schema:
           type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+        schema:
+          type: string
       - name: listAccessible
         in: query
         description: Whether to return any accessible sub-resources even if the current
@@ -829,6 +869,16 @@ paths:
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
         schema:
           type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+        schema:
+          type: string
       - name: listAccessible
         in: query
         description: Whether to return any accessible sub-resources even if the current
@@ -922,6 +972,16 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -1022,6 +1082,16 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -1127,6 +1197,16 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -1683,6 +1763,16 @@ paths:
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
         schema:
           type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+        schema:
+          type: string
       - name: listAccessible
         in: query
         description: Whether to return any accessible sub-resources even if the current
@@ -1776,6 +1866,16 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -1876,6 +1976,16 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -2503,6 +2613,16 @@ paths:
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
         schema:
           type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+        schema:
+          type: string
       - name: listAccessible
         in: query
         description: Whether to return any accessible sub-resources even if the current
@@ -2603,6 +2723,16 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -2753,6 +2883,16 @@ paths:
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
         schema:
           type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+        schema:
+          type: string
       - name: listAccessible
         in: query
         description: Whether to return any accessible sub-resources even if the current
@@ -2853,6 +2993,16 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -2960,6 +3110,16 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -3078,6 +3238,16 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -3244,6 +3414,16 @@ paths:
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
         schema:
           type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+        schema:
+          type: string
       - name: listAccessible
         in: query
         description: Whether to return any accessible sub-resources even if the current
@@ -3344,6 +3524,16 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -3451,6 +3641,16 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -3612,6 +3812,16 @@ paths:
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
         schema:
           type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+        schema:
+          type: string
       - name: listAccessible
         in: query
         description: Whether to return any accessible sub-resources even if the current
@@ -3712,6 +3922,16 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -3862,6 +4082,16 @@ paths:
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
         schema:
           type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+        schema:
+          type: string
       - name: listAccessible
         in: query
         description: Whether to return any accessible sub-resources even if the current
@@ -3962,6 +4192,16 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -4284,6 +4524,16 @@ paths:
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
         schema:
           type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+        schema:
+          type: string
       - name: listAccessible
         in: query
         description: Whether to return any accessible sub-resources even if the current
@@ -4377,6 +4627,16 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -4826,6 +5086,16 @@ paths:
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
         schema:
           type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+        schema:
+          type: string
       - name: listAccessible
         in: query
         description: Whether to return any accessible sub-resources even if the current
@@ -4919,6 +5189,16 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -5336,6 +5616,696 @@ paths:
         bearerAuth: []
       x-ui:
         enabled: true
+  /cluster/canaryrollouts:
+    get:
+      tags:
+      - cluster/canaryrollouts
+      summary: List the canary rollouts
+      operationId: getCanaryRollouts
+      parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The list of canary rollouts was returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemList"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /cluster/canaryrollouts/{name}:
+    get:
+      tags:
+      - cluster/canaryrollouts
+      summary: Get an existing canary rollout
+      operationId: getCanaryRollout
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The canary rollout was found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CanaryRolloutModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The canary rollout does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    put:
+      tags:
+      - cluster/canaryrollouts
+      summary: Create or update a canary rollout
+      operationId: createCanaryRollout
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: updateStatus
+        in: query
+        description: Whether to update the status of the resource
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CanaryRolloutModel"
+        required: true
+      responses:
+        "200":
+          description: The canary rollout was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CanaryRolloutModel"
+        "201":
+          description: The canary rollout was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CanaryRolloutModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The canary rollout could not be updated because it does not
+            exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "409":
+          description: The canary rollout could not be created or updated due to unexpected
+            state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "415":
+          description: A media type other than `application/json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    delete:
+      tags:
+      - cluster/canaryrollouts
+      summary: Delete an existing canary rollout
+      operationId: deleteCanaryRollout
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: timeoutSeconds
+        in: query
+        description: "The number of seconds to wait for the operation to be finalized,\
+          \ unless 0 is specified which indicates not to wait"
+        schema:
+          minimum: 0
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "204":
+          description: The canary rollout was deleted
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The canary rollout does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "408":
+          description: The canary rollout was not deleted within the specified timeout
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    patch:
+      tags:
+      - cluster/canaryrollouts
+      summary: Update an existing canary rollout
+      operationId: patchCanaryRollout
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: updateStatus
+        in: query
+        description: Whether to update the status of the resource
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/JsonPatchOperation"
+        required: true
+      responses:
+        "200":
+          description: The patch was applied to the canary rollout
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CanaryRolloutModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The canary rollout does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "409":
+          description: The canary rollout could not be updated due to unexpected state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "415":
+          description: A media type other than `application/json-patch+json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /cluster/canaryrollouttemplates:
+    get:
+      tags:
+      - cluster/canaryrollouttemplates
+      summary: List the canary rollout templates
+      operationId: getCanaryRolloutTemplates
+      parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The list of canary rollout templates was returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemList"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /cluster/canaryrollouttemplates/{name}:
+    get:
+      tags:
+      - cluster/canaryrollouttemplates
+      summary: Get an existing canary rollout template
+      operationId: getCanaryRolloutTemplate
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The canary rollout template was found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CanaryRolloutTemplateModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The canary rollout template does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    put:
+      tags:
+      - cluster/canaryrollouttemplates
+      summary: Create or update a canary rollout template
+      operationId: createCanaryRolloutTemplate
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: updateStatus
+        in: query
+        description: Whether to update the status of the resource
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CanaryRolloutTemplateModel"
+        required: true
+      responses:
+        "200":
+          description: The canary rollout template was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CanaryRolloutTemplateModel"
+        "201":
+          description: The canary rollout template was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CanaryRolloutTemplateModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The canary rollout template could not be updated because it
+            does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "409":
+          description: The canary rollout template could not be created or updated
+            due to unexpected state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "415":
+          description: A media type other than `application/json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    delete:
+      tags:
+      - cluster/canaryrollouttemplates
+      summary: Delete an existing canary rollout template
+      operationId: deleteCanaryRolloutTemplate
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: timeoutSeconds
+        in: query
+        description: "The number of seconds to wait for the operation to be finalized,\
+          \ unless 0 is specified which indicates not to wait"
+        schema:
+          minimum: 0
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "204":
+          description: The canary rollout template was deleted
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The canary rollout template does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "408":
+          description: The canary rollout template was not deleted within the specified
+            timeout
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    patch:
+      tags:
+      - cluster/canaryrollouttemplates
+      summary: Update an existing canary rollout template
+      operationId: patchCanaryRolloutTemplate
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: updateStatus
+        in: query
+        description: Whether to update the status of the resource
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/JsonPatchOperation"
+        required: true
+      responses:
+        "200":
+          description: The patch was applied to the canary rollout template
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CanaryRolloutTemplateModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The canary rollout template does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "409":
+          description: The canary rollout template could not be updated due to unexpected
+            state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "415":
+          description: A media type other than `application/json-patch+json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
   /cluster/databasequotas:
     get:
       tags:
@@ -5471,6 +6441,11 @@ paths:
         required: true
         schema:
           type: string
+      - name: updateStatus
+        in: query
+        description: Whether to update the status of the resource
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json:
@@ -5610,6 +6585,11 @@ paths:
         required: true
         schema:
           type: string
+      - name: updateStatus
+        in: query
+        description: Whether to update the status of the resource
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json-patch+json:
@@ -5805,6 +6785,11 @@ paths:
         required: true
         schema:
           type: string
+      - name: updateStatus
+        in: query
+        description: Whether to update the status of the resource
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json:
@@ -5943,6 +6928,11 @@ paths:
         required: true
         schema:
           type: string
+      - name: updateStatus
+        in: query
+        description: Whether to update the status of the resource
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json-patch+json:
@@ -5984,6 +6974,350 @@ paths:
                 $ref: "#/components/schemas/ErrorContent"
         "409":
           description: The Helm feature could not be updated due to unexpected state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "415":
+          description: A media type other than `application/json-patch+json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /cluster/roletemplates:
+    get:
+      tags:
+      - cluster/roletemplates
+      summary: List the role templates
+      operationId: getRoleTemplates
+      parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The list of role templates was returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemList"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /cluster/roletemplates/{name}:
+    get:
+      tags:
+      - cluster/roletemplates
+      summary: Get an existing role template
+      operationId: getRoleTemplate
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The role template was found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoleTemplateModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The role template does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    put:
+      tags:
+      - cluster/roletemplates
+      summary: Create or update a role template
+      operationId: createRoleTemplate
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: updateStatus
+        in: query
+        description: Whether to update the status of the resource
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RoleTemplateModel"
+        required: true
+      responses:
+        "200":
+          description: The role template was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoleTemplateModel"
+        "201":
+          description: The role template was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoleTemplateModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The role template could not be updated because it does not
+            exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "409":
+          description: The role template could not be created or updated due to unexpected
+            state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "415":
+          description: A media type other than `application/json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    delete:
+      tags:
+      - cluster/roletemplates
+      summary: Delete an existing role template
+      operationId: deleteRoleTemplate
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: timeoutSeconds
+        in: query
+        description: "The number of seconds to wait for the operation to be finalized,\
+          \ unless 0 is specified which indicates not to wait"
+        schema:
+          minimum: 0
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "204":
+          description: The role template was deleted
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The role template does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "408":
+          description: The role template was not deleted within the specified timeout
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    patch:
+      tags:
+      - cluster/roletemplates
+      summary: Update an existing role template
+      operationId: patchRoleTemplate
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: updateStatus
+        in: query
+        description: Whether to update the status of the resource
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/JsonPatchOperation"
+        required: true
+      responses:
+        "200":
+          description: The patch was applied to the role template
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RoleTemplateModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The role template does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "409":
+          description: The role template could not be updated due to unexpected state
           content:
             application/json:
               schema:
@@ -6138,6 +7472,11 @@ paths:
         required: true
         schema:
           type: string
+      - name: updateStatus
+        in: query
+        description: Whether to update the status of the resource
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json:
@@ -6276,6 +7615,11 @@ paths:
         required: true
         schema:
           type: string
+      - name: updateStatus
+        in: query
+        description: Whether to update the status of the resource
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json-patch+json:
@@ -6732,6 +8076,7 @@ components:
           description: The tiers to filter databases on
           items:
             type: string
+            x-enum-from: /cluster/servicetiers
           x-tf-name: tiers
           x-oapi-codegen-extra-tags:
             cty: tiers
@@ -6805,6 +8150,11 @@ components:
             \ and more items are available. The absence of the `next` field indicates\
             \ that all items have been returned."
           x-order: 4
+        total:
+          type: integer
+          description: The total number of items available.
+          format: int32
+          x-order: 5
     JsonNode:
       type: object
       oneOf:
@@ -6987,6 +8337,11 @@ components:
           - Succeeded
           - Failed
           - Deleting
+          x-enum-descriptions:
+            Pending: The backup is pending completion
+            Succeeded: The backup completed successfully and is available for use
+            Failed: The backup failed and is unusable
+            Deleting: "The backup has been marked for deletion, which is in progress"
           x-tf-name: state
           x-oapi-codegen-extra-tags:
             cty: state
@@ -7020,6 +8375,16 @@ components:
             hcl: retained_as
             tfsdk: retained_as
           x-order: 7
+        databaseProductVersion:
+          type: string
+          description: The product version of the database that the backup belongs
+            to
+          x-tf-name: database_product_version
+          x-oapi-codegen-extra-tags:
+            cty: database_product_version
+            hcl: database_product_version
+            tfsdk: database_product_version
+          x-order: 8
       readOnly: true
       x-tf-name: status
       x-oapi-codegen-extra-tags:
@@ -7189,6 +8554,7 @@ components:
           description: "The service tier for the database. If omitted, the project\
             \ service tier is inherited."
           example: n0.small
+          x-enum-from: /cluster/servicetiers
           x-tf-name: tier
           x-oapi-codegen-extra-tags:
             cty: tier
@@ -7346,6 +8712,18 @@ components:
           - Deleting
           - Restoring
           - RotatingCertificates
+          x-enum-descriptions:
+            Available: The database is ready to accept SQL connections
+            Creating: The database is being created and not yet available
+            Modifying: The database is being modified
+            Stopping: Shutdown is in progress for this database
+            Stopped: The database has been stopped
+            Expired: The database has expired
+            Failed: The database has failed to achieve a usable state
+            Deleting: "The database has been marked for deletion, which is in progress"
+            Restoring: Restore from backup is in progress for this database
+            RotatingCertificates: TLS certificates rotation is in progress for this
+              database
           x-tf-name: state
           x-oapi-codegen-extra-tags:
             cty: state
@@ -7495,6 +8873,7 @@ components:
           description: "The service tier for the database. If omitted, the project\
             \ service tier is inherited."
           example: n0.small
+          x-enum-from: /cluster/servicetiers
           x-tf-name: tier
           x-oapi-codegen-extra-tags:
             cty: tier
@@ -7545,12 +8924,24 @@ components:
             \ specifier>[:<SLA>]` that specify requests to allow"
           items:
             type: string
+          x-tf-name: allow
+          x-oapi-codegen-extra-tags:
+            cty: allow
+            hcl: allow
+            tfsdk: allow
+          x-order: 0
         deny:
           type: array
           description: List of access rule entries in the form `<verb>:<resource specifier>`
             that specify requests to deny
           items:
             type: string
+          x-tf-name: deny
+          x-oapi-codegen-extra-tags:
+            cty: deny
+            hcl: deny
+            tfsdk: deny
+          x-order: 1
       description: The rule specifying access for the user
       x-tf-name: access_rule
       x-oapi-codegen-extra-tags:
@@ -7664,6 +9055,7 @@ components:
           type: string
           description: The service tier for the project
           example: n0.small
+          x-enum-from: /cluster/servicetiers
           x-tf-name: tier
           x-oapi-codegen-extra-tags:
             cty: tier
@@ -7778,6 +9170,17 @@ components:
           - Failed
           - Deleting
           - RotatingCertificates
+          x-enum-descriptions:
+            Available: The project is available
+            Creating: The project is being created and not yet available
+            Modifying: The project is being modified
+            Stopping: Shutdown is in progress for this project
+            Stopped: The project and its databases have been stopped
+            Expired: The project and its databases have expired
+            Failed: The project has failed to achieve a usable state
+            Deleting: "The project has been marked for deletion, which is in progress"
+            RotatingCertificates: TLS certificates rotation is in progress for this
+              domain
           x-tf-name: state
           x-oapi-codegen-extra-tags:
             cty: state
@@ -7837,6 +9240,17 @@ components:
             hcl: labels
             tfsdk: labels
           x-order: 2
+        roles:
+          type: array
+          description: List of roles for user
+          items:
+            $ref: "#/components/schemas/RoleModel"
+          x-tf-name: roles
+          x-oapi-codegen-extra-tags:
+            cty: roles
+            hcl: roles
+            tfsdk: roles
+          x-order: 3
         accessRule:
           $ref: "#/components/schemas/DbaasAccessRuleModel"
         resourceVersion:
@@ -7844,9 +9258,41 @@ components:
           description: "The version of the resource. When specified in a `PUT` request\
             \ payload, indicates that the resoure should be updated, and is used by\
             \ the system to guard against concurrent updates."
-          x-order: 4
+          x-order: 5
           x-oapi-codegen-extra-tags:
             tfsdk: "-"
+    RoleModel:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          pattern: "(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])"
+          type: string
+          description: The name of the role template
+          x-enum-from: /cluster/roletemplates
+          x-tf-name: name
+          x-oapi-codegen-extra-tags:
+            cty: name
+            hcl: name
+            tfsdk: name
+          x-order: 0
+        params:
+          pattern: "[a-z][a-z0-9]*"
+          type: object
+          additionalProperties:
+            pattern: "(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])"
+            type: string
+          description: "The parameters to apply to the role template. These parameters\
+            \ take precedence over the `organization` and `user`/`name` properties\
+            \ of the user and any user labels, which are implicitly used to resolve\
+            \ parameters appearing in the `allow` entries of the role template."
+          x-tf-name: params
+          x-oapi-codegen-extra-tags:
+            cty: params
+            hcl: params
+            tfsdk: params
+          x-order: 1
     DbaasUserCreateUpdateModel:
       required:
       - accessRule
@@ -7894,6 +9340,17 @@ components:
             hcl: labels
             tfsdk: labels
           x-order: 2
+        roles:
+          type: array
+          description: List of roles for user
+          items:
+            $ref: "#/components/schemas/RoleModel"
+          x-tf-name: roles
+          x-oapi-codegen-extra-tags:
+            cty: roles
+            hcl: roles
+            tfsdk: roles
+          x-order: 3
         password:
           type: string
           description: The password for the user
@@ -7904,7 +9361,7 @@ components:
             hcl: password
             tfsdk: password
           x-tf-sensitive: true
-          x-order: 3
+          x-order: 4
         accessRule:
           $ref: "#/components/schemas/DbaasAccessRuleModel"
         resourceVersion:
@@ -7912,9 +9369,597 @@ components:
           description: "The version of the resource. When specified in a `PUT` request\
             \ payload, indicates that the resoure should be updated, and is used by\
             \ the system to guard against concurrent updates."
-          x-order: 5
+          x-order: 6
           x-oapi-codegen-extra-tags:
             tfsdk: "-"
+    CanaryRolloutTemplateModel:
+      required:
+      - name
+      - spec
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+          description: The name of the resource
+          x-order: 0
+        description:
+          type: string
+          description: Human-readable description of the resource
+          x-order: 1
+        resourceVersion:
+          type: string
+          description: "The version of the resource. When specified in a `PUT` request\
+            \ payload, indicates that the resoure should be updated, and is used by\
+            \ the system to guard against concurrent updates."
+          x-order: 2
+        spec:
+          $ref: "#/components/schemas/CanaryRolloutTemplateSpec"
+        status:
+          $ref: "#/components/schemas/CanaryRolloutTemplateStatus"
+    CanaryRolloutTemplateSpec:
+      required:
+      - steps
+      type: object
+      properties:
+        analysis:
+          type: array
+          description: Analysis performed after every promotion step.
+          items:
+            $ref: "#/components/schemas/canaryrollouttemplatespec_Analysis"
+          x-order: 0
+        skipDisabled:
+          type: boolean
+          description: |-
+            Skip disabled target resources. By default a change is promoted to all
+            matching resources.
+          x-order: 1
+        steps:
+          type: array
+          description: Canary rollout steps for this template.
+          items:
+            $ref: "#/components/schemas/Steps"
+          x-order: 2
+    CanaryRolloutTemplateStatus:
+      type: object
+      properties:
+        conditions:
+          type: array
+          description: Conditions holds the conditions for the service tier.
+          items:
+            $ref: "#/components/schemas/canaryrollouttemplatestatus_Conditions"
+          x-order: 0
+      readOnly: true
+    Pause:
+      type: object
+      properties:
+        duration:
+          type: string
+          description: |-
+            The duration for which the rollout is paused. Zero duration means wait
+            until manually approved.
+          x-order: 0
+    PromoteTo:
+      type: object
+      properties:
+        labelSelector:
+          $ref: "#/components/schemas/canaryrollouttemplatespec_steps_promoteto_LabelSelector"
+        limitCount:
+          type: integer
+          description: |-
+            Limit the promotion to certain number of the matching resources. The
+            supplied limit is cumulative accross promote steps (i.e. total number of
+            targets to be promoted).
+          format: int32
+          x-order: 1
+        limitPercentage:
+          type: integer
+          description: |-
+            Limit the promotion to certain percentage of the matching resources. The
+            supplied limit is cumulative accross promote steps (i.e. total percentage
+            of targets to be promoted).
+          format: int32
+          x-order: 2
+        rollback:
+          $ref: "#/components/schemas/Rollback"
+    Rollback:
+      required:
+      - strategy
+      type: object
+      properties:
+        backoffLimit:
+          type: integer
+          description: Specifies the number of retries before giving up on rollback.
+            Defaults to 20.
+          format: int32
+          x-order: 0
+        strategy:
+          type: string
+          description: The rollback strategy.
+          enum:
+          - None
+          - Failed
+          - Step
+          x-order: 1
+    Steps:
+      type: object
+      properties:
+        analysis:
+          $ref: "#/components/schemas/canaryrollouttemplatespec_steps_Analysis"
+        pause:
+          $ref: "#/components/schemas/Pause"
+        promoteTo:
+          $ref: "#/components/schemas/PromoteTo"
+    canaryrollouttemplatespec_Analysis:
+      required:
+      - name
+      type: object
+      properties:
+        checkStatusCondition:
+          $ref: "#/components/schemas/canaryrollouttemplatespec_analysis_CheckStatusCondition"
+        executionDeadlineSeconds:
+          type: integer
+          description: |-
+            Optional deadline in seconds for executing this analaysis. Analysis runs
+            that exceed the specified deadline are interrupted and retried later.
+            Defaults to 60s.
+          format: int32
+          x-order: 1
+        interval:
+          type: string
+          description: Interval in which the analysis is run. Defaults to 60s.
+          x-order: 2
+        name:
+          type: string
+          description: The analysis name.
+          x-order: 3
+        runOnDisabled:
+          type: boolean
+          description: |-
+            Run the analysis on disabled targets. By default the analysis is skipped
+            on disabled resources.
+          x-order: 4
+    canaryrollouttemplatespec_analysis_CheckStatusCondition:
+      required:
+      - status
+      - timeout
+      - type
+      type: object
+      properties:
+        status:
+          type: string
+          description: The required condition status.
+          x-order: 0
+        timeout:
+          type: string
+          description: A timeout after which an analysis is declared as failed.
+          x-order: 1
+        type:
+          type: string
+          description: The condition type to perform analysis on.
+          x-order: 2
+    canaryrollouttemplatespec_steps_Analysis:
+      required:
+      - name
+      type: object
+      properties:
+        checkStatusCondition:
+          $ref: "#/components/schemas/canaryrollouttemplatespec_steps_analysis_CheckStatusCondition"
+        executionDeadlineSeconds:
+          type: integer
+          description: |-
+            Optional deadline in seconds for executing this analaysis. Analysis runs
+            that exceed the specified deadline are interrupted and retried later.
+            Defaults to 60s.
+          format: int32
+          x-order: 1
+        interval:
+          type: string
+          description: Interval in which the analysis is run. Defaults to 60s.
+          x-order: 2
+        name:
+          type: string
+          description: The analysis name.
+          x-order: 3
+        runOnDisabled:
+          type: boolean
+          description: |-
+            Run the analysis on disabled targets. By default the analysis is skipped
+            on disabled resources.
+          x-order: 4
+    canaryrollouttemplatespec_steps_analysis_CheckStatusCondition:
+      required:
+      - status
+      - timeout
+      - type
+      type: object
+      properties:
+        status:
+          type: string
+          description: The required condition status.
+          x-order: 0
+        timeout:
+          type: string
+          description: A timeout after which an analysis is declared as failed.
+          x-order: 1
+        type:
+          type: string
+          description: The condition type to perform analysis on.
+          x-order: 2
+    canaryrollouttemplatespec_steps_promoteto_LabelSelector:
+      type: object
+      properties:
+        matchExpressions:
+          type: array
+          description: matchExpressions is a list of label selector requirements.
+            The requirements are ANDed.
+          items:
+            $ref: "#/components/schemas/canaryrollouttemplatespec_steps_promoteto_labelselector_MatchExpressions"
+          x-order: 0
+        matchLabels:
+          type: object
+          additionalProperties:
+            type: string
+          description: |-
+            matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
+            map is equivalent to an element of matchExpressions, whose key field is "key", the
+            operator is "In", and the values array contains only "value". The requirements are ANDed.
+          x-order: 1
+    canaryrollouttemplatespec_steps_promoteto_labelselector_MatchExpressions:
+      required:
+      - key
+      - operator
+      type: object
+      properties:
+        key:
+          type: string
+          description: key is the label key that the selector applies to.
+          x-order: 0
+        operator:
+          type: string
+          description: |-
+            operator represents a key's relationship to a set of values.
+            Valid operators are In, NotIn, Exists and DoesNotExist.
+          x-order: 1
+        values:
+          type: array
+          description: |-
+            values is an array of string values. If the operator is In or NotIn,
+            the values array must be non-empty. If the operator is Exists or DoesNotExist,
+            the values array must be empty. This array is replaced during a strategic
+            merge patch.
+          items:
+            type: string
+          x-order: 2
+    canaryrollouttemplatestatus_Conditions:
+      required:
+      - lastTransitionTime
+      - message
+      - reason
+      - status
+      - type
+      type: object
+      properties:
+        lastTransitionTime:
+          pattern: yyyy-MM-dd'T'HH:mm:ssVV
+          type: string
+          description: |-
+            lastTransitionTime is the last time the condition transitioned from one status to another.
+            This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+          format: date-time
+          x-order: 0
+        message:
+          type: string
+          description: |-
+            message is a human readable message indicating details about the transition.
+            This may be an empty string.
+          x-order: 1
+        observedGeneration:
+          type: integer
+          description: |-
+            observedGeneration represents the .metadata.generation that the condition was set based upon.
+            For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+            with respect to the current state of the instance.
+          format: int64
+          x-order: 2
+        reason:
+          type: string
+          description: |-
+            reason contains a programmatic identifier indicating the reason for the condition's last transition.
+            Producers of specific condition types may define expected values and meanings for this field,
+            and whether the values are considered a guaranteed API.
+            The value should be a CamelCase string.
+            This field may not be empty.
+          x-order: 3
+        status:
+          type: string
+          description: "status of the condition, one of True, False, Unknown."
+          enum:
+          - "True"
+          - "False"
+          - Unknown
+          x-order: 4
+        type:
+          type: string
+          description: |-
+            type of condition in CamelCase or in foo.example.com/CamelCase.
+            ---
+            Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be
+            useful (see .node.status.conditions), the ability to deconflict is important.
+            The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
+          x-order: 5
+    AnalysisRun:
+      required:
+      - name
+      - result
+      type: object
+      properties:
+        endTime:
+          pattern: yyyy-MM-dd'T'HH:mm:ssVV
+          type: string
+          description: Analysis end time is the analysis completion time.
+          format: date-time
+          x-order: 0
+        message:
+          type: string
+          description: The human readable message indicating details about the analysis
+            run.
+          x-order: 1
+        name:
+          type: string
+          description: The name of the analysis.
+          x-order: 2
+        result:
+          type: string
+          description: The result of the analysis run.
+          enum:
+          - Skipped
+          - Failed
+          - Succeeded
+          - Pending
+          x-order: 3
+        startTime:
+          pattern: yyyy-MM-dd'T'HH:mm:ssVV
+          type: string
+          description: |-
+            Analysis start time is the initial time when the analysis run was
+            performed without an error.
+          format: date-time
+          x-order: 4
+    AnyType:
+      type: object
+      additionalProperties:
+        oneOf:
+        - type: object
+        - type: string
+        - type: number
+        - type: boolean
+    CanaryRolloutModel:
+      required:
+      - name
+      - spec
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+          description: The name of the resource
+          x-order: 0
+        description:
+          type: string
+          description: Human-readable description of the resource
+          x-order: 1
+        resourceVersion:
+          type: string
+          description: "The version of the resource. When specified in a `PUT` request\
+            \ payload, indicates that the resoure should be updated, and is used by\
+            \ the system to guard against concurrent updates."
+          x-order: 2
+        spec:
+          $ref: "#/components/schemas/CanaryRolloutSpec"
+        status:
+          $ref: "#/components/schemas/CanaryRolloutStatus"
+    CanaryRolloutSpec:
+      required:
+      - patch
+      - rolloutTemplate
+      type: object
+      properties:
+        patch:
+          $ref: "#/components/schemas/AnyType"
+        rolloutTemplate:
+          $ref: "#/components/schemas/RolloutTemplate"
+        selector:
+          $ref: "#/components/schemas/canaryrolloutspec_Selector"
+        stepBackoffLimit:
+          type: integer
+          description: |-
+            Specifies the number of retries before declaring a step and this canary
+            rollout as failed. Defaults to 20.
+          format: int32
+          x-order: 3
+    CanaryRolloutStatus:
+      type: object
+      properties:
+        conditions:
+          type: array
+          description: Conditions holds the conditions for the canary rollout.
+          items:
+            $ref: "#/components/schemas/canaryrolloutstatus_Conditions"
+          x-order: 0
+        currentStepFailures:
+          type: integer
+          description: |-
+            The number of reconciliation failure count for the current step. It is
+            reset after step completion.
+          format: int32
+          x-order: 1
+        currentStepIndex:
+          type: integer
+          description: The step index which the rollout is currently on.
+          format: int32
+          x-order: 2
+        lastObservedConfigChecksum:
+          type: string
+          description: |-
+            The SHA1 checksum of rollout configuration used in the last
+            reconciliation attempt. If a checksum change is detected, the rollout is
+            restarted.
+          x-order: 3
+        lastPromotedFromIndex:
+          type: integer
+          description: The step index which last promoted targets.
+          format: int32
+          x-order: 4
+        lastPromotedTargets:
+          type: array
+          description: Targets to which the change is being promoted by the last promote
+            step.
+          items:
+            $ref: "#/components/schemas/LastPromotedTargets"
+          x-order: 5
+        observedGeneration:
+          type: integer
+          description: The generation observed by the controller from metadata.generation.
+          format: int64
+          x-order: 6
+      readOnly: true
+    LastPromotedTargets:
+      required:
+      - apiGroup
+      - kind
+      - name
+      type: object
+      properties:
+        analysisRun:
+          type: array
+          description: Information about performed analysis run against the target.
+          items:
+            $ref: "#/components/schemas/AnalysisRun"
+          x-order: 0
+        apiGroup:
+          type: string
+          description: APIGroup is the group for the resource being referenced.
+          x-order: 1
+        kind:
+          type: string
+          description: Kind is the type of resource being referenced.
+          x-order: 2
+        name:
+          type: string
+          description: Name is the name of resource being referenced
+          x-order: 3
+    RolloutTemplate:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the referent
+          x-order: 0
+    canaryrolloutspec_Selector:
+      type: object
+      properties:
+        matchExpressions:
+          type: array
+          description: matchExpressions is a list of label selector requirements.
+            The requirements are ANDed.
+          items:
+            $ref: "#/components/schemas/canaryrolloutspec_selector_MatchExpressions"
+          x-order: 0
+        matchLabels:
+          type: object
+          additionalProperties:
+            type: string
+          description: |-
+            matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
+            map is equivalent to an element of matchExpressions, whose key field is "key", the
+            operator is "In", and the values array contains only "value". The requirements are ANDed.
+          x-order: 1
+    canaryrolloutspec_selector_MatchExpressions:
+      required:
+      - key
+      - operator
+      type: object
+      properties:
+        key:
+          type: string
+          description: key is the label key that the selector applies to.
+          x-order: 0
+        operator:
+          type: string
+          description: |-
+            operator represents a key's relationship to a set of values.
+            Valid operators are In, NotIn, Exists and DoesNotExist.
+          x-order: 1
+        values:
+          type: array
+          description: |-
+            values is an array of string values. If the operator is In or NotIn,
+            the values array must be non-empty. If the operator is Exists or DoesNotExist,
+            the values array must be empty. This array is replaced during a strategic
+            merge patch.
+          items:
+            type: string
+          x-order: 2
+    canaryrolloutstatus_Conditions:
+      required:
+      - lastTransitionTime
+      - message
+      - reason
+      - status
+      - type
+      type: object
+      properties:
+        lastTransitionTime:
+          pattern: yyyy-MM-dd'T'HH:mm:ssVV
+          type: string
+          description: |-
+            lastTransitionTime is the last time the condition transitioned from one status to another.
+            This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+          format: date-time
+          x-order: 0
+        message:
+          type: string
+          description: |-
+            message is a human readable message indicating details about the transition.
+            This may be an empty string.
+          x-order: 1
+        observedGeneration:
+          type: integer
+          description: |-
+            observedGeneration represents the .metadata.generation that the condition was set based upon.
+            For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+            with respect to the current state of the instance.
+          format: int64
+          x-order: 2
+        reason:
+          type: string
+          description: |-
+            reason contains a programmatic identifier indicating the reason for the condition's last transition.
+            Producers of specific condition types may define expected values and meanings for this field,
+            and whether the values are considered a guaranteed API.
+            The value should be a CamelCase string.
+            This field may not be empty.
+          x-order: 3
+        status:
+          type: string
+          description: "status of the condition, one of True, False, Unknown."
+          enum:
+          - "True"
+          - "False"
+          - Unknown
+          x-order: 4
+        type:
+          type: string
+          description: |-
+            type of condition in CamelCase or in foo.example.com/CamelCase.
+            ---
+            Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be
+            useful (see .node.status.conditions), the ability to deconflict is important.
+            The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
+          x-order: 5
     DatabaseQuotaModel:
       required:
       - name
@@ -7954,6 +9999,20 @@ components:
     DatabaseQuotaStatus:
       type: object
       properties:
+        lastEnforced:
+          type: array
+          description: |-
+            The information about objects on which this quota has been enforced.
+            It is cleared by the quota controller after a successful
+            reconciliation.
+          items:
+            $ref: "#/components/schemas/LastEnforced"
+          x-order: 0
+        observedGeneration:
+          type: integer
+          description: The last observed generation.
+          format: int64
+          x-order: 1
         used:
           type: object
           additionalProperties:
@@ -7963,7 +10022,7 @@ components:
           description: |-
             The current observed total usage of the named resources per scoped
             group.
-          x-order: 0
+          x-order: 2
       readOnly: true
     FieldSelector:
       type: object
@@ -7990,7 +10049,62 @@ components:
       - type: integer
         format: int32
       - type: string
-    LabelSelector:
+    LastEnforced:
+      required:
+      - enforceTimestamp
+      - objectRef
+      type: object
+      properties:
+        enforceTimestamp:
+          pattern: yyyy-MM-dd'T'HH:mm:ssVV
+          type: string
+          description: |-
+            Timestamp is a timestamp representing the server time when this quota was
+            enforced on a selected object.
+          format: date-time
+          x-order: 0
+        objectGeneration:
+          type: integer
+          description: The generation that the object had at the time of quota enforcement.
+          format: int64
+          x-order: 1
+        objectRef:
+          $ref: "#/components/schemas/ObjectRef"
+    ObjectRef:
+      required:
+      - apiGroup
+      - kind
+      - name
+      type: object
+      properties:
+        apiGroup:
+          type: string
+          description: APIGroup is the group for the resource being referenced.
+          x-order: 0
+        kind:
+          type: string
+          description: Kind is the type of resource being referenced.
+          x-order: 1
+        name:
+          type: string
+          description: Name is the name of resource being referenced
+          x-order: 2
+    Scope:
+      type: object
+      properties:
+        fieldSelector:
+          $ref: "#/components/schemas/FieldSelector"
+        groupByLabels:
+          type: array
+          description: |-
+            The label keys on which the selected databases are divided into
+            groups.
+          items:
+            type: string
+          x-order: 1
+        labelSelector:
+          $ref: "#/components/schemas/databasequotaspec_scope_LabelSelector"
+    databasequotaspec_scope_LabelSelector:
       type: object
       properties:
         matchExpressions:
@@ -8009,21 +10123,6 @@ components:
             map is equivalent to an element of matchExpressions, whose key field is "key", the
             operator is "In", and the values array contains only "value". The requirements are ANDed.
           x-order: 1
-    Scope:
-      type: object
-      properties:
-        fieldSelector:
-          $ref: "#/components/schemas/FieldSelector"
-        groupByLabels:
-          type: array
-          description: |-
-            The label keys on which the selected databases are divided into
-            groups.
-          items:
-            type: string
-          x-order: 1
-        labelSelector:
-          $ref: "#/components/schemas/LabelSelector"
     databasequotaspec_scope_fieldselector_MatchExpressions:
       required:
       - key
@@ -8069,14 +10168,6 @@ components:
           items:
             type: string
           x-order: 2
-    AnyType:
-      type: object
-      additionalProperties:
-        oneOf:
-        - type: object
-        - type: string
-        - type: number
-        - type: boolean
     HelmFeatureModel:
       required:
       - name
@@ -8134,6 +10225,9 @@ components:
           $ref: "#/components/schemas/AnyType"
     HelmFeatureStatus:
       type: object
+      properties:
+        history:
+          $ref: "#/components/schemas/helmfeaturestatus_History"
       readOnly: true
     Parameters:
       type: object
@@ -8141,10 +10235,137 @@ components:
         default:
           type: string
           x-order: 0
+        description:
+          type: string
+          description: The parameter's description.
+          x-order: 1
         jsonSchema:
           type: string
           description: A JSONSchema used to validate the parameter's value.
+          x-order: 2
+    helmfeaturestatus_History:
+      type: object
+      properties:
+        revisions:
+          type: array
+          description: Resource revisions.
+          items:
+            $ref: "#/components/schemas/helmfeaturestatus_history_Revisions"
+          x-order: 0
+    helmfeaturestatus_history_Revisions:
+      required:
+      - creationTimestamp
+      - generation
+      - spec
+      type: object
+      properties:
+        creationTimestamp:
+          pattern: yyyy-MM-dd'T'HH:mm:ssVV
+          type: string
+          description: A timestamp representing the server time when this version
+            was created.
+          format: date-time
+          x-order: 0
+        generation:
+          type: integer
+          description: |-
+            A sequence number representing a specific generation of the desired
+            state stored in the revision.
+          format: int64
           x-order: 1
+        spec:
+          type: string
+          description: The encoded versioned resource desired state.
+          x-order: 2
+    Allow:
+      required:
+      - resource
+      - verb
+      type: object
+      properties:
+        resource:
+          type: string
+          description: |-
+            The resource or set of resources to grant access to. If the value
+            begins with a slash (`/`), then the value denotes a resource path.
+            Otherwise, the value denotes a scope in the hierarchy of the DBaaS
+            resources that this access rule entry grants access to, of the form
+            `<organization>`, `<organization>/<project>`, or
+            `<organization>/<project>/<database>`. In either case, parameterized
+            path segments of the form `{organization}` or `{user}` may appear
+            that are resolved when the role template is assigned to a user.
+          x-order: 0
+        sla:
+          type: string
+          description: |-
+            The SLA to constrain access to. This constraint only applies to
+            projects and resources contained within projects, such as databases
+            and backups.
+          x-order: 1
+        verb:
+          type: string
+          description: |-
+            The verb to grant access to with this access rule entry, which maps
+            to HTTP request methods as follows:
+
+
+            - `read`: GET
+            - `write`: PUT, POST
+            - `delete`: DELETE
+
+
+            `all` denotes that the request method is unconstrained for this
+            access rule entry.
+          enum:
+          - read
+          - write
+          - delete
+          - all
+          x-order: 2
+    RoleTemplateModel:
+      required:
+      - name
+      - spec
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+          description: The name of the resource
+          x-order: 0
+        description:
+          type: string
+          description: Human-readable description of the resource
+          x-order: 1
+        resourceVersion:
+          type: string
+          description: "The version of the resource. When specified in a `PUT` request\
+            \ payload, indicates that the resoure should be updated, and is used by\
+            \ the system to guard against concurrent updates."
+          x-order: 2
+        spec:
+          $ref: "#/components/schemas/RoleTemplateSpec"
+        status:
+          $ref: "#/components/schemas/RoleTemplateStatus"
+    RoleTemplateSpec:
+      type: object
+      properties:
+        allow:
+          type: array
+          description: List of access rule entries to allow.
+          items:
+            $ref: "#/components/schemas/Allow"
+          x-order: 0
+    RoleTemplateStatus:
+      type: object
+      readOnly: true
+    Canary:
+      required:
+      - templateRef
+      type: object
+      properties:
+        templateRef:
+          $ref: "#/components/schemas/TemplateRef"
     Features:
       required:
       - name
@@ -8160,6 +10381,11 @@ components:
             The namespace of the resource. When not specified, the current
             namespace is assumed.
           x-order: 1
+        revision:
+          type: string
+          description: Revision of the Helm feature used by this revision of the service
+            tier.
+          x-order: 2
     ServiceTierModel:
       required:
       - name
@@ -8194,9 +10420,134 @@ components:
           items:
             $ref: "#/components/schemas/Features"
           x-order: 0
+        updateStrategy:
+          $ref: "#/components/schemas/UpdateStrategy"
     ServiceTierStatus:
       type: object
+      properties:
+        conditions:
+          type: array
+          description: Conditions holds the conditions for the service tier.
+          items:
+            $ref: "#/components/schemas/servicetierstatus_Conditions"
+          x-order: 0
+        history:
+          $ref: "#/components/schemas/servicetierstatus_History"
       readOnly: true
+    TemplateRef:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the referent
+          x-order: 0
+    UpdateStrategy:
+      required:
+      - type
+      type: object
+      properties:
+        canary:
+          $ref: "#/components/schemas/Canary"
+        type:
+          type: string
+          description: The service tier update strategy type. Defaults to Immediate.
+          enum:
+          - CanaryRollout
+          - Immediate
+          x-order: 1
+    servicetierstatus_Conditions:
+      required:
+      - lastTransitionTime
+      - message
+      - reason
+      - status
+      - type
+      type: object
+      properties:
+        lastTransitionTime:
+          pattern: yyyy-MM-dd'T'HH:mm:ssVV
+          type: string
+          description: |-
+            lastTransitionTime is the last time the condition transitioned from one status to another.
+            This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+          format: date-time
+          x-order: 0
+        message:
+          type: string
+          description: |-
+            message is a human readable message indicating details about the transition.
+            This may be an empty string.
+          x-order: 1
+        observedGeneration:
+          type: integer
+          description: |-
+            observedGeneration represents the .metadata.generation that the condition was set based upon.
+            For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+            with respect to the current state of the instance.
+          format: int64
+          x-order: 2
+        reason:
+          type: string
+          description: |-
+            reason contains a programmatic identifier indicating the reason for the condition's last transition.
+            Producers of specific condition types may define expected values and meanings for this field,
+            and whether the values are considered a guaranteed API.
+            The value should be a CamelCase string.
+            This field may not be empty.
+          x-order: 3
+        status:
+          type: string
+          description: "status of the condition, one of True, False, Unknown."
+          enum:
+          - "True"
+          - "False"
+          - Unknown
+          x-order: 4
+        type:
+          type: string
+          description: |-
+            type of condition in CamelCase or in foo.example.com/CamelCase.
+            ---
+            Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be
+            useful (see .node.status.conditions), the ability to deconflict is important.
+            The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
+          x-order: 5
+    servicetierstatus_History:
+      type: object
+      properties:
+        revisions:
+          type: array
+          description: Resource revisions.
+          items:
+            $ref: "#/components/schemas/servicetierstatus_history_Revisions"
+          x-order: 0
+    servicetierstatus_history_Revisions:
+      required:
+      - creationTimestamp
+      - generation
+      - spec
+      type: object
+      properties:
+        creationTimestamp:
+          pattern: yyyy-MM-dd'T'HH:mm:ssVV
+          type: string
+          description: A timestamp representing the server time when this version
+            was created.
+          format: date-time
+          x-order: 0
+        generation:
+          type: integer
+          description: |-
+            A sequence number representing a specific generation of the desired
+            state stored in the revision.
+          format: int64
+          x-order: 1
+        spec:
+          type: string
+          description: The encoded versioned resource desired state.
+          x-order: 2
     BackupEventModel:
       type: object
       properties:
@@ -8220,6 +10571,14 @@ components:
           - UPDATED
           - DELETED
           - HEARTBEAT
+          x-enum-descriptions:
+            RESYNC: The event stream was established and the current state of the
+              resource is being returned
+            CREATED: The resource was created
+            UPDATED: The resource was updated
+            DELETED: The resource was deleted
+            HEARTBEAT: The server is sending an empty message to ensure that the event
+              stream remains open
           x-order: 1
         data:
           $ref: "#/components/schemas/BackupModel"
@@ -8246,6 +10605,14 @@ components:
           - UPDATED
           - DELETED
           - HEARTBEAT
+          x-enum-descriptions:
+            RESYNC: The event stream was established and the current state of the
+              resource is being returned
+            CREATED: The resource was created
+            UPDATED: The resource was updated
+            DELETED: The resource was deleted
+            HEARTBEAT: The server is sending an empty message to ensure that the event
+              stream remains open
           x-order: 1
         data:
           $ref: "#/components/schemas/BackupPolicyModel"
@@ -8272,6 +10639,14 @@ components:
           - UPDATED
           - DELETED
           - HEARTBEAT
+          x-enum-descriptions:
+            RESYNC: The event stream was established and the current state of the
+              resource is being returned
+            CREATED: The resource was created
+            UPDATED: The resource was updated
+            DELETED: The resource was deleted
+            HEARTBEAT: The server is sending an empty message to ensure that the event
+              stream remains open
           x-order: 1
         data:
           $ref: "#/components/schemas/DatabaseModel"
@@ -8298,6 +10673,14 @@ components:
           - UPDATED
           - DELETED
           - HEARTBEAT
+          x-enum-descriptions:
+            RESYNC: The event stream was established and the current state of the
+              resource is being returned
+            CREATED: The resource was created
+            UPDATED: The resource was updated
+            DELETED: The resource was deleted
+            HEARTBEAT: The server is sending an empty message to ensure that the event
+              stream remains open
           x-order: 1
         data:
           $ref: "#/components/schemas/ProjectModel"
@@ -8324,6 +10707,14 @@ components:
           - UPDATED
           - DELETED
           - HEARTBEAT
+          x-enum-descriptions:
+            RESYNC: The event stream was established and the current state of the
+              resource is being returned
+            CREATED: The resource was created
+            UPDATED: The resource was updated
+            DELETED: The resource was deleted
+            HEARTBEAT: The server is sending an empty message to ensure that the event
+              stream remains open
           x-order: 1
         data:
           $ref: "#/components/schemas/DbaasUserModel"
@@ -8341,6 +10732,17 @@ components:
           - HTTP_ERROR
           - CONCURRENT_UPDATE
           - UNKNOWN_REQUEST
+          x-enum-descriptions:
+            HTTP_ERROR: "The error should be handled based on the HTTP status code\
+              \ (`status`) of the response according to RFC-9910, and `detail` should\
+              \ be interpreted as a human-readable string."
+            CONCURRENT_UPDATE: A concurrent update caused the `PUT` or `PATCH` request
+              to fail. A `PUT` request can be retried after using `GET` to obtain
+              the latest resource version and applying the desired change to it. A
+              `PATCH` request can be retried without any changes to the request content.
+            UNKNOWN_REQUEST: "The client request is unroutable due to an unknown content-type,\
+              \ method, or resource path. This can be indicate a versioning issue\
+              \ between the client and server."
           x-order: 0
         status:
           type: string
