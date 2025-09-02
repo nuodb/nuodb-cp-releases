@@ -7,7 +7,7 @@ info:
   contact:
     url: https://nuodb.com
     email: NuoDB.Support@3ds.com
-  version: 2.8.0
+  version: 2.9.0
 servers:
 - url: https://example.nuodb.com
 paths:
@@ -4406,6 +4406,220 @@ paths:
       security:
       - basicAuth: []
         bearerAuth: []
+  /login/providers:
+    get:
+      tags:
+      - login/providers
+      summary: List the available identity providers
+      operationId: getProviders
+      parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If omitted or `expand=true`,\
+          \ then all payload fields are expanded. If `expand=<field>,...` is supplied,\
+          \ then the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field. If\
+          \ `expand=false`, then expansion is disabled and only the resource names\
+          \ relative to the request path are returned."
+        schema:
+          type: string
+          default: "true"
+      - name: labelFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on labels, which are composed using `AND`. Acceptable filter expressions are:
+          * `key` - Only return resources that have label with specified key
+          * `key=value` - Only return resources that have label with specified key set to value
+          * `!key` - Only return resources that do _not_ have label with specified key
+          * `key!=value` - Only return resources that do _not_ have label with specified key set to value
+        schema:
+          type: string
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+        schema:
+          type: string
+      - name: listAccessible
+        in: query
+        description: Whether to return any accessible sub-resources even if the current
+          user does not have access privileges to list all resources at this level
+        schema:
+          type: boolean
+      - name: redirectUrl
+        in: query
+        description: The URL the identity provider should redirect to after login
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The list of identity providers was returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemList"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /login/providers/{provider}:
+    get:
+      tags:
+      - login/providers
+      summary: Get an identity provider
+      operationId: getProvider
+      parameters:
+      - name: provider
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: redirectUrl
+        in: query
+        description: The URL the identity provider should redirect to after login
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The identity provider was found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginProviderModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The identity provider does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /login/providers/{provider}/token:
+    get:
+      tags:
+      - login/providers
+      summary: Verify user with an external identity provider and generate token usable
+        with `Bearer` scheme
+      operationId: authenticateUser
+      parameters:
+      - name: provider
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: redirectUrl
+        in: query
+        description: The value of `redirectUrl` supplied to the `GET /login/providers`
+          invocation used to initiate the login flow
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The user was authenticated by the identity provider
+          content:
+            application/json: {}
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user credentials were rejected by the identity provider
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
   /openapi:
     get:
       tags:
@@ -4418,6 +4632,39 @@ paths:
       responses:
         "200":
           description: The OpenAPI specification was returned successfully
+          content:
+            application/json:
+              example:
+                openapi: 3.0.1
+                info:
+                  version: 2.5.0
+                paths:
+                  /databases:
+                    get:
+                      parameters: []
+                      responses:
+                        "200":
+                          content:
+                            application/json:
+                              schema:
+                                $ref: "#/components/schemas/ItemList"
+                      security:
+                      - bearerAuth: []
+                components:
+                  schemas:
+                    ItemList:
+                      type: object
+                      properties:
+                        items:
+                          type: array
+                          items:
+                            type: object
+                  securitySchemes:
+                    bearerAuth:
+                      type: http
+                      scheme: BEARER
+        "304":
+          description: The OpenAPI specification has not been modified
           content:
             application/json:
               example:
@@ -6993,6 +7240,1039 @@ paths:
       security:
       - basicAuth: []
         bearerAuth: []
+  /cluster/identityproviders:
+    get:
+      tags:
+      - cluster/identityproviders
+      summary: List the identity providers
+      operationId: getIdentityProviders
+      parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The list of identity providers was returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemList"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /cluster/identityproviders/{name}:
+    get:
+      tags:
+      - cluster/identityproviders
+      summary: Get an existing identity provider
+      operationId: getIdentityProvider
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The identity provider was found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IdentityProviderModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The identity provider does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    put:
+      tags:
+      - cluster/identityproviders
+      summary: Create or update a identity provider
+      operationId: createIdentityProvider
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: updateStatus
+        in: query
+        description: Whether to update the status of the resource
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IdentityProviderModel"
+        required: true
+      responses:
+        "200":
+          description: The identity provider was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IdentityProviderModel"
+        "201":
+          description: The identity provider was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IdentityProviderModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The identity provider could not be updated because it does
+            not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "409":
+          description: The identity provider could not be created or updated due to
+            unexpected state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "415":
+          description: A media type other than `application/json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    delete:
+      tags:
+      - cluster/identityproviders
+      summary: Delete an existing identity provider
+      operationId: deleteIdentityProvider
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: timeoutSeconds
+        in: query
+        description: "The number of seconds to wait for the operation to be finalized,\
+          \ unless 0 is specified which indicates not to wait"
+        schema:
+          minimum: 0
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "204":
+          description: The identity provider was deleted
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The identity provider does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "408":
+          description: The identity provider was not deleted within the specified
+            timeout
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    patch:
+      tags:
+      - cluster/identityproviders
+      summary: Update an existing identity provider
+      operationId: patchIdentityProvider
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: updateStatus
+        in: query
+        description: Whether to update the status of the resource
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/JsonPatchOperation"
+        required: true
+      responses:
+        "200":
+          description: The patch was applied to the identity provider
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IdentityProviderModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The identity provider does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "409":
+          description: The identity provider could not be updated due to unexpected
+            state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "415":
+          description: A media type other than `application/json-patch+json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /cluster/metrics:
+    get:
+      tags:
+      - cluster/metrics
+      summary: List the metrics
+      operationId: getMetrics
+      parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The list of metrics was returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemList"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /cluster/metrics/{name}:
+    get:
+      tags:
+      - cluster/metrics
+      summary: Get an existing metric
+      operationId: getMetric
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The metric was found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetricModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The metric does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    put:
+      tags:
+      - cluster/metrics
+      summary: Create or update a metric
+      operationId: createMetric
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: updateStatus
+        in: query
+        description: Whether to update the status of the resource
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MetricModel"
+        required: true
+      responses:
+        "200":
+          description: The metric was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetricModel"
+        "201":
+          description: The metric was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetricModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The metric could not be updated because it does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "409":
+          description: The metric could not be created or updated due to unexpected
+            state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "415":
+          description: A media type other than `application/json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    delete:
+      tags:
+      - cluster/metrics
+      summary: Delete an existing metric
+      operationId: deleteMetric
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: timeoutSeconds
+        in: query
+        description: "The number of seconds to wait for the operation to be finalized,\
+          \ unless 0 is specified which indicates not to wait"
+        schema:
+          minimum: 0
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "204":
+          description: The metric was deleted
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The metric does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "408":
+          description: The metric was not deleted within the specified timeout
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    patch:
+      tags:
+      - cluster/metrics
+      summary: Update an existing metric
+      operationId: patchMetric
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: updateStatus
+        in: query
+        description: Whether to update the status of the resource
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/JsonPatchOperation"
+        required: true
+      responses:
+        "200":
+          description: The patch was applied to the metric
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetricModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The metric does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "409":
+          description: The metric could not be updated due to unexpected state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "415":
+          description: A media type other than `application/json-patch+json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /cluster/metricsources:
+    get:
+      tags:
+      - cluster/metricsources
+      summary: List the metric sources
+      operationId: getMetricSources
+      parameters:
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The list of metric sources was returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemList"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /cluster/metricsources/{name}:
+    get:
+      tags:
+      - cluster/metricsources
+      summary: Get an existing metric source
+      operationId: getMetricSource
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The metric source was found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetricSourceModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The metric source does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    put:
+      tags:
+      - cluster/metricsources
+      summary: Create or update a metric source
+      operationId: createMetricSource
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: updateStatus
+        in: query
+        description: Whether to update the status of the resource
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MetricSourceModel"
+        required: true
+      responses:
+        "200":
+          description: The metric source was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetricSourceModel"
+        "201":
+          description: The metric source was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetricSourceModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The metric source could not be updated because it does not
+            exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "409":
+          description: The metric source could not be created or updated due to unexpected
+            state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "415":
+          description: A media type other than `application/json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    delete:
+      tags:
+      - cluster/metricsources
+      summary: Delete an existing metric source
+      operationId: deleteMetricSource
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: timeoutSeconds
+        in: query
+        description: "The number of seconds to wait for the operation to be finalized,\
+          \ unless 0 is specified which indicates not to wait"
+        schema:
+          minimum: 0
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        "204":
+          description: The metric source was deleted
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The metric source does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "408":
+          description: The metric source was not deleted within the specified timeout
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+    patch:
+      tags:
+      - cluster/metricsources
+      summary: Update an existing metric source
+      operationId: patchMetricSource
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: updateStatus
+        in: query
+        description: Whether to update the status of the resource
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/JsonPatchOperation"
+        required: true
+      responses:
+        "200":
+          description: The patch was applied to the metric source
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetricSourceModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The metric source does not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "409":
+          description: The metric source could not be updated due to unexpected state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "415":
+          description: A media type other than `application/json-patch+json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
   /cluster/roletemplates:
     get:
       tags:
@@ -7324,6 +8604,227 @@ paths:
                 $ref: "#/components/schemas/ErrorContent"
         "415":
           description: A media type other than `application/json-patch+json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /cluster/roletemplates/{name}/users:
+    get:
+      tags:
+      - "cluster/roletemplates/{name}/users"
+      summary: List the users in the cluster with the role template
+      operationId: getAllUsersWithRole
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The list of users was returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemList"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /cluster/roletemplates/{name}/users/{organization}:
+    get:
+      tags:
+      - "cluster/roletemplates/{name}/users"
+      summary: List the users in an organization with the role template
+      operationId: getUsersWithRole
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: The offset at which to list items
+        schema:
+          type: integer
+          format: int32
+      - name: cursor
+        in: query
+        description: "The cursor at which to list items, which represents the last\
+          \ item returned. If specified, all items returned must be lexicographically\
+          \ greater than the supplied value. For expanded payloads, the `$ref` value\
+          \ is compared to the cursor."
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of items to return. If payload expansion was enabled\
+          \ and `limit` was not specified, the default of 20 is used. Otherwise, the\
+          \ default is 0 to indicate that all items should be returned."
+        schema:
+          type: integer
+          format: int32
+      - name: expand
+        in: query
+        description: "Whether to expand payload fields. If `expand=true`, then all\
+          \ payload fields are expanded. If `expand=<field>,...` is supplied, then\
+          \ the value is interpreted as a comma-separated list of top-level fields\
+          \ to expand. If `expand.<field>=<JSONPath expression>` is supplied, then\
+          \ the JSONPath expression is used to resolve the user-supplied field."
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The list of users was returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemList"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /cluster/roletemplates/{name}/users/{organization}/{user}:
+    get:
+      tags:
+      - "cluster/roletemplates/{name}/users"
+      summary: Get an existing user with the role template
+      operationId: getUserWithRole
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: user
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The user was found and has the role remplate
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DbaasUserModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The user does not exist or does not have the role template
           content:
             application/json:
               schema:
@@ -7738,7 +9239,7 @@ components:
         organization:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The organization that the backup policy belongs to
           x-tf-name: organization
@@ -7751,7 +9252,7 @@ components:
         name:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The name of the backup policy
           x-tf-name: name
@@ -8051,7 +9552,7 @@ components:
       type: object
       properties:
         scope:
-          pattern: "([*]|([a-z][a-z0-9]*/){0,2}[a-z][a-z0-9]*)"
+          pattern: "^([*]|([a-z][a-z0-9]*/){0,2}[a-z][a-z0-9]*)$"
           type: string
           description: The scope that the backup policy applies to
           x-tf-name: scope
@@ -8179,12 +9680,12 @@ components:
           - test
           x-order: 0
         from:
-          pattern: /.*
+          pattern: ^/.*$
           type: string
           x-order: 1
         path:
           minLength: 1
-          pattern: /.*
+          pattern: ^/.*$
           type: string
           x-order: 2
         value:
@@ -8200,7 +9701,7 @@ components:
         organization:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The organization that the backup belongs to
           x-tf-name: organization
@@ -8213,7 +9714,7 @@ components:
         project:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The project that the backup belongs to
           x-tf-name: project
@@ -8226,7 +9727,7 @@ components:
         database:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The database that the backup belongs to
           x-tf-name: database
@@ -8237,7 +9738,7 @@ components:
           x-tf-identifier: true
           x-order: 2
         name:
-          pattern: "([0-9]+|[a-z][a-z0-9]*)"
+          pattern: "^([0-9]+|[a-z][a-z0-9]*)$"
           type: string
           description: The name of the backup
           x-tf-name: name
@@ -8434,7 +9935,7 @@ components:
         organization:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The organization that the backup belongs to
           x-tf-name: organization
@@ -8447,7 +9948,7 @@ components:
         project:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The project that the backup belongs to
           x-tf-name: project
@@ -8460,7 +9961,7 @@ components:
         database:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The database that the backup belongs to
           x-tf-name: database
@@ -8494,7 +9995,7 @@ components:
         organization:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The organization that the database belongs to
           x-tf-name: organization
@@ -8508,7 +10009,7 @@ components:
         project:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The project that the database belongs to
           x-tf-name: project
@@ -8522,7 +10023,7 @@ components:
         name:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The name of the database
           x-tf-name: name
@@ -8579,7 +10080,7 @@ components:
       type: object
       properties:
         archiveDiskSize:
-          pattern: "(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?"
+          pattern: "^(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?$"
           type: string
           description: The size of the archive volumes for the database. Can be only
             updated to increase the volume size.
@@ -8591,7 +10092,7 @@ components:
             tfsdk: archive_disk_size
           x-order: 0
         journalDiskSize:
-          pattern: "(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?"
+          pattern: "^(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?$"
           type: string
           description: The size of the journal volumes for the database. Can be only
             updated to increase the volume size.
@@ -8622,7 +10123,7 @@ components:
           x-oapi-codegen-extra-tags:
             tfsdk: "-"
         productVersion:
-          pattern: "([1-9][0-9]*|[1-9][0-9]*\\.[0-9]+|[1-9][0-9]*\\.[0-9]+\\.[0-9]+)([._-][a-z0-9._-]+)?"
+          pattern: "^([1-9][0-9]*|[1-9][0-9]*\\.[0-9]+|[1-9][0-9]*\\.[0-9]+\\.[0-9]+)([._-][a-z0-9._-]+)?$"
           type: string
           description: "The version/tag of the NuoDB image to use. For available tags,\
             \ see https://hub.docker.com/r/nuodb/nuodb/tags. If omitted, the database\
@@ -8701,6 +10202,7 @@ components:
               * `Deleting` - The database has been marked for deletion, which is in progress
               * `Restoring` - Restore from backup is in progress for this database
               * `RotatingCertificates` - TLS certificates rotation is in progress for this database
+              * `Upgrading` - Database version upgrade is in progress
           enum:
           - Available
           - Creating
@@ -8712,6 +10214,7 @@ components:
           - Deleting
           - Restoring
           - RotatingCertificates
+          - Upgrading
           x-enum-descriptions:
             Available: The database is ready to accept SQL connections
             Creating: The database is being created and not yet available
@@ -8724,6 +10227,7 @@ components:
             Restoring: Restore from backup is in progress for this database
             RotatingCertificates: TLS certificates rotation is in progress for this
               database
+            Upgrading: Database version upgrade is in progress
           x-tf-name: state
           x-oapi-codegen-extra-tags:
             cty: state
@@ -8773,7 +10277,7 @@ components:
       type: object
       properties:
         backup:
-          pattern: "([a-z][a-z0-9]*/){0,3}([0-9]+|[a-z][a-z0-9]*)"
+          pattern: "^([a-z][a-z0-9]*/){0,3}([0-9]+|[a-z][a-z0-9]*)$"
           type: string
           description: "The name of the backup to restore the database from. If a\
             \ fully-qualified name is not supplied, then the organization, project,\
@@ -8801,7 +10305,7 @@ components:
         organization:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The organization that the database belongs to
           x-tf-name: organization
@@ -8815,7 +10319,7 @@ components:
         project:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The project that the database belongs to
           x-tf-name: project
@@ -8829,7 +10333,7 @@ components:
         name:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The name of the database
           x-tf-name: name
@@ -8915,6 +10419,34 @@ components:
             \ actual DBA password. If `true`, `current` is verified by connecting\
             \ to the database directly before updating configured DBA password."
           x-order: 2
+    LoginProviderModel:
+      required:
+      - name
+      - url
+      type: object
+      properties:
+        name:
+          maxLength: 63
+          minLength: 1
+          pattern: "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$"
+          type: string
+          description: The name of the identity provider
+          x-immutable: true
+          x-order: 0
+        description:
+          type: string
+          description: The description of the identity provider
+          x-order: 1
+        url:
+          minLength: 1
+          type: string
+          description: The URL to initiate login for the identity provider
+          x-order: 2
+        organization:
+          type: string
+          description: "If present, the organization that users from the identity\
+            \ provider are bound to"
+          x-order: 3
     DbaasAccessRuleModel:
       type: object
       properties:
@@ -8961,6 +10493,10 @@ components:
           type: string
           description: The token expiration time
           x-order: 2
+        username:
+          type: string
+          description: Username of the logged in user
+          x-order: 3
     LoginRequestModel:
       type: object
       properties:
@@ -8998,7 +10534,7 @@ components:
         organization:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The organization that the project belongs to
           x-tf-name: organization
@@ -9012,7 +10548,7 @@ components:
         name:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The name of the project
           x-tf-name: name
@@ -9091,7 +10627,7 @@ components:
             tfsdk: tier_parameters
           x-order: 0
         productVersion:
-          pattern: "([1-9][0-9]*|[1-9][0-9]*\\.[0-9]+|[1-9][0-9]*\\.[0-9]+\\.[0-9]+)([._-][a-z0-9._-]+)?"
+          pattern: "^([1-9][0-9]*|[1-9][0-9]*\\.[0-9]+|[1-9][0-9]*\\.[0-9]+\\.[0-9]+)([._-][a-z0-9._-]+)?$"
           type: string
           description: "The version/tag of the NuoDB image to use. For available tags,\
             \ see https://hub.docker.com/r/nuodb/nuodb/tags. If omitted, the project\
@@ -9160,6 +10696,7 @@ components:
               * `Failed` - The project has failed to achieve a usable state
               * `Deleting` - The project has been marked for deletion, which is in progress
               * `RotatingCertificates` - TLS certificates rotation is in progress for this domain
+              * `Upgrading` - Project version upgrade is in progress
           enum:
           - Available
           - Creating
@@ -9170,6 +10707,7 @@ components:
           - Failed
           - Deleting
           - RotatingCertificates
+          - Upgrading
           x-enum-descriptions:
             Available: The project is available
             Creating: The project is being created and not yet available
@@ -9181,6 +10719,7 @@ components:
             Deleting: "The project has been marked for deletion, which is in progress"
             RotatingCertificates: TLS certificates rotation is in progress for this
               domain
+            Upgrading: Project version upgrade is in progress
           x-tf-name: state
           x-oapi-codegen-extra-tags:
             cty: state
@@ -9203,7 +10742,7 @@ components:
         organization:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The organization that the user belongs to
           x-tf-name: organization
@@ -9216,7 +10755,7 @@ components:
         name:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The name of the user
           x-tf-name: name
@@ -9261,13 +10800,29 @@ components:
           x-order: 5
           x-oapi-codegen-extra-tags:
             tfsdk: "-"
+        status:
+          $ref: "#/components/schemas/DbaasUserStatusModel"
+    DbaasUserStatusModel:
+      type: object
+      properties:
+        identityProvider:
+          type: string
+          description: "If present, the identity provider used to authenticate and\
+            \ provision the user"
+          x-tf-name: identity_provider
+          x-oapi-codegen-extra-tags:
+            cty: identity_provider
+            hcl: identity_provider
+            tfsdk: identity_provider
+          x-order: 0
+      readOnly: true
     RoleModel:
       required:
       - name
       type: object
       properties:
         name:
-          pattern: "(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])"
+          pattern: "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$"
           type: string
           description: The name of the role template
           x-enum-from: /cluster/roletemplates
@@ -9281,7 +10836,7 @@ components:
           pattern: "[a-z][a-z0-9]*"
           type: object
           additionalProperties:
-            pattern: "(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])"
+            pattern: "[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*"
             type: string
           description: "The parameters to apply to the role template. These parameters\
             \ take precedence over the `organization` and `user`/`name` properties\
@@ -9303,7 +10858,7 @@ components:
         organization:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The organization that the user belongs to
           x-tf-name: organization
@@ -9316,7 +10871,7 @@ components:
         name:
           maxLength: 63
           minLength: 1
-          pattern: "[a-z][a-z0-9]*"
+          pattern: "^[a-z][a-z0-9]*$"
           type: string
           description: The name of the user
           x-tf-name: name
@@ -9372,6 +10927,8 @@ components:
           x-order: 6
           x-oapi-codegen-extra-tags:
             tfsdk: "-"
+        status:
+          $ref: "#/components/schemas/DbaasUserStatusModel"
     CanaryRolloutTemplateModel:
       required:
       - name
@@ -9448,7 +11005,7 @@ components:
           type: integer
           description: |-
             Limit the promotion to certain number of the matching resources. The
-            supplied limit is cumulative accross promote steps (i.e. total number of
+            supplied limit is cumulative across promote steps (i.e. total number of
             targets to be promoted).
           format: int32
           x-order: 1
@@ -9456,7 +11013,7 @@ components:
           type: integer
           description: |-
             Limit the promotion to certain percentage of the matching resources. The
-            supplied limit is cumulative accross promote steps (i.e. total percentage
+            supplied limit is cumulative across promote steps (i.e. total percentage
             of targets to be promoted).
           format: int32
           x-order: 2
@@ -9529,6 +11086,10 @@ components:
         status:
           type: string
           description: The required condition status.
+          enum:
+          - "True"
+          - "False"
+          - Unknown
           x-order: 0
         timeout:
           type: string
@@ -9577,6 +11138,10 @@ components:
         status:
           type: string
           description: The required condition status.
+          enum:
+          - "True"
+          - "False"
+          - Unknown
           x-order: 0
         timeout:
           type: string
@@ -9641,7 +11206,6 @@ components:
       type: object
       properties:
         lastTransitionTime:
-          pattern: yyyy-MM-dd'T'HH:mm:ssVV
           type: string
           description: |-
             lastTransitionTime is the last time the condition transitioned from one status to another.
@@ -9681,12 +11245,7 @@ components:
           x-order: 4
         type:
           type: string
-          description: |-
-            type of condition in CamelCase or in foo.example.com/CamelCase.
-            ---
-            Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be
-            useful (see .node.status.conditions), the ability to deconflict is important.
-            The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
+          description: type of condition in CamelCase or in foo.example.com/CamelCase.
           x-order: 5
     AnalysisRun:
       required:
@@ -9695,7 +11254,6 @@ components:
       type: object
       properties:
         endTime:
-          pattern: yyyy-MM-dd'T'HH:mm:ssVV
           type: string
           description: Analysis end time is the analysis completion time.
           format: date-time
@@ -9719,7 +11277,6 @@ components:
           - Pending
           x-order: 3
         startTime:
-          pattern: yyyy-MM-dd'T'HH:mm:ssVV
           type: string
           description: |-
             Analysis start time is the initial time when the analysis run was
@@ -9778,6 +11335,12 @@ components:
             rollout as failed. Defaults to 20.
           format: int32
           x-order: 3
+        suspended:
+          type: boolean
+          description: |-
+            Suspended disables the canary rollout until the value is cleared. Once
+            resumed, the rollout will continue from the current step.
+          x-order: 4
     CanaryRolloutStatus:
       type: object
       properties:
@@ -9913,7 +11476,6 @@ components:
       type: object
       properties:
         lastTransitionTime:
-          pattern: yyyy-MM-dd'T'HH:mm:ssVV
           type: string
           description: |-
             lastTransitionTime is the last time the condition transitioned from one status to another.
@@ -9953,12 +11515,7 @@ components:
           x-order: 4
         type:
           type: string
-          description: |-
-            type of condition in CamelCase or in foo.example.com/CamelCase.
-            ---
-            Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be
-            useful (see .node.status.conditions), the ability to deconflict is important.
-            The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
+          description: type of condition in CamelCase or in foo.example.com/CamelCase.
           x-order: 5
     DatabaseQuotaModel:
       required:
@@ -10056,7 +11613,6 @@ components:
       type: object
       properties:
         enforceTimestamp:
-          pattern: yyyy-MM-dd'T'HH:mm:ssVV
           type: string
           description: |-
             Timestamp is a timestamp representing the server time when this quota was
@@ -10260,7 +11816,6 @@ components:
       type: object
       properties:
         creationTimestamp:
-          pattern: yyyy-MM-dd'T'HH:mm:ssVV
           type: string
           description: A timestamp representing the server time when this version
             was created.
@@ -10277,6 +11832,860 @@ components:
           type: string
           description: The encoded versioned resource desired state.
           x-order: 2
+    AccessRule:
+      type: object
+      properties:
+        jsonPath:
+          type: string
+          description: |-
+            If specified, the JSONPath expression to use to resolve the value
+            from the user attributes in the external provider, which are assumed
+            to be in JSON format.
+          x-order: 0
+        value:
+          type: string
+          description: "If specified, the value to use."
+          x-order: 1
+    Cas:
+      required:
+      - serverUrl
+      type: object
+      properties:
+        serverUrl:
+          type: string
+          description: The URL of the CAS server.
+          x-order: 0
+        validateEndpoint:
+          $ref: "#/components/schemas/ValidateEndpoint"
+    ClientId:
+      type: object
+      properties:
+        secretRef:
+          $ref: "#/components/schemas/identityproviderspec_oidc_clientid_SecretRef"
+        value:
+          type: string
+          description: "If specified, the value to use."
+          x-order: 1
+    ClientSecret:
+      required:
+      - key
+      - name
+      type: object
+      properties:
+        key:
+          type: string
+          description: The key of the value within the Secret resource.
+          x-order: 0
+        name:
+          type: string
+          description: The name of the Secret resource to obtain the value from.
+          x-order: 1
+    IdentityProviderModel:
+      required:
+      - name
+      - spec
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+          description: The name of the resource
+          x-order: 0
+        description:
+          type: string
+          description: Human-readable description of the resource
+          x-order: 1
+        resourceVersion:
+          type: string
+          description: "The version of the resource. When specified in a `PUT` request\
+            \ payload, indicates that the resoure should be updated, and is used by\
+            \ the system to guard against concurrent updates."
+          x-order: 2
+        spec:
+          $ref: "#/components/schemas/IdentityProviderSpec"
+        status:
+          $ref: "#/components/schemas/IdentityProviderStatus"
+    IdentityProviderSpec:
+      required:
+      - provisionUser
+      type: object
+      properties:
+        cas:
+          $ref: "#/components/schemas/Cas"
+        oidc:
+          $ref: "#/components/schemas/identityproviderspec_Oidc"
+        provisionUser:
+          $ref: "#/components/schemas/ProvisionUser"
+    IdentityProviderStatus:
+      type: object
+      properties:
+        oidc:
+          $ref: "#/components/schemas/identityproviderstatus_Oidc"
+      readOnly: true
+    Items:
+      type: object
+      properties:
+        enum:
+          type: array
+          items:
+            type: string
+          x-order: 0
+        pattern:
+          type: string
+          description: "If present, the regular expression that the resolved value\
+            \ must match."
+          x-order: 1
+    Name:
+      type: object
+      properties:
+        jsonPath:
+          type: string
+          description: |-
+            If specified, the JSONPath expression to use to resolve the value
+            from the user attributes in the external provider, which are assumed
+            to be in JSON format.
+          x-order: 0
+        transform:
+          type: array
+          description: |-
+            Transformations to apply to the value resolved by evaluating
+            `jsonPath` or to each element of the resolved array of values. If the
+            resolved value is not a value node (e.g. string, number) or an array
+            of value nodes, then `transform` is ignored.
+          items:
+            $ref: "#/components/schemas/identityproviderspec_provisionuser_name_Transform"
+          x-order: 1
+        value:
+          type: string
+          description: "If specified, the value to use."
+          x-order: 2
+    Organization:
+      type: object
+      properties:
+        jsonPath:
+          type: string
+          description: |-
+            If specified, the JSONPath expression to use to resolve the value
+            from the user attributes in the external provider, which are assumed
+            to be in JSON format.
+          x-order: 0
+        transform:
+          type: array
+          description: |-
+            Transformations to apply to the value resolved by evaluating
+            `jsonPath` or to each element of the resolved array of values. If the
+            resolved value is not a value node (e.g. string, number) or an array
+            of value nodes, then `transform` is ignored.
+          items:
+            $ref: "#/components/schemas/identityproviderspec_provisionuser_organization_Transform"
+          x-order: 1
+        value:
+          type: string
+          description: "If specified, the value to use."
+          x-order: 2
+    ProvisionUser:
+      required:
+      - name
+      - organization
+      type: object
+      properties:
+        accessRule:
+          $ref: "#/components/schemas/AccessRule"
+        name:
+          $ref: "#/components/schemas/Name"
+        organization:
+          $ref: "#/components/schemas/Organization"
+        roles:
+          type: array
+          description: |-
+            Resolvers for roles assigned to the user, which are aggregated to
+            obtain the full list of roles assigned to the user.
+          items:
+            $ref: "#/components/schemas/Roles"
+          x-order: 3
+        validate:
+          type: array
+          description: Validations to apply to the user attributes from the external
+            provider.
+          items:
+            $ref: "#/components/schemas/Validate"
+          x-order: 4
+    Roles:
+      type: object
+      properties:
+        jsonPath:
+          type: string
+          description: |-
+            If specified, the JSONPath expression to use to resolve the value
+            from the user attributes in the external provider, which are assumed
+            to be in JSON format.
+          x-order: 0
+        transform:
+          type: array
+          description: |-
+            Transformations to apply to the value resolved by evaluating
+            `jsonPath` or to each element of the resolved array of values. If the
+            resolved value is not a value node (e.g. string, number) or an array
+            of value nodes, then `transform` is ignored.
+          items:
+            $ref: "#/components/schemas/identityproviderspec_provisionuser_roles_Transform"
+          x-order: 1
+        value:
+          type: string
+          description: "If specified, the value to use."
+          x-order: 2
+    Validate:
+      required:
+      - jsonPath
+      type: object
+      properties:
+        enum:
+          type: array
+          items:
+            type: string
+          x-order: 0
+        items:
+          $ref: "#/components/schemas/Items"
+        jsonPath:
+          type: string
+          description: |-
+            The JSONPath expression to use to resolve the value from the user
+            attributes in the external provider, which are assumed to be in JSON
+            format.
+          x-order: 2
+        pattern:
+          type: string
+          description: "If present, the regular expression that the resolved value\
+            \ must match."
+          x-order: 3
+        required:
+          type: boolean
+          description: Whether the resolved value is required.
+          x-order: 4
+        transform:
+          type: array
+          description: |-
+            Transformations to apply to the value resolved by evaluating
+            `jsonPath` or to each element of the resolved array of values. If the
+            resolved value is not a value node (e.g. string, number) or an array
+            of value nodes, then `transform` is ignored.
+          items:
+            $ref: "#/components/schemas/identityproviderspec_provisionuser_validate_Transform"
+          x-order: 5
+    ValidateEndpoint:
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          type: string
+          description: The URL of the endpoint to use to validate service tickets.
+          x-order: 0
+    identityproviderspec_Oidc:
+      required:
+      - clientId
+      - clientSecret
+      - issuerUrl
+      type: object
+      properties:
+        clientId:
+          $ref: "#/components/schemas/ClientId"
+        clientSecret:
+          $ref: "#/components/schemas/ClientSecret"
+        issuerUrl:
+          type: string
+          description: The URL of the OIDC provider.
+          x-order: 2
+        tlsSkipVerify:
+          type: boolean
+          description: Whether to disable TLS verification of the server certificate.
+          x-order: 3
+        updateInterval:
+          type: string
+          description: |-
+            The interval at which the OIDC provider configuration is updated via
+            OpenID Connect discovery.
+          x-order: 4
+    identityproviderspec_oidc_clientid_SecretRef:
+      required:
+      - key
+      - name
+      type: object
+      properties:
+        key:
+          type: string
+          description: The key of the value within the Secret resource.
+          x-order: 0
+        name:
+          type: string
+          description: The name of the Secret resource to obtain the value from.
+          x-order: 1
+    identityproviderspec_provisionuser_name_Transform:
+      required:
+      - from
+      - to
+      type: object
+      properties:
+        from:
+          type: string
+          description: |-
+            The value to transform. If `regex` is `true`, this is interpreted as
+            a regular expression that is matched against the input value.
+            Otherwise, this is interpreted as a literal string that is compared
+            fully to the input value. If the `from` value does not match the
+            input value, then this transformation has no effect.
+          x-order: 0
+        global:
+          type: boolean
+          description: |-
+            Whether to apply transformation to all matches of the regular
+            expression. If `global` is `true`, this transformation will be
+            applied to all occurrences of `from` within the current value. If
+            `global` is `false` or omitted, this transformation will be applied
+            to the first occurrence only.
+          x-order: 1
+        regex:
+          type: boolean
+          description: Whether to interpret `from` as a regular expression.
+          x-order: 2
+        strategy:
+          type: string
+          description: |-
+            The strategy to use when chaining transformations.
+
+            - `Compose` indicates that the output value of the current transformation
+            should be applied as the input value to the next transformation.
+            - `ShortCircuit` indicates that all subsequent transformations should be
+            skipped if the current transformation matched on the input value.
+
+            If omitted, the default strategy is based on the `regex` value, with
+            `Compose` being used when `regex` is `true` and `ShortCircuit` being used
+            when `regex` is `false` or omitted.
+          enum:
+          - Compose
+          - ShortCircuit
+          x-order: 3
+        to:
+          type: string
+          description: |-
+            The value to transform to. If `regex` is `true`, this may contain
+            references to capturing groups appearing in the `from` value,
+            otherwise it is just the literal output value.
+          x-order: 4
+    identityproviderspec_provisionuser_organization_Transform:
+      required:
+      - from
+      - to
+      type: object
+      properties:
+        from:
+          type: string
+          description: |-
+            The value to transform. If `regex` is `true`, this is interpreted as
+            a regular expression that is matched against the input value.
+            Otherwise, this is interpreted as a literal string that is compared
+            fully to the input value. If the `from` value does not match the
+            input value, then this transformation has no effect.
+          x-order: 0
+        global:
+          type: boolean
+          description: |-
+            Whether to apply transformation to all matches of the regular
+            expression. If `global` is `true`, this transformation will be
+            applied to all occurrences of `from` within the current value. If
+            `global` is `false` or omitted, this transformation will be applied
+            to the first occurrence only.
+          x-order: 1
+        regex:
+          type: boolean
+          description: Whether to interpret `from` as a regular expression.
+          x-order: 2
+        strategy:
+          type: string
+          description: |-
+            The strategy to use when chaining transformations.
+
+            - `Compose` indicates that the output value of the current transformation
+            should be applied as the input value to the next transformation.
+            - `ShortCircuit` indicates that all subsequent transformations should be
+            skipped if the current transformation matched on the input value.
+
+            If omitted, the default strategy is based on the `regex` value, with
+            `Compose` being used when `regex` is `true` and `ShortCircuit` being used
+            when `regex` is `false` or omitted.
+          enum:
+          - Compose
+          - ShortCircuit
+          x-order: 3
+        to:
+          type: string
+          description: |-
+            The value to transform to. If `regex` is `true`, this may contain
+            references to capturing groups appearing in the `from` value,
+            otherwise it is just the literal output value.
+          x-order: 4
+    identityproviderspec_provisionuser_roles_Transform:
+      required:
+      - from
+      - to
+      type: object
+      properties:
+        from:
+          type: string
+          description: |-
+            The value to transform. If `regex` is `true`, this is interpreted as
+            a regular expression that is matched against the input value.
+            Otherwise, this is interpreted as a literal string that is compared
+            fully to the input value. If the `from` value does not match the
+            input value, then this transformation has no effect.
+          x-order: 0
+        global:
+          type: boolean
+          description: |-
+            Whether to apply transformation to all matches of the regular
+            expression. If `global` is `true`, this transformation will be
+            applied to all occurrences of `from` within the current value. If
+            `global` is `false` or omitted, this transformation will be applied
+            to the first occurrence only.
+          x-order: 1
+        regex:
+          type: boolean
+          description: Whether to interpret `from` as a regular expression.
+          x-order: 2
+        strategy:
+          type: string
+          description: |-
+            The strategy to use when chaining transformations.
+
+            - `Compose` indicates that the output value of the current transformation
+            should be applied as the input value to the next transformation.
+            - `ShortCircuit` indicates that all subsequent transformations should be
+            skipped if the current transformation matched on the input value.
+
+            If omitted, the default strategy is based on the `regex` value, with
+            `Compose` being used when `regex` is `true` and `ShortCircuit` being used
+            when `regex` is `false` or omitted.
+          enum:
+          - Compose
+          - ShortCircuit
+          x-order: 3
+        to:
+          type: string
+          description: |-
+            The value to transform to. If `regex` is `true`, this may contain
+            references to capturing groups appearing in the `from` value,
+            otherwise it is just the literal output value.
+          x-order: 4
+    identityproviderspec_provisionuser_validate_Transform:
+      required:
+      - from
+      - to
+      type: object
+      properties:
+        from:
+          type: string
+          description: |-
+            The value to transform. If `regex` is `true`, this is interpreted as
+            a regular expression that is matched against the input value.
+            Otherwise, this is interpreted as a literal string that is compared
+            fully to the input value. If the `from` value does not match the
+            input value, then this transformation has no effect.
+          x-order: 0
+        global:
+          type: boolean
+          description: |-
+            Whether to apply transformation to all matches of the regular
+            expression. If `global` is `true`, this transformation will be
+            applied to all occurrences of `from` within the current value. If
+            `global` is `false` or omitted, this transformation will be applied
+            to the first occurrence only.
+          x-order: 1
+        regex:
+          type: boolean
+          description: Whether to interpret `from` as a regular expression.
+          x-order: 2
+        strategy:
+          type: string
+          description: |-
+            The strategy to use when chaining transformations.
+
+            - `Compose` indicates that the output value of the current transformation
+            should be applied as the input value to the next transformation.
+            - `ShortCircuit` indicates that all subsequent transformations should be
+            skipped if the current transformation matched on the input value.
+
+            If omitted, the default strategy is based on the `regex` value, with
+            `Compose` being used when `regex` is `true` and `ShortCircuit` being used
+            when `regex` is `false` or omitted.
+          enum:
+          - Compose
+          - ShortCircuit
+          x-order: 3
+        to:
+          type: string
+          description: |-
+            The value to transform to. If `regex` is `true`, this may contain
+            references to capturing groups appearing in the `from` value,
+            otherwise it is just the literal output value.
+          x-order: 4
+    identityproviderstatus_Oidc:
+      required:
+      - issuerUrl
+      - lastUpdateTime
+      type: object
+      properties:
+        authorizationEndpoint:
+          type: string
+          description: The `authorization_endpoint` property of OIDC configuration.
+          x-order: 0
+        configuration:
+          type: string
+          description: |-
+            The content returned by the OpenID Connect discovery endpoint, which
+            is `<issuerUrl>/.well-known/openid-configuration`.
+          x-order: 1
+        error:
+          type: string
+          description: The error that occurred while obtaining OIDC configuration.
+          x-order: 2
+        errorCount:
+          type: integer
+          description: |-
+            The number of consecutive attempts to obtain OIDC configuration that
+            have failed.
+          format: int64
+          x-order: 3
+        issuerUrl:
+          type: string
+          description: The URL of the OIDC provider.
+          x-order: 4
+        jwks:
+          type: string
+          description: |-
+            The content returned by the JSON Web Key Set (JWKS) endpoint
+            appearing in the `jwks_uri` property of OIDC configuration.
+          x-order: 5
+        lastUpdateTime:
+          type: string
+          description: The last update time for the OIDC configuration.
+          format: date-time
+          x-order: 6
+        nextUpdateTime:
+          type: string
+          description: |-
+            The time that the next update will be scheduled for the OIDC
+            configuration.
+          format: date-time
+          x-order: 7
+        tokenEndpoint:
+          type: string
+          description: The `token_endpoint` property of OIDC configuration.
+          x-order: 8
+    Authentication:
+      type: object
+      properties:
+        basic:
+          $ref: "#/components/schemas/Basic"
+    Basic:
+      required:
+      - secretRef
+      type: object
+      properties:
+        passwordKey:
+          type: string
+          description: The key in the Secret that provides the password.
+          x-order: 0
+        secretRef:
+          $ref: "#/components/schemas/metricsourcespec_provider_prometheus_authentication_basic_SecretRef"
+        usernameKey:
+          type: string
+          description: The key in the Secret that provides the username.
+          x-order: 2
+    Headers:
+      required:
+      - key
+      - value
+      type: object
+      properties:
+        key:
+          type: string
+          description: The HTTP header key.
+          x-order: 0
+        value:
+          type: string
+          description: The HTTP header value.
+          x-order: 1
+    MetricSelector:
+      type: object
+      properties:
+        matchExpressions:
+          type: array
+          description: matchExpressions is a list of label selector requirements.
+            The requirements are ANDed.
+          items:
+            $ref: "#/components/schemas/metricsourcespec_metricselector_MatchExpressions"
+          x-order: 0
+        matchLabels:
+          type: object
+          additionalProperties:
+            type: string
+          description: |-
+            matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
+            map is equivalent to an element of matchExpressions, whose key field is "key", the
+            operator is "In", and the values array contains only "value". The requirements are ANDed.
+          x-order: 1
+    MetricSourceModel:
+      required:
+      - name
+      - spec
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+          description: The name of the resource
+          x-order: 0
+        description:
+          type: string
+          description: Human-readable description of the resource
+          x-order: 1
+        resourceVersion:
+          type: string
+          description: "The version of the resource. When specified in a `PUT` request\
+            \ payload, indicates that the resoure should be updated, and is used by\
+            \ the system to guard against concurrent updates."
+          x-order: 2
+        spec:
+          $ref: "#/components/schemas/MetricSourceSpec"
+        status:
+          $ref: "#/components/schemas/MetricSourceStatus"
+    MetricSourceSpec:
+      required:
+      - provider
+      type: object
+      properties:
+        metricSelector:
+          $ref: "#/components/schemas/MetricSelector"
+        provider:
+          $ref: "#/components/schemas/Provider"
+        targetsSelector:
+          $ref: "#/components/schemas/TargetsSelector"
+    MetricSourceStatus:
+      type: object
+      readOnly: true
+    Provider:
+      type: object
+      properties:
+        prometheus:
+          $ref: "#/components/schemas/metricsourcespec_provider_Prometheus"
+    TargetsSelector:
+      type: object
+      properties:
+        matchExpressions:
+          type: array
+          description: matchExpressions is a list of label selector requirements.
+            The requirements are ANDed.
+          items:
+            $ref: "#/components/schemas/metricsourcespec_targetsselector_MatchExpressions"
+          x-order: 0
+        matchLabels:
+          type: object
+          additionalProperties:
+            type: string
+          description: |-
+            matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
+            map is equivalent to an element of matchExpressions, whose key field is "key", the
+            operator is "In", and the values array contains only "value". The requirements are ANDed.
+          x-order: 1
+    metricsourcespec_metricselector_MatchExpressions:
+      required:
+      - key
+      - operator
+      type: object
+      properties:
+        key:
+          type: string
+          description: key is the label key that the selector applies to.
+          x-order: 0
+        operator:
+          type: string
+          description: |-
+            operator represents a key's relationship to a set of values.
+            Valid operators are In, NotIn, Exists and DoesNotExist.
+          x-order: 1
+        values:
+          type: array
+          description: |-
+            values is an array of string values. If the operator is In or NotIn,
+            the values array must be non-empty. If the operator is Exists or DoesNotExist,
+            the values array must be empty. This array is replaced during a strategic
+            merge patch.
+          items:
+            type: string
+          x-order: 2
+    metricsourcespec_provider_Prometheus:
+      required:
+      - address
+      type: object
+      properties:
+        address:
+          type: string
+          description: The HTTP URL of the Prometheus server.
+          x-order: 0
+        authentication:
+          $ref: "#/components/schemas/Authentication"
+        headers:
+          type: array
+          description: Optional HTTP headers to use in the request.
+          items:
+            $ref: "#/components/schemas/Headers"
+          x-order: 2
+        insecureSkipVerify:
+          type: boolean
+          description: Skip TLS hostname verification.
+          x-order: 3
+        timeoutSec:
+          type: integer
+          description: The duration in seconds within which a prometheus query should
+            complete.
+          format: int32
+          x-order: 4
+    metricsourcespec_provider_prometheus_authentication_basic_SecretRef:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the referent
+          x-order: 0
+    metricsourcespec_targetsselector_MatchExpressions:
+      required:
+      - key
+      - operator
+      type: object
+      properties:
+        key:
+          type: string
+          description: key is the label key that the selector applies to.
+          x-order: 0
+        operator:
+          type: string
+          description: |-
+            operator represents a key's relationship to a set of values.
+            Valid operators are In, NotIn, Exists and DoesNotExist.
+          x-order: 1
+        values:
+          type: array
+          description: |-
+            values is an array of string values. If the operator is In or NotIn,
+            the values array must be non-empty. If the operator is Exists or DoesNotExist,
+            the values array must be empty. This array is replaced during a strategic
+            merge patch.
+          items:
+            type: string
+          x-order: 2
+    Dimensions:
+      required:
+      - name
+      type: object
+      properties:
+        description:
+          type: string
+          description: A detailed description of the metric dimension.
+          x-order: 0
+        jsonSchema:
+          type: string
+          description: A JSONSchema used to validate the dimension's value.
+          x-order: 1
+        name:
+          type: string
+          description: The metric dimension's name.
+          x-order: 2
+    MetricModel:
+      required:
+      - name
+      - spec
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+          description: The name of the resource
+          x-order: 0
+        description:
+          type: string
+          description: Human-readable description of the resource
+          x-order: 1
+        resourceVersion:
+          type: string
+          description: "The version of the resource. When specified in a `PUT` request\
+            \ payload, indicates that the resoure should be updated, and is used by\
+            \ the system to guard against concurrent updates."
+          x-order: 2
+        spec:
+          $ref: "#/components/schemas/MetricSpec"
+        status:
+          $ref: "#/components/schemas/MetricStatus"
+    MetricSpec:
+      type: object
+      properties:
+        metrics:
+          type: array
+          description: A list of metric descriptors.
+          items:
+            $ref: "#/components/schemas/Metrics"
+          x-order: 0
+    MetricStatus:
+      type: object
+      readOnly: true
+    Metrics:
+      required:
+      - name
+      - prometheus
+      - unit
+      type: object
+      properties:
+        description:
+          type: string
+          description: A detailed description of the metric.
+          x-order: 0
+        dimensions:
+          type: array
+          description: A set of custom dimensions for classifying metric's data.
+          items:
+            $ref: "#/components/schemas/Dimensions"
+          x-order: 1
+        internalOnly:
+          type: boolean
+          description: Whether the metric is internal only or exposed to DBaaS users.
+          x-order: 2
+        name:
+          type: string
+          description: The name of the metric.
+          x-order: 3
+        productCompatibility:
+          type: string
+          description: The NuoDB product version compatibility constraint for the
+            metric.
+          x-order: 4
+        prometheus:
+          $ref: "#/components/schemas/metricspec_metrics_Prometheus"
+        unit:
+          type: string
+          description: The units in which the metric value is reported.
+          x-order: 6
+    metricspec_metrics_Prometheus:
+      required:
+      - query
+      type: object
+      properties:
+        query:
+          type: string
+          description: |-
+            The Prometheus query string using Prometheus Query Language (PromQL).
+            More info: https://prometheus.io/docs/prometheus/latest/querying/basics/
+          x-order: 0
     Allow:
       required:
       - resource
@@ -10308,11 +12717,9 @@ components:
             The verb to grant access to with this access rule entry, which maps
             to HTTP request methods as follows:
 
-
             - `read`: GET
             - `write`: PUT, POST
             - `delete`: DELETE
-
 
             `all` denotes that the request method is unconstrained for this
             access rule entry.
@@ -10348,6 +12755,8 @@ components:
         status:
           $ref: "#/components/schemas/RoleTemplateStatus"
     RoleTemplateSpec:
+      required:
+      - allow
       type: object
       properties:
         allow:
@@ -10467,7 +12876,6 @@ components:
       type: object
       properties:
         lastTransitionTime:
-          pattern: yyyy-MM-dd'T'HH:mm:ssVV
           type: string
           description: |-
             lastTransitionTime is the last time the condition transitioned from one status to another.
@@ -10507,12 +12915,7 @@ components:
           x-order: 4
         type:
           type: string
-          description: |-
-            type of condition in CamelCase or in foo.example.com/CamelCase.
-            ---
-            Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be
-            useful (see .node.status.conditions), the ability to deconflict is important.
-            The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
+          description: type of condition in CamelCase or in foo.example.com/CamelCase.
           x-order: 5
     servicetierstatus_History:
       type: object
@@ -10531,7 +12934,6 @@ components:
       type: object
       properties:
         creationTimestamp:
-          pattern: yyyy-MM-dd'T'HH:mm:ssVV
           type: string
           description: A timestamp representing the server time when this version
             was created.

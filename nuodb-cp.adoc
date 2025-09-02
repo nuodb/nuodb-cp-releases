@@ -1,4 +1,4 @@
-:revnumber: 2.8.0
+:revnumber: 2.9.0
 :toc: left
 
 [#nuodb-cp]
@@ -2116,7 +2116,8 @@ Inspect and manage Kubernetes state for the NuoDB Control Plane
 ....
 nuodb-cp k8s [-hV] [generate-tls
                    |create-user
-                   |rotate-dba-creds]
+                   |rotate-dba-creds
+                   |delete-cluster-config]
 ....
 
 [cols="1,3"]
@@ -2254,6 +2255,39 @@ nuodb-cp k8s rotate-dba-creds [-hV] [--dba-password[=<dbaPassword>]]
 
 |`--finalize`
 |Finalize database DBA password rotation to make the target DBA password current
+
+|`-h, --help`
+|Show this help message and exit.
+
+|`-V, --version`
+|Print version information and exit.
+
+|===
+
+[#k8s-delete-cluster-config]
+=== delete-cluster-config
+
+Delete cluster configuration resources
+
+....
+nuodb-cp k8s delete-cluster-config [-yhV] [-l=<labelFilter>]...
+                                   [-r=<resourceTypes>...]...
+                                   [--timeout=<timeout>]
+....
+
+[cols="1,3"]
+|===
+|`-l, --label-filter`
+|Filter to apply based on labels
+
+|`-r, --resource-types`
+|List of cluster resource types to delete
+
+|`--timeout`
+|The number of seconds to wait for the operation to be finalized, unless 0 is specified which indicates not to wait
+
+|`-y, --auto-approve`
+|Automatically approve deletion of resources
 
 |`-h, --help`
 |Show this help message and exit.
