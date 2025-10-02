@@ -2,6 +2,23 @@ apiVersion: v1
 entries:
   nuodb-cp-config:
   - apiVersion: v2
+    appVersion: 2.9.1
+    created: "2025-10-02T18:13:35.056866377Z"
+    description: NuoDB Control Plane Configuration
+    digest: d66760926552a81ecd1e2779b96f76445cb04eb7e4b1c39bf23c6ed40d9fadf1
+    home: https://github.com/nuodb/nuodb-control-plane/charts/nuodb-cp-config
+    icon: https://raw.githubusercontent.com/nuodb/nuodb-helm-charts/master/images/nuodb.svg
+    keywords:
+    - nuodb
+    maintainers:
+    - email: support@nuodb.com
+      name: NuoDB
+    name: nuodb-cp-config
+    type: application
+    urls:
+    - https://github.com/nuodb/nuodb-cp-releases/releases/download/v2.9.1/nuodb-cp-config-2.9.1.tgz
+    version: 2.9.1
+  - apiVersion: v2
     appVersion: 2.9.0
     created: "2025-09-02T18:29:24.83555416Z"
     description: NuoDB Control Plane Configuration
@@ -53,6 +70,25 @@ entries:
     - https://github.com/nuodb/nuodb-cp-releases/releases/download/v2.8.0/nuodb-cp-config-2.8.0.tgz
     version: 2.8.0
   nuodb-cp-crd:
+  - apiVersion: v2
+    appVersion: 2.9.1
+    created: "2025-10-02T18:13:35.05787889Z"
+    description: NuoDB Control Plane custom resource definitions (CRDs)
+    digest: 97838cb0fe00399ad0016a0fd4480a593d2e9e00a6ce56db7aaa7be31c9bad48
+    home: https://github.com/nuodb/nuodb-control-plane/charts/nuodb-cp-crd
+    icon: https://raw.githubusercontent.com/nuodb/nuodb-helm-charts/master/images/nuodb.svg
+    keywords:
+    - nuodb
+    - operator
+    - crd
+    maintainers:
+    - email: support@nuodb.com
+      name: NuoDB
+    name: nuodb-cp-crd
+    type: application
+    urls:
+    - https://github.com/nuodb/nuodb-cp-releases/releases/download/v2.9.1/nuodb-cp-crd-2.9.1.tgz
+    version: 2.9.1
   - apiVersion: v2
     appVersion: 2.9.0
     created: "2025-09-02T18:29:24.836490559Z"
@@ -359,6 +395,16 @@ entries:
     version: 2.1.0
   nuodb-cp-doc:
   - apiVersion: v2
+    appVersion: 2.9.1
+    created: "2025-10-02T18:13:35.060021645Z"
+    description: Interactive documentation for the NuoDB Control Plane REST API
+    digest: 6a953276eced0b6c745f19b82275435e9fb1e847b7a43919a5275fa0fc4e75b7
+    name: nuodb-cp-doc
+    type: application
+    urls:
+    - https://github.com/nuodb/nuodb-cp-releases/releases/download/v2.9.1/nuodb-cp-doc-2.9.1.tgz
+    version: 2.9.1
+  - apiVersion: v2
     appVersion: 2.9.0
     created: "2025-09-02T18:29:24.838506537Z"
     description: Interactive documentation for the NuoDB Control Plane REST API
@@ -520,6 +566,25 @@ entries:
     version: 2.1.0
   nuodb-cp-external-operator:
   - apiVersion: v2
+    appVersion: 2.9.1
+    created: "2025-10-02T18:13:35.060654618Z"
+    description: NuoDB Control Plane External Operator
+    digest: 404762ee462b8fab671478582f2937f4269cb24a95f3a0bdd28409135fd7645f
+    home: https://github.com/nuodb/nuodb-control-plane/charts/nuodb-cp-external-operator
+    icon: https://raw.githubusercontent.com/nuodb/nuodb-helm-charts/master/images/nuodb.svg
+    keywords:
+    - nuodb
+    - controller
+    - operator
+    maintainers:
+    - email: support@nuodb.com
+      name: NuoDB
+    name: nuodb-cp-external-operator
+    type: application
+    urls:
+    - https://github.com/nuodb/nuodb-cp-releases/releases/download/v2.9.1/nuodb-cp-external-operator-2.9.1.tgz
+    version: 2.9.1
+  - apiVersion: v2
     appVersion: 2.9.0
     created: "2025-09-02T18:29:24.839031941Z"
     description: NuoDB Control Plane External Operator
@@ -596,6 +661,32 @@ entries:
     - https://github.com/nuodb/nuodb-cp-releases/releases/download/v2.7.0/nuodb-cp-external-operator-2.7.0.tgz
     version: 2.7.0
   nuodb-cp-operator:
+  - apiVersion: v2
+    appVersion: 2.9.1
+    created: "2025-10-02T18:13:35.062385473Z"
+    dependencies:
+    - condition: cpOperator.samples.serviceTiers.enabled
+      name: nuodb-cp-config
+      repository: https://nuodb.github.io/nuodb-cp-releases/charts
+      tags:
+      - configuration
+      version: 2.9.1
+    description: NuoDB Control Plane Operator
+    digest: c4eb80849229e742229b8ec771f079a2e490b6d7bd21717c86fbb6f61fad05d7
+    home: https://github.com/nuodb/nuodb-control-plane/charts/nuodb-cp-operator
+    icon: https://raw.githubusercontent.com/nuodb/nuodb-helm-charts/master/images/nuodb.svg
+    keywords:
+    - nuodb
+    - controller
+    - operator
+    maintainers:
+    - email: support@nuodb.com
+      name: NuoDB
+    name: nuodb-cp-operator
+    type: application
+    urls:
+    - https://github.com/nuodb/nuodb-cp-releases/releases/download/v2.9.1/nuodb-cp-operator-2.9.1.tgz
+    version: 2.9.1
   - apiVersion: v2
     appVersion: 2.9.0
     created: "2025-09-02T18:29:24.841092036Z"
@@ -923,6 +1014,24 @@ entries:
     version: 2.1.0
   nuodb-cp-rest:
   - apiVersion: v2
+    appVersion: 2.9.1
+    created: "2025-10-02T18:13:35.062971138Z"
+    description: NuoDB Control Plane REST service
+    digest: ff031034ee15a078e797cc82a3844a42a74f68c0d546ec40b0be7a940d895c32
+    home: https://github.com/nuodb/nuodb-control-plane/charts/nuodb-cp-rest
+    icon: https://raw.githubusercontent.com/nuodb/nuodb-helm-charts/master/images/nuodb.svg
+    keywords:
+    - nuodb
+    - rest
+    maintainers:
+    - email: support@nuodb.com
+      name: NuoDB
+    name: nuodb-cp-rest
+    type: application
+    urls:
+    - https://github.com/nuodb/nuodb-cp-releases/releases/download/v2.9.1/nuodb-cp-rest-2.9.1.tgz
+    version: 2.9.1
+  - apiVersion: v2
     appVersion: 2.9.0
     created: "2025-09-02T18:29:24.841751997Z"
     description: NuoDB Control Plane REST service
@@ -1210,4 +1319,4 @@ entries:
     urls:
     - https://github.com/nuodb/nuodb-cp-releases/releases/download/v2.1.0/nuodb-cp-rest-2.1.0.tgz
     version: 2.1.0
-generated: "2025-09-02T18:29:24.834448027Z"
+generated: "2025-10-02T18:13:35.049935963Z"
