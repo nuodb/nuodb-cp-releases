@@ -7,7 +7,7 @@ info:
   contact:
     url: https://nuodb.com
     email: NuoDB.Support@3ds.com
-  version: 2.10.0
+  version: 2.11.0
 servers:
 - url: https://example.nuodb.com
 paths:
@@ -10134,6 +10134,12 @@ components:
             hcl: product_version
             tfsdk: product_version
           x-order: 4
+        productVersionSelector:
+          $ref: "#/components/schemas/VersionSelectorModel"
+        archiveDiskAutoResize:
+          $ref: "#/components/schemas/DiskAutoResizeModel"
+        journalDiskAutoResize:
+          $ref: "#/components/schemas/DiskAutoResizeModel"
       x-tf-name: properties
       x-oapi-codegen-extra-tags:
         cty: properties
@@ -10240,6 +10246,99 @@ components:
         cty: status
         hcl: status
         tfsdk: status
+    DiskAutoResizeModel:
+      required:
+      - threshold
+      type: object
+      properties:
+        threshold:
+          $ref: "#/components/schemas/DiskResizeThreshold"
+        growth:
+          $ref: "#/components/schemas/DiskResizeGrowth"
+        initialSize:
+          pattern: "^(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?$"
+          type: string
+          description: The initial volume size.
+          writeOnly: true
+          example: 20Gi
+          x-immutable: true
+          x-order: 2
+          x-oapi-codegen-extra-tags:
+            tfsdk: "-"
+        maxSize:
+          pattern: "^(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?$"
+          type: string
+          description: The maximum volume size.
+          example: 100Gi
+          x-tf-name: max_size
+          x-oapi-codegen-extra-tags:
+            cty: max_size
+            hcl: max_size
+            tfsdk: max_size
+          x-order: 3
+      x-tf-name: journal_disk_auto_resize
+      x-oapi-codegen-extra-tags:
+        cty: journal_disk_auto_resize
+        hcl: journal_disk_auto_resize
+        tfsdk: journal_disk_auto_resize
+    DiskResizeGrowth:
+      type: object
+      properties:
+        increment:
+          pattern: "^(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?$"
+          type: string
+          description: Increase the volume size by a constant number of bytes.
+          example: 2Gi
+          x-tf-name: increment
+          x-oapi-codegen-extra-tags:
+            cty: increment
+            hcl: increment
+            tfsdk: increment
+          x-order: 0
+        scale:
+          pattern: "^(1[.]([0-9][1-9]|[1-9][0-9]?)|[2-9]([.][0-9]{1,2})?)$"
+          type: string
+          description: Increase the volume size by a factor of the current size.
+          example: "1.2"
+          x-tf-name: scale
+          x-oapi-codegen-extra-tags:
+            cty: scale
+            hcl: scale
+            tfsdk: scale
+          x-order: 1
+      description: "Determines the new size of the volume. By default the volume size\
+        \ will be increased by 20%. If maxSize is set, then the new volume size will\
+        \ be evaluated as the minimum of maxSize and result of applying the growth\
+        \ configuration."
+    DiskResizeThreshold:
+      type: object
+      properties:
+        bytesAvailable:
+          pattern: "^(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?$"
+          type: string
+          description: Threshold in number of available bytes at which volume expansion
+            is performed.
+          example: 2Gi
+          x-tf-name: bytes_available
+          x-oapi-codegen-extra-tags:
+            cty: bytes_available
+            hcl: bytes_available
+            tfsdk: bytes_available
+          x-order: 0
+        percentageAvailable:
+          maximum: 99
+          minimum: 1
+          type: integer
+          description: Threshold in percentage of available disk space at which volume
+            expansion is performed.
+          format: int32
+          x-tf-name: percentage_available
+          x-oapi-codegen-extra-tags:
+            cty: percentage_available
+            hcl: percentage_available
+            tfsdk: percentage_available
+          x-order: 1
+      description: The threshold at which the volume will be expanded.
     MaintenanceModel:
       type: object
       properties:
@@ -10295,6 +10394,20 @@ components:
         cty: restore_from
         hcl: restore_from
         tfsdk: restore_from
+    VersionSelectorModel:
+      type: object
+      properties:
+        matchesTag:
+          maxLength: 63
+          pattern: "^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$"
+          type: string
+          description: The version metadata tag to match.
+          x-order: 0
+      x-tf-name: product_version_selector
+      x-oapi-codegen-extra-tags:
+        cty: product_version_selector
+        hcl: product_version_selector
+        tfsdk: product_version_selector
     DatabaseCreateUpdateModel:
       required:
       - name
@@ -10369,6 +10482,7 @@ components:
             hcl: dba_password
             tfsdk: dba_password
           x-tf-sensitive: true
+          x-immutable: true
           x-order: 4
         restoreFrom:
           $ref: "#/components/schemas/RestoreFromModel"
@@ -10638,6 +10752,8 @@ components:
             hcl: product_version
             tfsdk: product_version
           x-order: 1
+        productVersionSelector:
+          $ref: "#/components/schemas/VersionSelectorModel"
       x-tf-name: properties
       x-oapi-codegen-extra-tags:
         cty: properties
@@ -10929,6 +11045,16 @@ components:
             tfsdk: "-"
         status:
           $ref: "#/components/schemas/DbaasUserStatusModel"
+    ApiSelector:
+      type: object
+      properties:
+        matchGroupKinds:
+          type: array
+          description: A list of GroupKind string elements formatted as "<kind>.<API
+            group>".
+          items:
+            type: string
+          x-order: 0
     CanaryRolloutTemplateModel:
       required:
       - name
@@ -10999,6 +11125,8 @@ components:
     PromoteTo:
       type: object
       properties:
+        apiSelector:
+          $ref: "#/components/schemas/ApiSelector"
         labelSelector:
           $ref: "#/components/schemas/canaryrollouttemplatespec_steps_promoteto_LabelSelector"
         limitCount:
@@ -11008,7 +11136,7 @@ components:
             supplied limit is cumulative across promote steps (i.e. total number of
             targets to be promoted).
           format: int32
-          x-order: 1
+          x-order: 2
         limitPercentage:
           type: integer
           description: |-
@@ -11016,7 +11144,7 @@ components:
             supplied limit is cumulative across promote steps (i.e. total percentage
             of targets to be promoted).
           format: int32
-          x-order: 2
+          x-order: 3
         rollback:
           $ref: "#/components/schemas/Rollback"
     Rollback:
@@ -11052,6 +11180,8 @@ components:
       - name
       type: object
       properties:
+        checkFieldValue:
+          $ref: "#/components/schemas/canaryrollouttemplatespec_analysis_CheckFieldValue"
         checkStatusCondition:
           $ref: "#/components/schemas/canaryrollouttemplatespec_analysis_CheckStatusCondition"
         executionDeadlineSeconds:
@@ -11061,21 +11191,44 @@ components:
             that exceed the specified deadline are interrupted and retried later.
             Defaults to 60s.
           format: int32
-          x-order: 1
+          x-order: 2
         interval:
           type: string
           description: Interval in which the analysis is run. Defaults to 60s.
-          x-order: 2
+          x-order: 3
         name:
           type: string
           description: The analysis name.
-          x-order: 3
+          x-order: 4
         runOnDisabled:
           type: boolean
           description: |-
             Run the analysis on disabled targets. By default the analysis is skipped
             on disabled resources.
-          x-order: 4
+          x-order: 5
+    canaryrollouttemplatespec_analysis_CheckFieldValue:
+      required:
+      - fieldPath
+      - timeout
+      - values
+      type: object
+      properties:
+        fieldPath:
+          type: string
+          description: The field's JSONPath to perform analysis on.
+          x-order: 0
+        timeout:
+          type: string
+          description: A timeout after which an analysis is declared as failed.
+          x-order: 1
+        values:
+          type: array
+          description: |-
+            The values to compare to the extracted value. The condition is satisfied
+            if any of the values match the extracted value.
+          items:
+            type: string
+          x-order: 2
     canaryrollouttemplatespec_analysis_CheckStatusCondition:
       required:
       - status
@@ -11104,6 +11257,8 @@ components:
       - name
       type: object
       properties:
+        checkFieldValue:
+          $ref: "#/components/schemas/canaryrollouttemplatespec_steps_analysis_CheckFieldValue"
         checkStatusCondition:
           $ref: "#/components/schemas/canaryrollouttemplatespec_steps_analysis_CheckStatusCondition"
         executionDeadlineSeconds:
@@ -11113,21 +11268,44 @@ components:
             that exceed the specified deadline are interrupted and retried later.
             Defaults to 60s.
           format: int32
-          x-order: 1
+          x-order: 2
         interval:
           type: string
           description: Interval in which the analysis is run. Defaults to 60s.
-          x-order: 2
+          x-order: 3
         name:
           type: string
           description: The analysis name.
-          x-order: 3
+          x-order: 4
         runOnDisabled:
           type: boolean
           description: |-
             Run the analysis on disabled targets. By default the analysis is skipped
             on disabled resources.
-          x-order: 4
+          x-order: 5
+    canaryrollouttemplatespec_steps_analysis_CheckFieldValue:
+      required:
+      - fieldPath
+      - timeout
+      - values
+      type: object
+      properties:
+        fieldPath:
+          type: string
+          description: The field's JSONPath to perform analysis on.
+          x-order: 0
+        timeout:
+          type: string
+          description: A timeout after which an analysis is declared as failed.
+          x-order: 1
+        values:
+          type: array
+          description: |-
+            The values to compare to the extracted value. The condition is satisfied
+            if any of the values match the extracted value.
+          items:
+            type: string
+          x-order: 2
     canaryrollouttemplatespec_steps_analysis_CheckStatusCondition:
       required:
       - status
@@ -11412,6 +11590,12 @@ components:
           type: string
           description: Name is the name of resource being referenced
           x-order: 3
+        namespace:
+          type: string
+          description: |-
+            Namespace is the namespace of resource being referenced. If empty, the
+            namespace of the referee is used instead.
+          x-order: 4
     RolloutTemplate:
       required:
       - name

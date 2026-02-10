@@ -1,4 +1,4 @@
-:revnumber: 2.10.0
+:revnumber: 2.11.0
 :toc: left
 
 [#nuodb-cp]
@@ -16,6 +16,7 @@ nuodb-cp [-hV] [backup
                |server
                |external-operator
                |k8s
+               |license
                |generate-completion
                |generate-doc]
 ....
@@ -1003,7 +1004,8 @@ nuodb-cp database create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
                          [--journal-size=<journalSize>]
                          [--tier-param=<String=String>]...
                          [--inherit-tier-params]
-                         [--product-version=<productVersion>] DATABASE
+                         [--product-version=<productVersion> |
+                         --product-version-selector-tag=<matchesTag>] DATABASE
 ....
 
 [cols="1,3"]
@@ -1062,7 +1064,12 @@ nuodb-cp database create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |Whether to inherit tier parameters from the project if the database service tier matches the project.
 
 |`--product-version`
-|The version/tag of the NuoDB image to use. For available tags, see https://hub.docker.com/r/nuodb/nuodb/tags. If omitted, the database version will be inherited from the project.
+|The version/tag of the NuoDB image to use. For available tags, see https://hub.docker.com/r/nuodb/nuodb/tags. If omitted, the project version will be resolved based on the SLA and cluster configuration. +
+*required*
+
+|`--product-version-selector-tag`
+|Set the version metadata tag to match a NuoDB version +
+*required*
 
 |`-h, --help`
 |Show this help message and exit.
@@ -1410,8 +1417,9 @@ nuodb-cp project create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
                         [--token=<token>] [--trusted-cert=<trustedCert>]
                         [-l=<String=String>]... --sla=<sla> --tier=<tier>
                         [--tier-param=<String=String>]...
-                        [--product-version=<productVersion>]
-                        [--expires-in=<expiresIn>] [--disabled] PROJECT
+                        [--expires-in=<expiresIn>] [--disabled]
+                        [--product-version=<productVersion> |
+                        --product-version-selector-tag=<matchesTag>] PROJECT
 ....
 
 [cols="1,3"]
@@ -1453,14 +1461,19 @@ nuodb-cp project create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--tier-param`
 |Opaque parameter supplied to service tier
 
-|`--product-version`
-|The version/tag of the NuoDB image to use. For available tags, see https://hub.docker.com/r/nuodb/nuodb/tags. If omitted, the project version will be resolved based on the SLA and cluster configuration.
-
 |`--expires-in`
 |Set the database to expire after elapsed time
 
 |`--disabled`
 |Set the database as disabled
+
+|`--product-version`
+|The version/tag of the NuoDB image to use. For available tags, see https://hub.docker.com/r/nuodb/nuodb/tags. If omitted, the project version will be resolved based on the SLA and cluster configuration. +
+*required*
+
+|`--product-version-selector-tag`
+|Set the version metadata tag to match a NuoDB version +
+*required*
 
 |`-h, --help`
 |Show this help message and exit.
@@ -2038,6 +2051,7 @@ Start the DBaaS External Operator
 nuodb-cp external-operator start [-hV] [--log-levels=<logLevels>]
                                  [--kubeconfig=<kubeconfig>]
                                  [--enable-leader-election]
+                                 [--disable-http-server] [--port=<port>]
                                  [--property=<String=String>]... [-b=<urlBase>]
                                  [-u=<user>] [-p[=<password>]]
                                  [--token=<token>]
@@ -2054,6 +2068,12 @@ nuodb-cp external-operator start [-hV] [--log-levels=<logLevels>]
 
 |`--enable-leader-election`
 |Whether to enable leader election
+
+|`--disable-http-server`
+|Whether to disable HTTP server used for probes and metrics
+
+|`--port`
+|The port the HTTP server should listen on, if enabled
 
 |`--property`
 |A server property override
@@ -2288,6 +2308,45 @@ nuodb-cp k8s delete-cluster-config [-yhV] [-l=<labelFilter>]...
 
 |`-y, --auto-approve`
 |Automatically approve deletion of resources
+
+|`-h, --help`
+|Show this help message and exit.
+
+|`-V, --version`
+|Print version information and exit.
+
+|===
+
+[#license]
+== license
+
+Decode and check NuoDB licenses
+
+....
+nuodb-cp license [-chV] [-k=<key>] [-f=<file> | -s=<secret> |
+                 --content=<content>]
+....
+
+[cols="1,3"]
+|===
+|`--file, -f`
+|The file containing the NuoDB license +
+*required*
+
+|`--secret, -s`
+|The Kubernetes Secret resource containing the NuoDB license +
+*required*
+
+|`--content`
+|The NuoDB license content +
+*required*
+
+|`--key, -k`
+|The key within the Kubernetes Secret resource containing the NuoDB license +
+*default*: `nuodb.lic`
+
+|`--check, -c`
+|Whether to check that the license is valid
 
 |`-h, --help`
 |Show this help message and exit.
