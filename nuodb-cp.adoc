@@ -1,4 +1,4 @@
-:revnumber: 2.11.0
+:revnumber: 2.12.0
 :toc: left
 
 [#nuodb-cp]
@@ -1004,6 +1004,14 @@ nuodb-cp database create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
                          [--journal-size=<journalSize>]
                          [--tier-param=<String=String>]...
                          [--inherit-tier-params]
+                         [--archive-resize-threshold=<threshold>]
+                         [--archive-resize-growth=<growth>]
+                         [--archive-initial-size=<initialSize>]
+                         [--archive-max-size=<maxSize>]
+                         [--journal-resize-threshold=<threshold>]
+                         [--journal-resize-growth=<growth>]
+                         [--journal-initial-size=<initialSize>]
+                         [--journal-max-size=<maxSize>]
                          [--product-version=<productVersion> |
                          --product-version-selector-tag=<matchesTag>] DATABASE
 ....
@@ -1070,6 +1078,30 @@ nuodb-cp database create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
 |`--product-version-selector-tag`
 |Set the version metadata tag to match a NuoDB version +
 *required*
+
+|`--archive-resize-threshold`
+|The threshold at which the volume will be expanded. Either number of available bytes (e.g. 2Gi) or percentage (20%) of the available disk space at which volume expansion is performed.
+
+|`--archive-resize-growth`
+|Determines the new size of the volume. If maxSize is set, then the new volume size will be evaluated as the minimum of maxSize and result of applying the growth configuration. Either constant number of bytes (e.g. +20Gi) or factor of the current size (e.g. x1.2) are allowed. Defaults to x1.2 volume size increase (or minimum of 1Gi increase).
+
+|`--archive-initial-size`
+|The initial volume size.
+
+|`--archive-max-size`
+|The maximum volume size.
+
+|`--journal-resize-threshold`
+|The threshold at which the volume will be expanded. Either number of available bytes (e.g. 2Gi) or percentage (20%) of the available disk space at which volume expansion is performed.
+
+|`--journal-resize-growth`
+|Determines the new size of the volume. If maxSize is set, then the new volume size will be evaluated as the minimum of maxSize and result of applying the growth configuration. Either constant number of bytes (e.g. +20Gi) or factor of the current size (e.g. x1.2) are allowed. Defaults to x1.2 volume size increase (or minimum of 1Gi increase).
+
+|`--journal-initial-size`
+|The initial volume size.
+
+|`--journal-max-size`
+|The maximum volume size.
 
 |`-h, --help`
 |Show this help message and exit.

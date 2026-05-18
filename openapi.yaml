@@ -7,7 +7,7 @@ info:
   contact:
     url: https://nuodb.com
     email: NuoDB.Support@3ds.com
-  version: 2.11.0
+  version: 2.12.0
 servers:
 - url: https://example.nuodb.com
 paths:
@@ -49,6 +49,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -57,16 +86,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -154,6 +173,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -162,16 +210,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -637,6 +675,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -645,16 +712,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -753,6 +810,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -761,16 +847,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -859,6 +935,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -867,16 +972,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -964,6 +1059,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -972,16 +1096,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -1074,6 +1188,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -1082,16 +1225,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -1189,6 +1322,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -1197,16 +1359,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -1753,6 +1905,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -1761,16 +1942,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -1858,6 +2029,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -1866,16 +2066,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -1968,6 +2158,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -1976,16 +2195,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -2603,6 +2812,35 @@ paths:
         schema:
           type: string
           default: "true"
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -2611,16 +2849,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -2715,6 +2943,35 @@ paths:
         schema:
           type: string
           default: "true"
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -2723,16 +2980,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -2873,6 +3120,35 @@ paths:
         schema:
           type: string
           default: "true"
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -2881,16 +3157,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -2985,6 +3251,35 @@ paths:
         schema:
           type: string
           default: "true"
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -2993,16 +3288,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -3102,6 +3387,35 @@ paths:
         schema:
           type: string
           default: "true"
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -3110,16 +3424,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -3230,6 +3534,35 @@ paths:
         schema:
           type: string
           default: "true"
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -3238,16 +3571,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -3404,6 +3727,35 @@ paths:
         schema:
           type: string
           default: "true"
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -3412,16 +3764,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -3516,6 +3858,35 @@ paths:
         schema:
           type: string
           default: "true"
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -3524,16 +3895,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -3633,6 +3994,35 @@ paths:
         schema:
           type: string
           default: "true"
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -3641,16 +4031,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -3802,6 +4182,35 @@ paths:
         schema:
           type: string
           default: "true"
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -3810,16 +4219,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -3914,6 +4313,35 @@ paths:
         schema:
           type: string
           default: "true"
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -3922,16 +4350,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -4072,6 +4490,35 @@ paths:
         schema:
           type: string
           default: "true"
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -4080,16 +4527,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -4184,6 +4621,35 @@ paths:
         schema:
           type: string
           default: "true"
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -4192,16 +4658,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -4447,6 +4903,35 @@ paths:
         schema:
           type: string
           default: "true"
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -4455,16 +4940,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -4761,6 +5236,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -4769,16 +5273,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -4866,6 +5360,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -4874,16 +5397,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -5323,6 +5836,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -5331,16 +5873,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -5428,6 +5960,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       - name: labelFilter
         in: query
         description: |-
@@ -5436,16 +5997,6 @@ paths:
           * `key=value` - Only return resources that have label with specified key set to value
           * `!key` - Only return resources that do _not_ have label with specified key
           * `key!=value` - Only return resources that do _not_ have label with specified key set to value
-        schema:
-          type: string
-      - name: fieldFilter
-        in: query
-        description: |-
-          Comma-separated list of filters to apply based on fields, which are composed using `AND`. Acceptable filter expressions are:
-          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
-          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
-          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
-          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
         schema:
           type: string
       - name: listAccessible
@@ -5901,6 +6452,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       responses:
         "200":
           description: The list of canary rollouts was returned
@@ -6245,6 +6825,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       responses:
         "200":
           description: The list of canary rollout templates was returned
@@ -6591,6 +7200,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       responses:
         "200":
           description: The list of database quotas was returned
@@ -6935,6 +7573,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       responses:
         "200":
           description: The list of Helm features was returned
@@ -7278,6 +7945,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       responses:
         "200":
           description: The list of identity providers was returned
@@ -7624,6 +8320,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       responses:
         "200":
           description: The list of metrics was returned
@@ -7967,6 +8692,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       responses:
         "200":
           description: The list of metric sources was returned
@@ -8311,6 +9065,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       responses:
         "200":
           description: The list of role templates was returned
@@ -8660,6 +9443,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       responses:
         "200":
           description: The list of users was returned
@@ -8742,6 +9554,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       responses:
         "200":
           description: The list of users was returned
@@ -8876,6 +9717,35 @@ paths:
           \ the JSONPath expression is used to resolve the user-supplied field."
         schema:
           type: string
+      - name: sortBy
+        in: query
+        description: Comma-separated list of field paths used to extract values to
+          sort by lexicographically. The query parameter can be specified multiple
+          times.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: reverse
+        in: query
+        description: Whether to list resources in reverse order
+        schema:
+          type: boolean
+      - name: fieldFilter
+        in: query
+        description: |-
+          Comma-separated list of filters to apply based on fields, which are composed using `AND`. The query parameter can be specified multiple times. Acceptable filter expressions are:
+          * `fieldPath` - Only return resources that have a non-`null` value at the specified field path
+          * `fieldPath=value` - Only return resources that have a matching value at the specified field path
+          * `!fieldPath` - Only return resources that do have a `null` value at the specified field path
+          * `fieldPath!=value` - Only return resources that do _not_ have a matching value at the specified field path
+          * `fieldPath~value` - Only return resources that have a value at the specified field path matching the regular expression
+          * `fieldPath>=value` - Only return resources that have a value at the specified field path lexicographically greater than or equal to the value
+          * `fieldPath<=value` - Only return resources that have a value at the specified field path lexicographically less than or equal to the value
+        schema:
+          type: array
+          items:
+            type: string
       responses:
         "200":
           description: The list of service tiers was returned
@@ -9343,6 +10213,18 @@ components:
     BackupPolicyStatusModel:
       type: object
       properties:
+        creationTime:
+          type: string
+          description: The time that the backup policy was created
+          format: date-time
+          example: 2024-01-01T00:00:00Z
+          x-tf-name: creation_time
+          x-oapi-codegen-extra-tags:
+            cty: creation_time
+            hcl: creation_time
+            tfsdk: creation_time
+          x-go-type: string
+          x-order: 0
         lastScheduleTime:
           type: string
           description: The time that backups were last taken by this policy
@@ -9354,7 +10236,7 @@ components:
             hcl: last_schedule_time
             tfsdk: last_schedule_time
           x-go-type: string
-          x-order: 0
+          x-order: 1
         lastMissedScheduleTime:
           type: string
           description: The time that backups were last missed by this policy
@@ -9366,7 +10248,7 @@ components:
             hcl: last_missed_schedule_time
             tfsdk: last_missed_schedule_time
           x-go-type: string
-          x-order: 1
+          x-order: 2
         nextScheduleTime:
           type: string
           description: The time that backups are next scheduled by this policy
@@ -9378,7 +10260,7 @@ components:
             hcl: next_schedule_time
             tfsdk: next_schedule_time
           x-go-type: string
-          x-order: 2
+          x-order: 3
         lastMissedBackups:
           type: array
           description: The last database backups that were not scheduled by this policy
@@ -9389,7 +10271,7 @@ components:
             cty: last_missed_backups
             hcl: last_missed_backups
             tfsdk: last_missed_backups
-          x-order: 3
+          x-order: 4
       readOnly: true
       x-tf-name: status
       x-oapi-codegen-extra-tags:
@@ -9777,6 +10659,18 @@ components:
     BackupStatusModel:
       type: object
       properties:
+        requestedTime:
+          type: string
+          description: The time that the backup was requested
+          format: date-time
+          example: 2024-01-01T00:00:00Z
+          x-tf-name: requested_time
+          x-oapi-codegen-extra-tags:
+            cty: requested_time
+            hcl: requested_time
+            tfsdk: requested_time
+          x-go-type: string
+          x-order: 0
         creationTime:
           type: string
           description: The time that the backup was taken
@@ -9788,7 +10682,7 @@ components:
             hcl: creation_time
             tfsdk: creation_time
           x-go-type: string
-          x-order: 0
+          x-order: 1
         backupHandle:
           type: string
           description: The handle for the backup
@@ -9797,7 +10691,7 @@ components:
             cty: backup_handle
             hcl: backup_handle
             tfsdk: backup_handle
-          x-order: 1
+          x-order: 2
         backupPlugin:
           type: string
           description: The plugin used to manage the backup
@@ -9806,7 +10700,7 @@ components:
             cty: backup_plugin
             hcl: backup_plugin
             tfsdk: backup_plugin
-          x-order: 2
+          x-order: 3
         readyToUse:
           type: boolean
           description: Whether the backup is ready to be used to restore a database
@@ -9815,7 +10709,7 @@ components:
             cty: ready_to_use
             hcl: ready_to_use
             tfsdk: ready_to_use
-          x-order: 3
+          x-order: 4
         message:
           type: string
           description: Message summarizing the state of the backup
@@ -9824,7 +10718,7 @@ components:
             cty: message
             hcl: message
             tfsdk: message
-          x-order: 4
+          x-order: 5
         state:
           type: string
           description: |-
@@ -9848,7 +10742,7 @@ components:
             cty: state
             hcl: state
             tfsdk: state
-          x-order: 5
+          x-order: 6
         createdByPolicy:
           type: string
           description: The fully-qualified name of the backup policy that the backup
@@ -9858,7 +10752,7 @@ components:
             cty: created_by_policy
             hcl: created_by_policy
             tfsdk: created_by_policy
-          x-order: 6
+          x-order: 7
         retainedAs:
           type: array
           description: The matching retention cycles by this backup
@@ -9875,7 +10769,7 @@ components:
             cty: retained_as
             hcl: retained_as
             tfsdk: retained_as
-          x-order: 7
+          x-order: 8
         databaseProductVersion:
           type: string
           description: The product version of the database that the backup belongs
@@ -9885,7 +10779,7 @@ components:
             cty: database_product_version
             hcl: database_product_version
             tfsdk: database_product_version
-          x-order: 8
+          x-order: 9
       readOnly: true
       x-tf-name: status
       x-oapi-codegen-extra-tags:
@@ -10148,6 +11042,30 @@ components:
     DatabaseStatusModel:
       type: object
       properties:
+        creationTime:
+          type: string
+          description: The time that the database was created
+          format: date-time
+          example: 2024-01-01T00:00:00Z
+          x-tf-name: creation_time
+          x-oapi-codegen-extra-tags:
+            cty: creation_time
+            hcl: creation_time
+            tfsdk: creation_time
+          x-go-type: string
+          x-order: 0
+        lastStateTransitionTime:
+          type: string
+          description: The time that the last state transition occurred
+          format: date-time
+          example: 2024-01-01T00:00:00Z
+          x-tf-name: last_state_transition_time
+          x-oapi-codegen-extra-tags:
+            cty: last_state_transition_time
+            hcl: last_state_transition_time
+            tfsdk: last_state_transition_time
+          x-go-type: string
+          x-order: 1
         sqlEndpoint:
           type: string
           description: The endpoint for SQL clients to connect to
@@ -10156,7 +11074,7 @@ components:
             cty: sql_endpoint
             hcl: sql_endpoint
             tfsdk: sql_endpoint
-          x-order: 0
+          x-order: 2
         caPem:
           type: string
           description: The PEM-encoded certificate for SQL clients to verify database
@@ -10166,7 +11084,7 @@ components:
             cty: ca_pem
             hcl: ca_pem
             tfsdk: ca_pem
-          x-order: 1
+          x-order: 3
         ready:
           type: boolean
           description: Whether the database is ready
@@ -10175,7 +11093,7 @@ components:
             cty: ready
             hcl: ready
             tfsdk: ready
-          x-order: 2
+          x-order: 4
         shutdown:
           type: boolean
           description: Whether the database has shutdown
@@ -10184,7 +11102,7 @@ components:
             cty: shutdown
             hcl: shutdown
             tfsdk: shutdown
-          x-order: 3
+          x-order: 5
         message:
           type: string
           description: Message summarizing the state of the database
@@ -10193,7 +11111,7 @@ components:
             cty: message
             hcl: message
             tfsdk: message
-          x-order: 4
+          x-order: 6
         state:
           type: string
           description: |-
@@ -10239,7 +11157,7 @@ components:
             cty: state
             hcl: state
             tfsdk: state
-          x-order: 5
+          x-order: 7
       readOnly: true
       x-tf-name: status
       x-oapi-codegen-extra-tags:
@@ -10287,7 +11205,8 @@ components:
         increment:
           pattern: "^(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?$"
           type: string
-          description: Increase the volume size by a constant number of bytes.
+          description: Increase the volume size by a constant number of bytes. Minimum
+            accepted increment is 1Gi.
           example: 2Gi
           x-tf-name: increment
           x-oapi-codegen-extra-tags:
@@ -10307,9 +11226,9 @@ components:
             tfsdk: scale
           x-order: 1
       description: "Determines the new size of the volume. By default the volume size\
-        \ will be increased by 20%. If maxSize is set, then the new volume size will\
-        \ be evaluated as the minimum of maxSize and result of applying the growth\
-        \ configuration."
+        \ will be increased by 20% (or minimum of 1Gi). If maxSize is set, then the\
+        \ new volume size will be evaluated as the minimum of maxSize and result of\
+        \ applying the growth configuration."
     DiskResizeThreshold:
       type: object
       properties:
@@ -10762,6 +11681,30 @@ components:
     ProjectStatusModel:
       type: object
       properties:
+        creationTime:
+          type: string
+          description: The time that the project was created
+          format: date-time
+          example: 2024-01-01T00:00:00Z
+          x-tf-name: creation_time
+          x-oapi-codegen-extra-tags:
+            cty: creation_time
+            hcl: creation_time
+            tfsdk: creation_time
+          x-go-type: string
+          x-order: 0
+        lastStateTransitionTime:
+          type: string
+          description: The time that the last state transition occurred
+          format: date-time
+          example: 2024-01-01T00:00:00Z
+          x-tf-name: last_state_transition_time
+          x-oapi-codegen-extra-tags:
+            cty: last_state_transition_time
+            hcl: last_state_transition_time
+            tfsdk: last_state_transition_time
+          x-go-type: string
+          x-order: 1
         caPem:
           type: string
           description: The PEM-encoded certificate for SQL clients to verify database
@@ -10771,7 +11714,7 @@ components:
             cty: ca_pem
             hcl: ca_pem
             tfsdk: ca_pem
-          x-order: 0
+          x-order: 2
         ready:
           type: boolean
           description: Whether the project is ready
@@ -10780,7 +11723,7 @@ components:
             cty: ready
             hcl: ready
             tfsdk: ready
-          x-order: 1
+          x-order: 3
         shutdown:
           type: boolean
           description: Whether the project and all of its databases have shutdown
@@ -10789,7 +11732,7 @@ components:
             cty: shutdown
             hcl: shutdown
             tfsdk: shutdown
-          x-order: 2
+          x-order: 4
         message:
           type: string
           description: Message summarizing the state of the project
@@ -10798,7 +11741,7 @@ components:
             cty: message
             hcl: message
             tfsdk: message
-          x-order: 3
+          x-order: 5
         state:
           type: string
           description: |-
@@ -10841,7 +11784,7 @@ components:
             cty: state
             hcl: state
             tfsdk: state
-          x-order: 4
+          x-order: 6
       readOnly: true
       x-tf-name: status
       x-oapi-codegen-extra-tags:
@@ -10921,6 +11864,18 @@ components:
     DbaasUserStatusModel:
       type: object
       properties:
+        creationTime:
+          type: string
+          description: The time that the user was created
+          format: date-time
+          example: 2024-01-01T00:00:00Z
+          x-tf-name: creation_time
+          x-oapi-codegen-extra-tags:
+            cty: creation_time
+            hcl: creation_time
+            tfsdk: creation_time
+          x-go-type: string
+          x-order: 0
         identityProvider:
           type: string
           description: "If present, the identity provider used to authenticate and\
@@ -10930,7 +11885,7 @@ components:
             cty: identity_provider
             hcl: identity_provider
             tfsdk: identity_provider
-          x-order: 0
+          x-order: 1
       readOnly: true
     RoleModel:
       required:
