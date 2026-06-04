@@ -1,4 +1,4 @@
-:revnumber: 2.12.1
+:revnumber: 2.12.2
 :toc: left
 
 [#nuodb-cp]
