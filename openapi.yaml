@@ -7,7 +7,7 @@ info:
   contact:
     url: https://nuodb.com
     email: NuoDB.Support@3ds.com
-  version: 2.12.0
+  version: 2.13.0
 servers:
 - url: https://example.nuodb.com
 paths:
@@ -141,6 +141,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -265,11 +266,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: policy
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -323,11 +326,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: policy
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       requestBody:
         content:
@@ -450,11 +455,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: policy
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: timeoutSeconds
         in: query
@@ -519,11 +526,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: policy
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       requestBody:
         content:
@@ -638,11 +647,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: policy
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -773,11 +784,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: policy
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -1027,6 +1040,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -1151,11 +1165,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -1280,16 +1296,19 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: database
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -1413,16 +1432,19 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: database
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       requestBody:
         content:
@@ -1505,16 +1527,19 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: database
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: backup
         in: path
@@ -1573,16 +1598,19 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: database
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: backup
         in: path
@@ -1690,16 +1718,19 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: database
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: backup
         in: path
@@ -1769,16 +1800,19 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: database
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: backup
         in: path
@@ -1997,6 +2031,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -2121,11 +2156,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -2256,16 +2293,19 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: database
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -2319,16 +2359,19 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: database
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       requestBody:
         content:
@@ -2447,16 +2490,19 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: database
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: timeoutSeconds
         in: query
@@ -2521,16 +2567,19 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: database
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       requestBody:
         content:
@@ -2666,16 +2715,19 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: database
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: timeoutSeconds
         in: query
@@ -2908,6 +2960,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -3039,11 +3092,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: policy
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -3216,6 +3271,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -3347,11 +3403,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -3489,16 +3547,19 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: database
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -3636,21 +3697,25 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: database
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: backup
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -3823,6 +3888,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -3954,11 +4020,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -4096,16 +4164,19 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: database
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -4278,6 +4349,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -4409,11 +4481,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -4586,6 +4660,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -4717,11 +4792,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: user
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -4998,6 +5075,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: redirectUrl
         in: query
@@ -5056,6 +5134,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: redirectUrl
         in: query
@@ -5328,6 +5407,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -5452,11 +5532,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -5510,11 +5592,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       requestBody:
         content:
@@ -5611,11 +5695,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: timeoutSeconds
         in: query
@@ -5686,11 +5772,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: project
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       requestBody:
         content:
@@ -5928,6 +6016,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -6052,11 +6141,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: user
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -6110,11 +6201,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: user
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: allowCrossOrganizationAccess
         in: query
@@ -6225,11 +6318,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: user
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: timeoutSeconds
         in: query
@@ -6294,11 +6389,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: user
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: allowCrossOrganizationAccess
         in: query
@@ -6526,6 +6623,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -6577,6 +6675,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: updateStatus
         in: query
@@ -6659,6 +6758,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: timeoutSeconds
         in: query
@@ -6721,6 +6821,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: updateStatus
         in: query
@@ -6774,6 +6875,139 @@ paths:
                 $ref: "#/components/schemas/ErrorContent"
         "415":
           description: A media type other than `application/json-patch+json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /cluster/canaryrollouts/{name}/restart:
+    post:
+      tags:
+      - "cluster/canaryrollouts/{name}/restart"
+      summary: Restart completed canary rollout
+      operationId: restartCanaryRollout
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      responses:
+        "200":
+          description: The canary rollout was restarted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CanaryRolloutModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The canary rollout could not be restarted because it does not
+            exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "409":
+          description: The canary rollout could not be restarted due to unexpected
+            state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "415":
+          description: A media type other than `application/json` was supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /cluster/canaryrollouts/{name}/resume:
+    post:
+      tags:
+      - "cluster/canaryrollouts/{name}/resume"
+      summary: Resume paused canary rollout
+      operationId: resumeCanaryRollout
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          minLength: 1
+          type: string
+      responses:
+        "200":
+          description: The canary rollout was resumed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CanaryRolloutModel"
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "404":
+          description: The canary rollout could not be resumed because it does not
+            exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "409":
+          description: The canary rollout could not be resumed due to unexpected state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "415":
+          description: A media type other than `application/json` was supplied
           content:
             application/json:
               schema:
@@ -6899,6 +7133,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -6950,6 +7185,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: updateStatus
         in: query
@@ -7032,6 +7268,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: timeoutSeconds
         in: query
@@ -7095,6 +7332,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: updateStatus
         in: query
@@ -7274,6 +7512,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -7325,6 +7564,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: updateStatus
         in: query
@@ -7407,6 +7647,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: timeoutSeconds
         in: query
@@ -7469,6 +7710,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: updateStatus
         in: query
@@ -7647,6 +7889,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -7698,6 +7941,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: updateStatus
         in: query
@@ -7779,6 +8023,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: timeoutSeconds
         in: query
@@ -7841,6 +8086,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: updateStatus
         in: query
@@ -8019,6 +8265,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -8070,6 +8317,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: updateStatus
         in: query
@@ -8152,6 +8400,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: timeoutSeconds
         in: query
@@ -8215,6 +8464,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: updateStatus
         in: query
@@ -8394,6 +8644,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -8445,6 +8696,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: updateStatus
         in: query
@@ -8526,6 +8778,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: timeoutSeconds
         in: query
@@ -8588,6 +8841,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: updateStatus
         in: query
@@ -8766,6 +9020,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -8817,6 +9072,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: updateStatus
         in: query
@@ -8899,6 +9155,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: timeoutSeconds
         in: query
@@ -8961,6 +9218,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: updateStatus
         in: query
@@ -9139,6 +9397,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -9190,6 +9449,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: updateStatus
         in: query
@@ -9272,6 +9532,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: timeoutSeconds
         in: query
@@ -9334,6 +9595,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: updateStatus
         in: query
@@ -9411,6 +9673,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -9517,11 +9780,13 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: organization
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: offset
         in: query
@@ -9628,16 +9893,19 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: organization
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: user
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -9791,6 +10059,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       responses:
         "200":
@@ -9842,6 +10111,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: updateStatus
         in: query
@@ -9923,6 +10193,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: timeoutSeconds
         in: query
@@ -9985,6 +10256,7 @@ paths:
         in: path
         required: true
         schema:
+          minLength: 1
           type: string
       - name: updateStatus
         in: query
@@ -10282,6 +10554,7 @@ components:
       type: object
       properties:
         hourly:
+          minimum: 0
           type: integer
           description: The number of hourly backups to retain
           format: int32
@@ -10292,6 +10565,7 @@ components:
             tfsdk: hourly
           x-order: 0
         daily:
+          minimum: 0
           type: integer
           description: The number of daily backups to retain
           format: int32
@@ -10302,6 +10576,7 @@ components:
             tfsdk: daily
           x-order: 1
         weekly:
+          minimum: 0
           type: integer
           description: The number of weekly backups to retain
           format: int32
@@ -10312,6 +10587,7 @@ components:
             tfsdk: weekly
           x-order: 2
         monthly:
+          minimum: 0
           type: integer
           description: The number of monthly backups to retain
           format: int32
@@ -10322,6 +10598,7 @@ components:
             tfsdk: monthly
           x-order: 3
         yearly:
+          minimum: 0
           type: integer
           description: The number of yearly backups to retain
           format: int32
@@ -10879,6 +11156,45 @@ components:
             hcl: labels
             tfsdk: labels
           x-order: 3
+    ArchiveDiskAutoResizeModel:
+      required:
+      - threshold
+      type: object
+      properties:
+        threshold:
+          $ref: "#/components/schemas/DiskResizeThreshold"
+        growth:
+          $ref: "#/components/schemas/DiskResizeGrowth"
+        initialSize:
+          pattern: "^(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?$"
+          type: string
+          description: The initial volume size.
+          writeOnly: true
+          example: 20Gi
+          x-tf-name: initial_size
+          x-oapi-codegen-extra-tags:
+            cty: initial_size
+            hcl: initial_size
+            tfsdk: initial_size
+          x-immutable: true
+          x-order: 2
+        maxSize:
+          pattern: "^(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?$"
+          type: string
+          description: The maximum volume size.
+          example: 100Gi
+          x-tf-name: max_size
+          x-oapi-codegen-extra-tags:
+            cty: max_size
+            hcl: max_size
+            tfsdk: max_size
+          x-order: 3
+      description: Resize the archive volumes automatically when a threshold is reached.
+      x-tf-name: archive_disk_auto_resize
+      x-oapi-codegen-extra-tags:
+        cty: archive_disk_auto_resize
+        hcl: archive_disk_auto_resize
+        tfsdk: archive_disk_auto_resize
     DatabaseModel:
       required:
       - name
@@ -11031,9 +11347,9 @@ components:
         productVersionSelector:
           $ref: "#/components/schemas/VersionSelectorModel"
         archiveDiskAutoResize:
-          $ref: "#/components/schemas/DiskAutoResizeModel"
+          $ref: "#/components/schemas/ArchiveDiskAutoResizeModel"
         journalDiskAutoResize:
-          $ref: "#/components/schemas/DiskAutoResizeModel"
+          $ref: "#/components/schemas/JournalDiskAutoResizeModel"
       x-tf-name: properties
       x-oapi-codegen-extra-tags:
         cty: properties
@@ -11164,41 +11480,6 @@ components:
         cty: status
         hcl: status
         tfsdk: status
-    DiskAutoResizeModel:
-      required:
-      - threshold
-      type: object
-      properties:
-        threshold:
-          $ref: "#/components/schemas/DiskResizeThreshold"
-        growth:
-          $ref: "#/components/schemas/DiskResizeGrowth"
-        initialSize:
-          pattern: "^(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?$"
-          type: string
-          description: The initial volume size.
-          writeOnly: true
-          example: 20Gi
-          x-immutable: true
-          x-order: 2
-          x-oapi-codegen-extra-tags:
-            tfsdk: "-"
-        maxSize:
-          pattern: "^(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?$"
-          type: string
-          description: The maximum volume size.
-          example: 100Gi
-          x-tf-name: max_size
-          x-oapi-codegen-extra-tags:
-            cty: max_size
-            hcl: max_size
-            tfsdk: max_size
-          x-order: 3
-      x-tf-name: journal_disk_auto_resize
-      x-oapi-codegen-extra-tags:
-        cty: journal_disk_auto_resize
-        hcl: journal_disk_auto_resize
-        tfsdk: journal_disk_auto_resize
     DiskResizeGrowth:
       type: object
       properties:
@@ -11229,6 +11510,11 @@ components:
         \ will be increased by 20% (or minimum of 1Gi). If maxSize is set, then the\
         \ new volume size will be evaluated as the minimum of maxSize and result of\
         \ applying the growth configuration."
+      x-tf-name: growth
+      x-oapi-codegen-extra-tags:
+        cty: growth
+        hcl: growth
+        tfsdk: growth
     DiskResizeThreshold:
       type: object
       properties:
@@ -11258,6 +11544,50 @@ components:
             tfsdk: percentage_available
           x-order: 1
       description: The threshold at which the volume will be expanded.
+      x-tf-name: threshold
+      x-oapi-codegen-extra-tags:
+        cty: threshold
+        hcl: threshold
+        tfsdk: threshold
+    JournalDiskAutoResizeModel:
+      required:
+      - threshold
+      type: object
+      properties:
+        threshold:
+          $ref: "#/components/schemas/DiskResizeThreshold"
+        growth:
+          $ref: "#/components/schemas/DiskResizeGrowth"
+        initialSize:
+          pattern: "^(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?$"
+          type: string
+          description: The initial volume size.
+          writeOnly: true
+          example: 20Gi
+          x-tf-name: initial_size
+          x-oapi-codegen-extra-tags:
+            cty: initial_size
+            hcl: initial_size
+            tfsdk: initial_size
+          x-immutable: true
+          x-order: 2
+        maxSize:
+          pattern: "^(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE])?$"
+          type: string
+          description: The maximum volume size.
+          example: 100Gi
+          x-tf-name: max_size
+          x-oapi-codegen-extra-tags:
+            cty: max_size
+            hcl: max_size
+            tfsdk: max_size
+          x-order: 3
+      description: Resize the journal volumes automatically when a threshold is reached.
+      x-tf-name: journal_disk_auto_resize
+      x-oapi-codegen-extra-tags:
+        cty: journal_disk_auto_resize
+        hcl: journal_disk_auto_resize
+        tfsdk: journal_disk_auto_resize
     MaintenanceModel:
       type: object
       properties:
@@ -11322,11 +11652,8 @@ components:
           type: string
           description: The version metadata tag to match.
           x-order: 0
-      x-tf-name: product_version_selector
       x-oapi-codegen-extra-tags:
-        cty: product_version_selector
-        hcl: product_version_selector
-        tfsdk: product_version_selector
+        tfsdk: "-"
     DatabaseCreateUpdateModel:
       required:
       - name
@@ -12000,6 +12327,282 @@ components:
             tfsdk: "-"
         status:
           $ref: "#/components/schemas/DbaasUserStatusModel"
+    AnalysisRun:
+      required:
+      - name
+      - result
+      type: object
+      properties:
+        endTime:
+          type: string
+          description: Analysis end time is the analysis completion time.
+          format: date-time
+          x-order: 0
+        message:
+          type: string
+          description: The human readable message indicating details about the analysis
+            run.
+          x-order: 1
+        name:
+          type: string
+          description: The name of the analysis.
+          x-order: 2
+        result:
+          type: string
+          description: The result of the analysis run.
+          enum:
+          - Skipped
+          - Failed
+          - Succeeded
+          - Pending
+          x-order: 3
+        startTime:
+          type: string
+          description: |-
+            Analysis start time is the initial time when the analysis run was
+            performed without an error.
+          format: date-time
+          x-order: 4
+    AnyType:
+      type: object
+      additionalProperties:
+        oneOf:
+        - type: object
+        - type: string
+        - type: number
+        - type: boolean
+    CanaryRolloutModel:
+      required:
+      - name
+      - spec
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+          description: The name of the resource
+          x-order: 0
+        description:
+          type: string
+          description: Human-readable description of the resource
+          x-order: 1
+        resourceVersion:
+          type: string
+          description: "The version of the resource. When specified in a `PUT` request\
+            \ payload, indicates that the resoure should be updated, and is used by\
+            \ the system to guard against concurrent updates."
+          x-order: 2
+        spec:
+          $ref: "#/components/schemas/CanaryRolloutSpec"
+        status:
+          $ref: "#/components/schemas/CanaryRolloutStatus"
+    CanaryRolloutSpec:
+      required:
+      - patch
+      - rolloutTemplate
+      type: object
+      properties:
+        patch:
+          $ref: "#/components/schemas/AnyType"
+        rolloutTemplate:
+          $ref: "#/components/schemas/RolloutTemplate"
+        selector:
+          $ref: "#/components/schemas/canaryrolloutspec_Selector"
+        stepBackoffLimit:
+          type: integer
+          description: |-
+            Specifies the number of retries before declaring a step and this canary
+            rollout as failed. Defaults to 20.
+          format: int32
+          x-order: 3
+        suspended:
+          type: boolean
+          description: |-
+            Suspended disables the canary rollout until the value is cleared. Once
+            resumed, the rollout will continue from the current step.
+          x-order: 4
+    CanaryRolloutStatus:
+      type: object
+      properties:
+        conditions:
+          type: array
+          description: Conditions holds the conditions for the canary rollout.
+          items:
+            $ref: "#/components/schemas/canaryrolloutstatus_Conditions"
+          x-order: 0
+        currentStepFailures:
+          type: integer
+          description: |-
+            The number of reconciliation failure count for the current step. It is
+            reset after step completion.
+          format: int32
+          x-order: 1
+        currentStepIndex:
+          type: integer
+          description: The step index which the rollout is currently on.
+          format: int32
+          x-order: 2
+        lastObservedConfigChecksum:
+          type: string
+          description: |-
+            The SHA1 checksum of rollout configuration used in the last
+            reconciliation attempt. If a checksum change is detected, the rollout is
+            restarted.
+          x-order: 3
+        lastPromotedFromIndex:
+          type: integer
+          description: The step index which last promoted targets.
+          format: int32
+          x-order: 4
+        lastPromotedTargets:
+          type: array
+          description: Targets to which the change is being promoted by the last promote
+            step.
+          items:
+            $ref: "#/components/schemas/LastPromotedTargets"
+          x-order: 5
+        observedGeneration:
+          type: integer
+          description: The generation observed by the controller from metadata.generation.
+          format: int64
+          x-order: 6
+      readOnly: true
+    LastPromotedTargets:
+      required:
+      - apiGroup
+      - kind
+      - name
+      type: object
+      properties:
+        analysisRun:
+          type: array
+          description: Information about performed analysis run against the target.
+          items:
+            $ref: "#/components/schemas/AnalysisRun"
+          x-order: 0
+        apiGroup:
+          type: string
+          description: APIGroup is the group for the resource being referenced.
+          x-order: 1
+        kind:
+          type: string
+          description: Kind is the type of resource being referenced.
+          x-order: 2
+        name:
+          type: string
+          description: Name is the name of resource being referenced
+          x-order: 3
+        namespace:
+          type: string
+          description: |-
+            Namespace is the namespace of resource being referenced. If empty, the
+            namespace of the referee is used instead.
+          x-order: 4
+    RolloutTemplate:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the referent
+          x-order: 0
+    canaryrolloutspec_Selector:
+      type: object
+      properties:
+        matchExpressions:
+          type: array
+          description: matchExpressions is a list of label selector requirements.
+            The requirements are ANDed.
+          items:
+            $ref: "#/components/schemas/canaryrolloutspec_selector_MatchExpressions"
+          x-order: 0
+        matchLabels:
+          type: object
+          additionalProperties:
+            type: string
+          description: |-
+            matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
+            map is equivalent to an element of matchExpressions, whose key field is "key", the
+            operator is "In", and the values array contains only "value". The requirements are ANDed.
+          x-order: 1
+    canaryrolloutspec_selector_MatchExpressions:
+      required:
+      - key
+      - operator
+      type: object
+      properties:
+        key:
+          type: string
+          description: key is the label key that the selector applies to.
+          x-order: 0
+        operator:
+          type: string
+          description: |-
+            operator represents a key's relationship to a set of values.
+            Valid operators are In, NotIn, Exists and DoesNotExist.
+          x-order: 1
+        values:
+          type: array
+          description: |-
+            values is an array of string values. If the operator is In or NotIn,
+            the values array must be non-empty. If the operator is Exists or DoesNotExist,
+            the values array must be empty. This array is replaced during a strategic
+            merge patch.
+          items:
+            type: string
+          x-order: 2
+    canaryrolloutstatus_Conditions:
+      required:
+      - lastTransitionTime
+      - message
+      - reason
+      - status
+      - type
+      type: object
+      properties:
+        lastTransitionTime:
+          type: string
+          description: |-
+            lastTransitionTime is the last time the condition transitioned from one status to another.
+            This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+          format: date-time
+          x-order: 0
+        message:
+          type: string
+          description: |-
+            message is a human readable message indicating details about the transition.
+            This may be an empty string.
+          x-order: 1
+        observedGeneration:
+          type: integer
+          description: |-
+            observedGeneration represents the .metadata.generation that the condition was set based upon.
+            For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+            with respect to the current state of the instance.
+          format: int64
+          x-order: 2
+        reason:
+          type: string
+          description: |-
+            reason contains a programmatic identifier indicating the reason for the condition's last transition.
+            Producers of specific condition types may define expected values and meanings for this field,
+            and whether the values are considered a guaranteed API.
+            The value should be a CamelCase string.
+            This field may not be empty.
+          x-order: 3
+        status:
+          type: string
+          description: "status of the condition, one of True, False, Unknown."
+          enum:
+          - "True"
+          - "False"
+          - Unknown
+          x-order: 4
+        type:
+          type: string
+          description: type of condition in CamelCase or in foo.example.com/CamelCase.
+          x-order: 5
     ApiSelector:
       type: object
       properties:
@@ -12330,282 +12933,6 @@ components:
             type: string
           x-order: 2
     canaryrollouttemplatestatus_Conditions:
-      required:
-      - lastTransitionTime
-      - message
-      - reason
-      - status
-      - type
-      type: object
-      properties:
-        lastTransitionTime:
-          type: string
-          description: |-
-            lastTransitionTime is the last time the condition transitioned from one status to another.
-            This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
-          format: date-time
-          x-order: 0
-        message:
-          type: string
-          description: |-
-            message is a human readable message indicating details about the transition.
-            This may be an empty string.
-          x-order: 1
-        observedGeneration:
-          type: integer
-          description: |-
-            observedGeneration represents the .metadata.generation that the condition was set based upon.
-            For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
-            with respect to the current state of the instance.
-          format: int64
-          x-order: 2
-        reason:
-          type: string
-          description: |-
-            reason contains a programmatic identifier indicating the reason for the condition's last transition.
-            Producers of specific condition types may define expected values and meanings for this field,
-            and whether the values are considered a guaranteed API.
-            The value should be a CamelCase string.
-            This field may not be empty.
-          x-order: 3
-        status:
-          type: string
-          description: "status of the condition, one of True, False, Unknown."
-          enum:
-          - "True"
-          - "False"
-          - Unknown
-          x-order: 4
-        type:
-          type: string
-          description: type of condition in CamelCase or in foo.example.com/CamelCase.
-          x-order: 5
-    AnalysisRun:
-      required:
-      - name
-      - result
-      type: object
-      properties:
-        endTime:
-          type: string
-          description: Analysis end time is the analysis completion time.
-          format: date-time
-          x-order: 0
-        message:
-          type: string
-          description: The human readable message indicating details about the analysis
-            run.
-          x-order: 1
-        name:
-          type: string
-          description: The name of the analysis.
-          x-order: 2
-        result:
-          type: string
-          description: The result of the analysis run.
-          enum:
-          - Skipped
-          - Failed
-          - Succeeded
-          - Pending
-          x-order: 3
-        startTime:
-          type: string
-          description: |-
-            Analysis start time is the initial time when the analysis run was
-            performed without an error.
-          format: date-time
-          x-order: 4
-    AnyType:
-      type: object
-      additionalProperties:
-        oneOf:
-        - type: object
-        - type: string
-        - type: number
-        - type: boolean
-    CanaryRolloutModel:
-      required:
-      - name
-      - spec
-      type: object
-      properties:
-        name:
-          minLength: 1
-          type: string
-          description: The name of the resource
-          x-order: 0
-        description:
-          type: string
-          description: Human-readable description of the resource
-          x-order: 1
-        resourceVersion:
-          type: string
-          description: "The version of the resource. When specified in a `PUT` request\
-            \ payload, indicates that the resoure should be updated, and is used by\
-            \ the system to guard against concurrent updates."
-          x-order: 2
-        spec:
-          $ref: "#/components/schemas/CanaryRolloutSpec"
-        status:
-          $ref: "#/components/schemas/CanaryRolloutStatus"
-    CanaryRolloutSpec:
-      required:
-      - patch
-      - rolloutTemplate
-      type: object
-      properties:
-        patch:
-          $ref: "#/components/schemas/AnyType"
-        rolloutTemplate:
-          $ref: "#/components/schemas/RolloutTemplate"
-        selector:
-          $ref: "#/components/schemas/canaryrolloutspec_Selector"
-        stepBackoffLimit:
-          type: integer
-          description: |-
-            Specifies the number of retries before declaring a step and this canary
-            rollout as failed. Defaults to 20.
-          format: int32
-          x-order: 3
-        suspended:
-          type: boolean
-          description: |-
-            Suspended disables the canary rollout until the value is cleared. Once
-            resumed, the rollout will continue from the current step.
-          x-order: 4
-    CanaryRolloutStatus:
-      type: object
-      properties:
-        conditions:
-          type: array
-          description: Conditions holds the conditions for the canary rollout.
-          items:
-            $ref: "#/components/schemas/canaryrolloutstatus_Conditions"
-          x-order: 0
-        currentStepFailures:
-          type: integer
-          description: |-
-            The number of reconciliation failure count for the current step. It is
-            reset after step completion.
-          format: int32
-          x-order: 1
-        currentStepIndex:
-          type: integer
-          description: The step index which the rollout is currently on.
-          format: int32
-          x-order: 2
-        lastObservedConfigChecksum:
-          type: string
-          description: |-
-            The SHA1 checksum of rollout configuration used in the last
-            reconciliation attempt. If a checksum change is detected, the rollout is
-            restarted.
-          x-order: 3
-        lastPromotedFromIndex:
-          type: integer
-          description: The step index which last promoted targets.
-          format: int32
-          x-order: 4
-        lastPromotedTargets:
-          type: array
-          description: Targets to which the change is being promoted by the last promote
-            step.
-          items:
-            $ref: "#/components/schemas/LastPromotedTargets"
-          x-order: 5
-        observedGeneration:
-          type: integer
-          description: The generation observed by the controller from metadata.generation.
-          format: int64
-          x-order: 6
-      readOnly: true
-    LastPromotedTargets:
-      required:
-      - apiGroup
-      - kind
-      - name
-      type: object
-      properties:
-        analysisRun:
-          type: array
-          description: Information about performed analysis run against the target.
-          items:
-            $ref: "#/components/schemas/AnalysisRun"
-          x-order: 0
-        apiGroup:
-          type: string
-          description: APIGroup is the group for the resource being referenced.
-          x-order: 1
-        kind:
-          type: string
-          description: Kind is the type of resource being referenced.
-          x-order: 2
-        name:
-          type: string
-          description: Name is the name of resource being referenced
-          x-order: 3
-        namespace:
-          type: string
-          description: |-
-            Namespace is the namespace of resource being referenced. If empty, the
-            namespace of the referee is used instead.
-          x-order: 4
-    RolloutTemplate:
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the referent
-          x-order: 0
-    canaryrolloutspec_Selector:
-      type: object
-      properties:
-        matchExpressions:
-          type: array
-          description: matchExpressions is a list of label selector requirements.
-            The requirements are ANDed.
-          items:
-            $ref: "#/components/schemas/canaryrolloutspec_selector_MatchExpressions"
-          x-order: 0
-        matchLabels:
-          type: object
-          additionalProperties:
-            type: string
-          description: |-
-            matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
-            map is equivalent to an element of matchExpressions, whose key field is "key", the
-            operator is "In", and the values array contains only "value". The requirements are ANDed.
-          x-order: 1
-    canaryrolloutspec_selector_MatchExpressions:
-      required:
-      - key
-      - operator
-      type: object
-      properties:
-        key:
-          type: string
-          description: key is the label key that the selector applies to.
-          x-order: 0
-        operator:
-          type: string
-          description: |-
-            operator represents a key's relationship to a set of values.
-            Valid operators are In, NotIn, Exists and DoesNotExist.
-          x-order: 1
-        values:
-          type: array
-          description: |-
-            values is an array of string values. If the operator is In or NotIn,
-            the values array must be non-empty. If the operator is Exists or DoesNotExist,
-            the values array must be empty. This array is replaced during a strategic
-            merge patch.
-          items:
-            type: string
-          x-order: 2
-    canaryrolloutstatus_Conditions:
       required:
       - lastTransitionTime
       - message
