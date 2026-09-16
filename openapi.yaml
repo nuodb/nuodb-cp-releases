@@ -7,7 +7,7 @@ info:
   contact:
     url: https://nuodb.com
     email: NuoDB.Support@3ds.com
-  version: 2.13.0
+  version: 2.13.1
 servers:
 - url: https://example.nuodb.com
 paths:
@@ -4840,6 +4840,13 @@ paths:
       - healthz
       summary: Get health of service
       operationId: getHealth
+      parameters:
+      - name: checkBackend
+        in: query
+        description: Whether to make an API call to the backend to verify connectivity
+        schema:
+          type: boolean
+          default: true
       responses:
         "204":
           description: The server is healthy
