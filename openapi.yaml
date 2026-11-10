@@ -7,7 +7,7 @@ info:
   contact:
     url: https://nuodb.com
     email: NuoDB.Support@3ds.com
-  version: 2.13.0
+  version: 2.14.0
 servers:
 - url: https://example.nuodb.com
 paths:
@@ -3715,7 +3715,6 @@ paths:
         in: path
         required: true
         schema:
-          minLength: 1
           type: string
       responses:
         "200":
@@ -4840,6 +4839,13 @@ paths:
       - healthz
       summary: Get health of service
       operationId: getHealth
+      parameters:
+      - name: checkBackend
+        in: query
+        description: Whether to make an API call to the backend to verify connectivity
+        schema:
+          type: boolean
+          default: true
       responses:
         "204":
           description: The server is healthy
@@ -4882,6 +4888,13 @@ paths:
       - login
       summary: Login a user
       operationId: login
+      parameters:
+      - name: useCookie
+        in: query
+        description: "Whether to return the access token as a cookie, omitting it\
+          \ from the response payload"
+        schema:
+          type: boolean
       requestBody:
         content:
           application/json:
@@ -5142,6 +5155,12 @@ paths:
           invocation used to initiate the login flow
         schema:
           type: string
+      - name: useCookie
+        in: query
+        description: "Whether to return the access token as a cookie, omitting it\
+          \ from the response payload"
+        schema:
+          type: boolean
       responses:
         "200":
           description: The user was authenticated by the identity provider
@@ -5161,6 +5180,54 @@ paths:
                 $ref: "#/components/schemas/ErrorContent"
         "403":
           description: The user credentials were rejected by the identity provider
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "500":
+          description: A server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+      security:
+      - basicAuth: []
+        bearerAuth: []
+  /logout:
+    post:
+      tags:
+      - logout
+      summary: Logout the user
+      operationId: logout
+      responses:
+        "204":
+          description: The logout was successful
+        "400":
+          description: The user request was invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "401":
+          description: The user did not provide correct authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "403":
+          description: The user was not authorized to access the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "409":
+          description: An unexpected state was encountered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorContent"
+        "415":
+          description: A media type other than `application/json` was supplied
           content:
             application/json:
               schema:
@@ -13631,13 +13698,19 @@ components:
           - Compose
           - ShortCircuit
           x-order: 3
+        template:
+          type: boolean
+          description: Whether to interpret `to` as a Pebble template.
+          x-order: 4
         to:
           type: string
           description: |-
             The value to transform to. If `regex` is `true`, this may contain
-            references to capturing groups appearing in the `from` value,
-            otherwise it is just the literal output value.
-          x-order: 4
+            references to capturing groups appearing in the `from` value. If
+            `template` is `true`, this is interpreted as a Pebble template evaluated
+            against a context of the actual `value` and all capturing groups in case
+            `regex` is also `true`. Otherwise it is just the literal output value.
+          x-order: 5
     identityproviderspec_provisionuser_organization_Transform:
       required:
       - from
@@ -13683,13 +13756,19 @@ components:
           - Compose
           - ShortCircuit
           x-order: 3
+        template:
+          type: boolean
+          description: Whether to interpret `to` as a Pebble template.
+          x-order: 4
         to:
           type: string
           description: |-
             The value to transform to. If `regex` is `true`, this may contain
-            references to capturing groups appearing in the `from` value,
-            otherwise it is just the literal output value.
-          x-order: 4
+            references to capturing groups appearing in the `from` value. If
+            `template` is `true`, this is interpreted as a Pebble template evaluated
+            against a context of the actual `value` and all capturing groups in case
+            `regex` is also `true`. Otherwise it is just the literal output value.
+          x-order: 5
     identityproviderspec_provisionuser_roles_Transform:
       required:
       - from
@@ -13735,13 +13814,19 @@ components:
           - Compose
           - ShortCircuit
           x-order: 3
+        template:
+          type: boolean
+          description: Whether to interpret `to` as a Pebble template.
+          x-order: 4
         to:
           type: string
           description: |-
             The value to transform to. If `regex` is `true`, this may contain
-            references to capturing groups appearing in the `from` value,
-            otherwise it is just the literal output value.
-          x-order: 4
+            references to capturing groups appearing in the `from` value. If
+            `template` is `true`, this is interpreted as a Pebble template evaluated
+            against a context of the actual `value` and all capturing groups in case
+            `regex` is also `true`. Otherwise it is just the literal output value.
+          x-order: 5
     identityproviderspec_provisionuser_validate_Transform:
       required:
       - from
@@ -13787,13 +13872,19 @@ components:
           - Compose
           - ShortCircuit
           x-order: 3
+        template:
+          type: boolean
+          description: Whether to interpret `to` as a Pebble template.
+          x-order: 4
         to:
           type: string
           description: |-
             The value to transform to. If `regex` is `true`, this may contain
-            references to capturing groups appearing in the `from` value,
-            otherwise it is just the literal output value.
-          x-order: 4
+            references to capturing groups appearing in the `from` value. If
+            `template` is `true`, this is interpreted as a Pebble template evaluated
+            against a context of the actual `value` and all capturing groups in case
+            `regex` is also `true`. Otherwise it is just the literal output value.
+          x-order: 5
     identityproviderstatus_Oidc:
       required:
       - issuerUrl

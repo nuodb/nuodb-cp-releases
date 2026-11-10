@@ -1,4 +1,4 @@
-:revnumber: 2.13.0
+:revnumber: 2.14.0
 :toc: left
 
 [#nuodb-cp]
@@ -186,14 +186,11 @@ nuodb-cp backup create [-hV] [-b=<urlBase>] [-u=<user>] [-p[=<password>]]
                        [--token=<token>] [--trusted-cert=<trustedCert>]
                        [-l=<String=String>]...
                        [--import-source-handle=<backupHandle>]
-                       [--import-source-plugin=<backupPlugin>] BACKUP BACKUP
+                       [--import-source-plugin=<backupPlugin>] BACKUP
 ....
 
 [cols="1,3"]
 |===
-|`BACKUP`
-|The fully-qualified name of the backup in the format `<organization>/<project>/<database>/<backup>`
-
 |`BACKUP`
 |The fully-qualified name of the backup to create in the format `<organization>/<project>/<database>/<backup>`, or the database name in the format `<organization>/<project>/<database>` for an on-demand backup
 
